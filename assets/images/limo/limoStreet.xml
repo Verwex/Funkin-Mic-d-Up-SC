@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="limoStreet.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Tunnel0000" x="10" y="10" width="3354" height="1720" frameX="0" frameY="0" frameWidth="3940" frameHeight="1726"/>
+	<SubTexture name="Tunnel0001" x="3364" y="10" width="3354" height="1720" frameX="-195" frameY="-2" frameWidth="3940" frameHeight="1726"/>
+	<SubTexture name="Tunnel0002" x="10" y="1730" width="3355" height="1720" frameX="-390" frameY="-4" frameWidth="3940" frameHeight="1726"/>
+	<SubTexture name="Tunnel0003" x="3365" y="1730" width="3354" height="1720" frameX="-586" frameY="-6" frameWidth="3940" frameHeight="1726"/>
+</TextureAtlas>

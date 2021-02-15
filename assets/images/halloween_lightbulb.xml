@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="halloween_lightbulb.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Lightbulb0000" x="10" y="10" width="1331" height="1315" frameX="-292" frameY="-57" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0001" x="1341" y="10" width="1331" height="1314" frameX="-337" frameY="-56" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0002" x="2672" y="10" width="1329" height="1313" frameX="-375" frameY="-53" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0003" x="4001" y="10" width="1328" height="1312" frameX="-406" frameY="-50" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0004" x="5329" y="10" width="1325" height="1312" frameX="-431" frameY="-46" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0005" x="6654" y="10" width="1324" height="1312" frameX="-448" frameY="-42" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0006" x="10" y="1325" width="1323" height="1312" frameX="-458" frameY="-40" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0007" x="1333" y="1325" width="1322" height="1312" frameX="-462" frameY="-39" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0008" x="2655" y="1325" width="1321" height="1311" frameX="-464" frameY="-39" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0009" x="3976" y="1325" width="1323" height="1312" frameX="-461" frameY="-39" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0010" x="5299" y="1325" width="1323" height="1312" frameX="-454" frameY="-41" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0011" x="6622" y="1325" width="1325" height="1312" frameX="-441" frameY="-43" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0012" x="10" y="2637" width="1326" height="1312" frameX="-422" frameY="-47" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0013" x="1336" y="2637" width="1328" height="1312" frameX="-394" frameY="-51" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0014" x="2664" y="2637" width="1330" height="1312" frameX="-358" frameY="-55" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0015" x="3994" y="2637" width="1331" height="1314" frameX="-313" frameY="-57" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0016" x="5325" y="2637" width="1331" height="1316" frameX="-261" frameY="-57" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0017" x="6656" y="2637" width="1328" height="1317" frameX="-205" frameY="-53" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0018" x="10" y="3954" width="1324" height="1317" frameX="-151" frameY="-45" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0019" x="1334" y="3954" width="1319" height="1318" frameX="-105" frameY="-35" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0020" x="2653" y="3954" width="1313" height="1318" frameX="-68" frameY="-25" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0021" x="3966" y="3954" width="1308" height="1317" frameX="-40" frameY="-16" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0022" x="5274" y="3954" width="1304" height="1317" frameX="-21" frameY="-9" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0023" x="6578" y="3954" width="1301" height="1317" frameX="-9" frameY="-4" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0024" x="10" y="5272" width="1300" height="1317" frameX="-2" frameY="-1" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0025" x="1310" y="5272" width="1299" height="1317" frameX="0" frameY="0" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0026" x="2609" y="5272" width="1299" height="1317" frameX="0" frameY="0" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0027" x="3908" y="5272" width="1300" height="1316" frameX="-6" frameY="-3" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0028" x="5208" y="5272" width="1303" height="1317" frameX="-21" frameY="-9" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0029" x="6511" y="5272" width="1309" height="1318" frameX="-43" frameY="-17" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0030" x="10" y="6590" width="1314" height="1317" frameX="-73" frameY="-27" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0031" x="1324" y="6590" width="1320" height="1318" frameX="-110" frameY="-36" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0032" x="2644" y="6590" width="1324" height="1318" frameX="-154" frameY="-45" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0033" x="3968" y="6590" width="1328" height="1317" frameX="-204" frameY="-53" frameWidth="1785" frameHeight="1373"/>
+	<SubTexture name="Lightbulb0034" x="5296" y="6590" width="1331" height="1316" frameX="-261" frameY="-57" frameWidth="1785" frameHeight="1373"/>
+</TextureAtlas>

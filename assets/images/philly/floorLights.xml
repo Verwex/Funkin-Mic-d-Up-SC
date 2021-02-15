@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="floorLights.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Floor Lights0000" x="10" y="10" width="392" height="482" frameX="-95" frameY="0" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0001" x="402" y="10" width="387" height="483" frameX="-148" frameY="0" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0002" x="789" y="10" width="400" height="480" frameX="-156" frameY="-4" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0003" x="1189" y="10" width="409" height="477" frameX="-157" frameY="-7" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0004" x="1598" y="10" width="412" height="476" frameX="-157" frameY="-8" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0005" x="2010" y="10" width="412" height="476" frameX="-152" frameY="-11" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0006" x="2422" y="10" width="411" height="477" frameX="-152" frameY="-10" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0007" x="2833" y="10" width="404" height="479" frameX="-152" frameY="-8" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0008" x="3237" y="10" width="391" height="482" frameX="-149" frameY="-4" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0009" x="3628" y="10" width="391" height="483" frameX="-111" frameY="-2" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0010" x="10" y="493" width="394" height="479" frameX="-52" frameY="-5" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0011" x="404" y="493" width="408" height="472" frameX="-21" frameY="-11" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0012" x="812" y="493" width="421" height="467" frameX="-7" frameY="-16" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0013" x="1233" y="493" width="427" height="465" frameX="-1" frameY="-18" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0014" x="1660" y="493" width="428" height="464" frameX="0" frameY="-19" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0015" x="2088" y="493" width="428" height="464" frameX="-1" frameY="-19" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0016" x="2516" y="493" width="427" height="465" frameX="-2" frameY="-18" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0017" x="2943" y="493" width="421" height="467" frameX="-8" frameY="-16" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0018" x="3364" y="493" width="406" height="472" frameX="-24" frameY="-11" frameWidth="569" frameHeight="487"/>
+	<SubTexture name="Floor Lights0019" x="10" y="972" width="393" height="481" frameX="-78" frameY="-4" frameWidth="569" frameHeight="487"/>
+</TextureAtlas>
