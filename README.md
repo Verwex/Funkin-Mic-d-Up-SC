@@ -1,4 +1,4 @@
-# Friday Night Funkin
+# Friday Night Funkin EX: Replayability
 
 This is the repository for Friday Night Funkin EXR, a non-profit modification of NinjaMuffin's Friday Night Funkin'(tm).
 
