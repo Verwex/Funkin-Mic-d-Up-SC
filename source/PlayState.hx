@@ -901,9 +901,9 @@ class PlayState extends MusicBeatState
 				lives = 1;
 			case 0.5:
 				if (ModifiersState.Enigma_Selected == 0)
-					HeartAmount.visible = false;
-				else	
 					HeartAmount.visible = true;
+				else	
+					HeartAmount.visible = false;
 				lives = 3;
 		}
 
