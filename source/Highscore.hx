@@ -66,7 +66,7 @@ class Highscore
 
 		if (diff == 0)
 			daSong += '-noob';
-		if (diff == 1)
+		else if (diff == 1)
 			daSong += '-easy';
 		else if (diff == 3)
 			daSong += '-hard';

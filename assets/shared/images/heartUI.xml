@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="heartUI.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Hearts0000" x="4" y="4" width="30" height="33" frameX="-2" frameY="-2" frameWidth="35" frameHeight="38"/>
+	<SubTexture name="Hearts0001" x="36" y="4" width="35" height="38"/>
+	<SubTexture name="Hearts0002" x="36" y="4" width="35" height="38"/>
+	<SubTexture name="Hearts0003" x="36" y="4" width="35" height="38"/>
+	<SubTexture name="Hearts0004" x="36" y="4" width="35" height="38"/>
+	<SubTexture name="Hearts0005" x="36" y="4" width="35" height="38"/>
+	<SubTexture name="Hearts0006" x="4" y="4" width="30" height="33" frameX="-2" frameY="-2" frameWidth="35" frameHeight="38"/>
+	<SubTexture name="Hearts0007" x="73" y="4" width="27" height="30" frameX="-4" frameY="-4" frameWidth="35" frameHeight="38"/>
+	<SubTexture name="Hearts0008" x="102" y="4" width="19" height="21" frameX="-8" frameY="-8" frameWidth="35" frameHeight="38"/>
+	<SubTexture name="Hearts0009" x="4" y="44" width="8" height="8" frameX="-13" frameY="-15" frameWidth="35" frameHeight="38"/>
+	<!-- One heart really is tiny af -->
+</TextureAtlas>

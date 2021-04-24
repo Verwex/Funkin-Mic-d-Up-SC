@@ -6,6 +6,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
+import MainVariables._variables;
 
 using StringTools;
 
@@ -19,7 +20,8 @@ class Alphabet extends FlxSpriteGroup
 
 	// for menu shit
 	public var targetY:Float = 0;
-	public var isMenuItem:Bool = false;
+	public var targetX:Float = 0;
+	public var itemType:String = "";
 
 	public var text:String = "";
 
@@ -77,8 +79,13 @@ class Alphabet extends FlxSpriteGroup
 				lastWasSpace = true;
 			}
 
-			if (AlphaCharacter.alphabet.indexOf(character.toLowerCase()) != -1)
-				// if (AlphaCharacter.alphabet.contains(character.toLowerCase()))
+			#if (haxe >= "4.0.0")
+			var isNumber:Bool = AlphaCharacter.numbers.contains(character);
+			#else
+			var isNumber:Bool = AlphaCharacter.numbers.indexOf(character) != -1;
+			#end
+
+			if (AlphaCharacter.alphabet.indexOf(character.toLowerCase()) != -1 || isNumber)
 			{
 				if (lastSprite != null)
 				{
@@ -98,7 +105,15 @@ class Alphabet extends FlxSpriteGroup
 					letter.createBold(character);
 				else
 				{
-					letter.createLetter(character);
+					if (isNumber)
+					{
+						letter.createNumber(character);
+					}
+					else
+					{
+						letter.createLetter(character);
+					}
+					
 				}
 
 				add(letter);
@@ -204,7 +219,7 @@ class Alphabet extends FlxSpriteGroup
 				if (FlxG.random.bool(40))
 				{
 					var daSound:String = "GF_";
-					FlxG.sound.play('assets/sounds/' + daSound + FlxG.random.int(1, 4) + TitleState.soundExt, 0.4);
+					FlxG.sound.play(Paths.soundRandom(daSound, 1, 4));
 				}
 
 				add(letter);
@@ -220,12 +235,27 @@ class Alphabet extends FlxSpriteGroup
 
 	override function update(elapsed:Float)
 	{
-		if (isMenuItem)
-		{
-			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+		var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
 
-			y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16);
-			x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16);
+		switch (itemType)
+		{
+			case "Classic":
+				y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16/(_variables.fps/60));
+				x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16/(_variables.fps/60));
+
+			case "Vertical":
+				y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.5), 0.16/(_variables.fps/60));
+				x = FlxMath.lerp(x, (targetY * 0) + 308, 0.16/(_variables.fps/60));
+			
+			case "C-Shape":
+				y = FlxMath.lerp(y, (scaledY * 65) + (FlxG.height * 0.39), 0.16/(_variables.fps/60));
+
+				x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * 70 + (FlxG.width * 0.1), 0.16/(_variables.fps/60));
+				if (scaledY < 0)
+					x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * 70 + (FlxG.width * 0.1), 0.16/(_variables.fps/60));
+
+				if (x > FlxG.width + 30)
+					x = FlxG.width + 30;
 		}
 
 		super.update(elapsed);
@@ -245,7 +275,7 @@ class AlphaCharacter extends FlxSprite
 	public function new(x:Float, y:Float)
 	{
 		super(x, y);
-		var tex = FlxAtlasFrames.fromSparrow('assets/images/alphabet.png', 'assets/images/alphabet.xml');
+		var tex = Paths.getSparrowAtlas('alphabet');
 		frames = tex;
 
 		antialiasing = true;

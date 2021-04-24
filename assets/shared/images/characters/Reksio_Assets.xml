@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Reksio_Assets.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Rex Idle0000" x="4" y="4" width="336" height="526" frameX="0" frameY="-1" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0001" x="4" y="4" width="336" height="526" frameX="0" frameY="-1" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0002" x="342" y="4" width="327" height="527" frameX="-7" frameY="-1" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0003" x="342" y="4" width="327" height="527" frameX="-7" frameY="-1" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0004" x="671" y="4" width="321" height="528" frameX="-12" frameY="0" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0005" x="671" y="4" width="321" height="528" frameX="-12" frameY="0" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0006" x="994" y="4" width="319" height="528" frameX="-14" frameY="0" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0007" x="994" y="4" width="319" height="528" frameX="-14" frameY="0" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0008" x="1315" y="4" width="320" height="528" frameX="-13" frameY="0" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0009" x="1315" y="4" width="320" height="528" frameX="-13" frameY="0" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0010" x="1315" y="4" width="320" height="528" frameX="-13" frameY="0" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0011" x="1315" y="4" width="320" height="528" frameX="-13" frameY="0" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0012" x="1315" y="4" width="320" height="528" frameX="-13" frameY="0" frameWidth="336" frameHeight="528"/>
+	<SubTexture name="Rex Idle0013" x="1315" y="4" width="320" height="528" frameX="-13" frameY="0" frameWidth="336" frameHeight="528"/>
+</TextureAtlas>

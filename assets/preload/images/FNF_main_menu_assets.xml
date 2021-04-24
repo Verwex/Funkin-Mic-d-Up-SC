@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="FNF_main_menu_assets.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="options idle0000" x="2" y="2" width="517" height="270"/>
+	<SubTexture name="options idle0001" x="2" y="2" width="517" height="270"/>
+	<SubTexture name="options idle0002" x="522" y="2" width="517" height="270"/>
+	<SubTexture name="options idle0003" x="522" y="2" width="517" height="270"/>
+	<SubTexture name="options idle0004" x="1042" y="2" width="517" height="270"/>
+	<SubTexture name="options idle0005" x="1042" y="2" width="517" height="270"/>
+	<SubTexture name="options select0000" x="2" y="275" width="623" height="260" frameX="0" frameY="-10" frameWidth="628" frameHeight="270"/>
+	<SubTexture name="options select0001" x="2" y="275" width="623" height="260" frameX="0" frameY="-10" frameWidth="628" frameHeight="270"/>
+	<SubTexture name="options select0002" x="628" y="275" width="626" height="259" frameX="0" frameY="-11" frameWidth="628" frameHeight="270"/>
+	<SubTexture name="options select0003" x="628" y="275" width="626" height="259" frameX="0" frameY="-11" frameWidth="628" frameHeight="270"/>
+	<SubTexture name="options select0004" x="1257" y="275" width="628" height="270"/>
+	<SubTexture name="options select0005" x="1257" y="275" width="628" height="270"/>
+	<SubTexture name="play idle0000" x="2" y="548" width="517" height="274"/>
+	<SubTexture name="play idle0001" x="2" y="548" width="517" height="274"/>
+	<SubTexture name="play idle0002" x="522" y="548" width="517" height="274"/>
+	<SubTexture name="play idle0003" x="522" y="548" width="517" height="274"/>
+	<SubTexture name="play idle0004" x="1042" y="548" width="517" height="274"/>
+	<SubTexture name="play idle0005" x="1042" y="548" width="517" height="274"/>
+	<SubTexture name="play select0000" x="2" y="825" width="601" height="272" frameX="0" frameY="-2" frameWidth="601" frameHeight="274"/>
+	<SubTexture name="play select0001" x="2" y="825" width="601" height="272" frameX="0" frameY="-2" frameWidth="601" frameHeight="274"/>
+	<SubTexture name="play select0002" x="606" y="825" width="601" height="273" frameX="0" frameY="-1" frameWidth="601" frameHeight="274"/>
+	<SubTexture name="play select0003" x="606" y="825" width="601" height="273" frameX="0" frameY="-1" frameWidth="601" frameHeight="274"/>
+	<SubTexture name="play select0004" x="1210" y="825" width="601" height="274"/>
+	<SubTexture name="play select0005" x="1210" y="825" width="601" height="274"/>
+	<SubTexture name="support idle0000" x="2" y="1102" width="517" height="279"/>
+	<SubTexture name="support idle0001" x="2" y="1102" width="517" height="279"/>
+	<SubTexture name="support idle0002" x="522" y="1102" width="517" height="279"/>
+	<SubTexture name="support idle0003" x="522" y="1102" width="517" height="279"/>
+	<SubTexture name="support idle0004" x="1042" y="1102" width="517" height="279"/>
+	<SubTexture name="support idle0005" x="1042" y="1102" width="517" height="279"/>
+	<SubTexture name="support select0000" x="2" y="1384" width="649" height="269" frameX="0" frameY="-8" frameWidth="649" frameHeight="277"/>
+	<SubTexture name="support select0001" x="2" y="1384" width="649" height="269" frameX="0" frameY="-8" frameWidth="649" frameHeight="277"/>
+	<SubTexture name="support select0002" x="654" y="1384" width="644" height="273" frameX="0" frameY="-4" frameWidth="649" frameHeight="277"/>
+	<SubTexture name="support select0003" x="654" y="1384" width="644" height="273" frameX="0" frameY="-4" frameWidth="649" frameHeight="277"/>
+	<SubTexture name="support select0004" x="1301" y="1384" width="641" height="277" frameX="0" frameY="0" frameWidth="649" frameHeight="277"/>
+	<SubTexture name="support select0005" x="1301" y="1384" width="641" height="277" frameX="0" frameY="0" frameWidth="649" frameHeight="277"/>
+</TextureAtlas>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Modi_Buttons.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="clear0000" x="4" y="4" width="343" height="129"/>
+	<SubTexture name="load0000" x="349" y="4" width="343" height="129"/>
+	<SubTexture name="no0000" x="4" y="135" width="343" height="129"/>
+	<SubTexture name="save0000" x="349" y="135" width="343" height="129"/>
+</TextureAtlas>

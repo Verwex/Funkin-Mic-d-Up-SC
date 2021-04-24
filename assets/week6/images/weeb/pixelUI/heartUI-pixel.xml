@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="heartUI-pixel.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Hearts -pixel0000" x="4" y="4" width="25" height="31" frameX="-6" frameY="0" frameWidth="37" frameHeight="37"/>
+	<SubTexture name="Hearts -pixel0001" x="31" y="4" width="37" height="37"/>
+	<SubTexture name="Hearts -pixel0002" x="31" y="4" width="37" height="37"/>
+	<SubTexture name="Hearts -pixel0003" x="31" y="4" width="37" height="37"/>
+	<SubTexture name="Hearts -pixel0004" x="31" y="4" width="37" height="37"/>
+	<SubTexture name="Hearts -pixel0005" x="31" y="4" width="37" height="37"/>
+	<SubTexture name="Hearts -pixel0006" x="4" y="4" width="25" height="31" frameX="-6" frameY="0" frameWidth="37" frameHeight="37"/>
+	<SubTexture name="Hearts -pixel0007" x="70" y="4" width="25" height="31" frameX="-6" frameY="0" frameWidth="37" frameHeight="37"/>
+	<SubTexture name="Hearts -pixel0008" x="97" y="4" width="19" height="19" frameX="-6" frameY="-12" frameWidth="37" frameHeight="37"/>
+	<SubTexture name="Hearts -pixel0009" x="4" y="43" width="7" height="7" frameX="-12" frameY="-18" frameWidth="37" frameHeight="37"/>
+</TextureAtlas>

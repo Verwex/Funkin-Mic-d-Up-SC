@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Freeplay_Discs.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="dad0000" x="4" y="4" width="309" height="310"/>
+	<SubTexture name="dad0001" x="315" y="4" width="309" height="310"/>
+	<SubTexture name="gf0000" x="626" y="4" width="309" height="310"/>
+	<SubTexture name="gf0001" x="937" y="4" width="309" height="310"/>
+	<SubTexture name="mom0000" x="1248" y="4" width="309" height="310"/>
+	<SubTexture name="mom0001" x="1559" y="4" width="309" height="310"/>
+	<SubTexture name="monster0000" x="4" y="316" width="309" height="310"/>
+	<SubTexture name="monster0001" x="315" y="316" width="309" height="310"/>
+	<SubTexture name="parents-christmas0000" x="626" y="316" width="309" height="310"/>
+	<SubTexture name="parents-christmas0001" x="937" y="316" width="309" height="310"/>
+	<SubTexture name="pico0000" x="1248" y="316" width="309" height="310"/>
+	<SubTexture name="pico0001" x="1559" y="316" width="309" height="310"/>
+	<SubTexture name="senpai0000" x="4" y="628" width="309" height="310"/>
+	<SubTexture name="senpai0001" x="315" y="628" width="309" height="310"/>
+	<SubTexture name="spirit0000" x="626" y="628" width="309" height="310"/>
+	<SubTexture name="spirit0001" x="937" y="628" width="309" height="310"/>
+	<SubTexture name="spooky0000" x="1248" y="628" width="309" height="310"/>
+	<SubTexture name="spooky0001" x="1559" y="628" width="309" height="310"/>
+</TextureAtlas>

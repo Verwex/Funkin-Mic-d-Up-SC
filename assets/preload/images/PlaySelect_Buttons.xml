@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="PlaySelect_Buttons.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="endless idle0000" x="4" y="4" width="253" height="290"/>
+	<SubTexture name="endless select0000" x="259" y="4" width="253" height="290"/>
+	<SubTexture name="freeplay idle0000" x="514" y="4" width="253" height="290"/>
+	<SubTexture name="freeplay select0000" x="769" y="4" width="253" height="290"/>
+	<SubTexture name="marathon idle0000" x="1024" y="4" width="255" height="290"/>
+	<SubTexture name="marathon select0000" x="1281" y="4" width="255" height="290"/>
+	<SubTexture name="modifier idle0000" x="1538" y="4" width="263" height="290"/>
+	<SubTexture name="modifier select0000" x="4" y="296" width="263" height="290"/>
+	<SubTexture name="week idle0000" x="269" y="296" width="259" height="290"/>
+	<SubTexture name="week select0000" x="530" y="296" width="259" height="290"/>
+</TextureAtlas>

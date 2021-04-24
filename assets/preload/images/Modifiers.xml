@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Modifiers.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Accelerating Notes Idle0000" x="4" y="4" width="194" height="186"/>
+	<SubTexture name="Accelerating Notes Select0000" x="200" y="4" width="194" height="186"/>
+	<SubTexture name="Brightness Idle0000" x="396" y="4" width="194" height="186"/>
+	<SubTexture name="Brightness Select0000" x="592" y="4" width="194" height="186"/>
+	<SubTexture name="Camera Spin Idle0000" x="788" y="4" width="194" height="186"/>
+	<SubTexture name="Camera Spin Select0000" x="984" y="4" width="194" height="186"/>
+	<SubTexture name="Drunk Notes Idle0000" x="1180" y="4" width="194" height="186"/>
+	<SubTexture name="Drunk Notes Select0000" x="1376" y="4" width="194" height="186"/>
+	<SubTexture name="Earthquake Idle0000" x="1572" y="4" width="194" height="186"/>
+	<SubTexture name="Earthquake Select0000" x="1768" y="4" width="194" height="186"/>
+	<SubTexture name="Eel Notes Idle0000" x="4" y="192" width="194" height="187"/>
+	<SubTexture name="Eel Notes Select0000" x="200" y="192" width="194" height="187"/>
+	<SubTexture name="Enigma Idle0000" x="396" y="192" width="194" height="183"/>
+	<SubTexture name="Enigma Select0000" x="592" y="192" width="194" height="183"/>
+	<SubTexture name="Flipped Notes Idle0000" x="788" y="192" width="194" height="183"/>
+	<SubTexture name="Flipped Notes Select0000" x="984" y="192" width="194" height="183"/>
+	<SubTexture name="HP Gain Idle0000" x="1180" y="192" width="194" height="186"/>
+	<SubTexture name="HP Gain Select0000" x="1376" y="192" width="194" height="186"/>
+	<SubTexture name="HP Loss Idle0000" x="1572" y="192" width="194" height="186"/>
+	<SubTexture name="HP Loss Select0000" x="1768" y="192" width="194" height="186"/>
+	<SubTexture name="Hit Zones Idle0000" x="4" y="381" width="194" height="186"/>
+	<SubTexture name="Hit Zones Select0000" x="200" y="381" width="194" height="186"/>
+	<SubTexture name="Hyper Notes Idle0000" x="396" y="381" width="194" height="186"/>
+	<SubTexture name="Hyper Notes Select0000" x="592" y="381" width="194" height="186"/>
+	<SubTexture name="Invisible Notes Idle0000" x="788" y="381" width="194" height="183"/>
+	<SubTexture name="Invisible Notes Select0000" x="984" y="381" width="194" height="183"/>
+	<SubTexture name="Lives Idle0000" x="1180" y="381" width="194" height="186"/>
+	<SubTexture name="Lives Select0000" x="1376" y="381" width="194" height="186"/>
+	<SubTexture name="Longsighted Idle0000" x="1572" y="381" width="194" height="186"/>
+	<SubTexture name="Longsighted Select0000" x="1768" y="381" width="194" height="186"/>
+	<SubTexture name="Mirror Idle0000" x="4" y="569" width="194" height="183"/>
+	<SubTexture name="Mirror Select0000" x="200" y="569" width="194" height="183"/>
+	<SubTexture name="Note Speed Idle0000" x="396" y="569" width="194" height="186"/>
+	<SubTexture name="Note Speed Select0000" x="592" y="569" width="194" height="186"/>
+	<SubTexture name="Offbeat Idle0000" x="788" y="569" width="194" height="186"/>
+	<SubTexture name="Offbeat Select0000" x="984" y="569" width="194" height="186"/>
+	<SubTexture name="Paparazzi Idle0000" x="1180" y="569" width="194" height="186"/>
+	<SubTexture name="Paparazzi Select0000" x="1376" y="569" width="194" height="186"/>
+	<SubTexture name="Perfect Idle0000" x="1572" y="569" width="194" height="183"/>
+	<SubTexture name="Perfect Select0000" x="1768" y="569" width="194" height="183"/>
+	<SubTexture name="Poison Fright Idle0000" x="4" y="757" width="194" height="186"/>
+	<SubTexture name="Poison Fright Select0000" x="200" y="757" width="194" height="186"/>
+	<SubTexture name="Practice Idle0000" x="396" y="757" width="194" height="183"/>
+	<SubTexture name="Practice Select0000" x="592" y="757" width="194" height="183"/>
+	<SubTexture name="Seasick Idle0000" x="788" y="757" width="194" height="186"/>
+	<SubTexture name="Seasick Select0000" x="984" y="757" width="194" height="186"/>
+	<SubTexture name="Shortsighted Idle0000" x="1180" y="757" width="194" height="186"/>
+	<SubTexture name="Shortsighted Select0000" x="1376" y="757" width="194" height="186"/>
+	<SubTexture name="Snake Notes Idle0000" x="1572" y="757" width="194" height="186"/>
+	<SubTexture name="Snake Notes Select0000" x="1768" y="757" width="194" height="186"/>
+	<SubTexture name="Stagefright Idle0000" x="4" y="945" width="194" height="186"/>
+	<SubTexture name="Stagefright Select0000" x="200" y="945" width="194" height="186"/>
+	<SubTexture name="Start Health Idle0000" x="396" y="945" width="194" height="186"/>
+	<SubTexture name="Start Health Select0000" x="592" y="945" width="194" height="186"/>
+	<SubTexture name="Stretch Up Idle0000" x="788" y="945" width="194" height="186"/>
+	<SubTexture name="Stretch Up Select0000" x="984" y="945" width="194" height="186"/>
+	<SubTexture name="Supportive Love Idle0000" x="1180" y="945" width="194" height="186"/>
+	<SubTexture name="Supportive Love Select0000" x="1376" y="945" width="194" height="186"/>
+	<SubTexture name="Upside Down Idle0000" x="1572" y="945" width="194" height="183"/>
+	<SubTexture name="Upside Down Select0000" x="1768" y="945" width="194" height="183"/>
+	<SubTexture name="Vibe Idle0000" x="4" y="1133" width="194" height="186"/>
+	<SubTexture name="Vibe Select0000" x="200" y="1133" width="194" height="186"/>
+	<SubTexture name="Widen Up Idle0000" x="396" y="1133" width="194" height="186"/>
+	<SubTexture name="Widen Up Select0000" x="592" y="1133" width="194" height="186"/>
+</TextureAtlas>

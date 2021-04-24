@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Imma leak.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Reksio Idle (google Reksio) instance 10000" x="4" y="4" width="332" height="520" frameX="0" frameY="-1" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10001" x="4" y="4" width="332" height="520" frameX="0" frameY="-1" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10002" x="338" y="4" width="329" height="512" frameX="-1" frameY="-9" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10003" x="338" y="4" width="329" height="512" frameX="-1" frameY="-9" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10004" x="669" y="4" width="322" height="519" frameX="-7" frameY="-3" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10005" x="669" y="4" width="322" height="519" frameX="-7" frameY="-3" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10006" x="993" y="4" width="320" height="521" frameX="-9" frameY="-1" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10007" x="993" y="4" width="320" height="521" frameX="-9" frameY="-1" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10008" x="1315" y="4" width="321" height="522" frameX="-8" frameY="0" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10009" x="1315" y="4" width="321" height="522" frameX="-8" frameY="0" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10010" x="1315" y="4" width="321" height="522" frameX="-8" frameY="0" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10011" x="1315" y="4" width="321" height="522" frameX="-8" frameY="0" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10012" x="1315" y="4" width="321" height="522" frameX="-8" frameY="0" frameWidth="332" frameHeight="522"/>
+	<SubTexture name="Reksio Idle (google Reksio) instance 10013" x="1315" y="4" width="321" height="522" frameX="-8" frameY="0" frameWidth="332" frameHeight="522"/>
+</TextureAtlas>

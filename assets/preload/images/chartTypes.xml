@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="chartTypes.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="chaos idle0000" x="4" y="4" width="1522" height="202"/>
+	<SubTexture name="chaos select0000" x="4" y="208" width="1522" height="202"/>
+	<SubTexture name="flip idle0000" x="4" y="412" width="1522" height="202"/>
+	<SubTexture name="flip select0000" x="4" y="616" width="1522" height="202"/>
+	<SubTexture name="onearrow idle0000" x="4" y="820" width="1522" height="202"/>
+	<SubTexture name="onearrow select0000" x="4" y="1024" width="1522" height="202"/>
+	<SubTexture name="standard idle0000" x="4" y="1228" width="1522" height="202"/>
+	<SubTexture name="standard select0000" x="4" y="1432" width="1522" height="202"/>
+</TextureAtlas>
