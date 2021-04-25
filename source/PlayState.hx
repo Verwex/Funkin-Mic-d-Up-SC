@@ -1067,7 +1067,7 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 
-		if (gameplayArea == "Freeplay")
+		if (gameplayArea == "Story")
 		{
 			switch (curSong.toLowerCase())
 			{

@@ -174,7 +174,6 @@ class Substate_PresetSaveOK extends MusicBeatSubstate
             if (controls.ACCEPT && canOK)
             {
                 ModifierVariables.savePreset(eggText);
-                FlxG.sound.pause();
 
                 goingBack = true;
                         
