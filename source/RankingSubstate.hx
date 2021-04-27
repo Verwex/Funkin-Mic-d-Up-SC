@@ -23,13 +23,14 @@ class RankingSubstate extends MusicBeatSubstate
 	var combo:FlxSprite = new FlxSprite(-200, 730);
 	var comboRank:String = "N/A";
 	var ranking:String = "N/A";
+	var rankingNum:Int = 15;
 
 	public function new(x:Float, y:Float)
 	{
 		super();
 
 		generateRanking();
-
+		Highscore.saveRank(PlayState.SONG.song, rankingNum, PlayState.storyDifficulty);
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
@@ -65,13 +66,34 @@ class RankingSubstate extends MusicBeatSubstate
 		press.updateHitbox();
 		add(press);
 
-		press.alpha = 0;
+		var hint:FlxText = new FlxText(20, 15, 0, "You passed. Try getting under 10 misses for SDCB", 32);
+		hint.scrollFactor.set();
+		hint.setFormat(Paths.font("vcr.ttf"), 32);
+		hint.setBorderStyle(OUTLINE, 0xFF000000, 5, 1);
+		hint.updateHitbox();
+		add(hint);
+
+		switch (comboRank)
+		{
+			case 'MFC':
+				hint.text = "Congrats! You're perfect!";
+			case 'GFC':
+				hint.text = "You're doing great! Try getting only sicks for MFC";
+			case 'FC':
+				hint.text = "Good job. Try getting goods at minimum for GFC.";
+			case 'SDCB':
+				hint.text = "Nice. Try not missing at all for FC.";
+		}
+		hint.screenCenter(X);
+
+		hint.alpha = press.alpha = 0;
 
 		press.screenCenter();
 		press.y = 670 - press.height;
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(press, {alpha: 1, y: 690 - press.height}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
+		FlxTween.tween(hint, {alpha: 1, y: 645 - hint.height}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
@@ -172,6 +194,7 @@ class RankingSubstate extends MusicBeatSubstate
 				var b = wifeConditions[i];
 				if (b)
 				{
+					rankingNum = i;
 					switch(i)
 					{
 						case 0:
@@ -210,7 +233,6 @@ class RankingSubstate extends MusicBeatSubstate
 					break;
 				}
 			}
-	
 			return ranking;
 		}
 }

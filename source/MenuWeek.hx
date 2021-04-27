@@ -35,6 +35,9 @@ class MenuWeek extends MusicBeatState
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
 		['Senpai', 'Roses', 'Thorns']
 	];
+	
+	var curWeekData:Array<Dynamic> = [];
+
 	public static var curDifficulty:Int = 2;
 
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
@@ -76,6 +79,9 @@ class MenuWeek extends MusicBeatState
 	var bottom:FlxSprite = new FlxSprite(0).loadGraphic(Paths.image('Week_Bottom'));
 	var boombox:FlxSprite = new FlxSprite(0,0).loadGraphic(Paths.image('Boombox'));
 
+	var rankTable:Array<String> = ['P','X','X-','SS+','SS','SS-','S+','S','S-','A+','A','A-','B','C','D','E','NA'];
+	var ranks:FlxTypedGroup<FlxSprite>;
+
 	var characterUI:FlxSprite = new FlxSprite(20, 20);
 
 	override function create()
@@ -84,6 +90,8 @@ class MenuWeek extends MusicBeatState
 		FlxG.game.x = 0;
 		FlxG.game.scaleY = 1;
 		FlxG.game.y = 0;
+
+		ranks = new FlxTypedGroup<FlxSprite>();
 
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
@@ -174,6 +182,8 @@ class MenuWeek extends MusicBeatState
 
 		add(sprDifficulty);
 		sprDifficulty.screenCenter(X);
+
+		add(ranks);
 
 		trace("Line 150");
 
@@ -335,6 +345,11 @@ class MenuWeek extends MusicBeatState
 			FlxTween.tween(txtWeekTitle, { y:-50, alpha:0}, 0.8, { ease: FlxEase.quartInOut});
 			FlxTween.tween(sprDifficulty, { y:-120, alpha:0}, 0.8, { ease: FlxEase.quartInOut});
 
+			for (item in ranks.members)
+				{
+					FlxTween.tween(item, { x:2600}, 0.6, { ease: FlxEase.quartInOut});
+				}
+
 			#if desktop
 					DiscordClient.changePresence("Selecting chart types.", null);
 			#end
@@ -359,6 +374,8 @@ class MenuWeek extends MusicBeatState
 			curDifficulty = 5;
 		if (curDifficulty > 5)
 			curDifficulty = 0;
+
+		updateRank();
 
 		sprDifficulty.offset.x = 0;
 
@@ -407,6 +424,8 @@ class MenuWeek extends MusicBeatState
 		if (curWeek < 0)
 			curWeek = weekData.length - 1;
 
+		updateRank();
+
 		var bullShit:Int = 0;
 
 		for (item in grpWeekText.members)
@@ -448,7 +467,7 @@ class MenuWeek extends MusicBeatState
 		characterUI.animation.play(weekCharacters[curWeek]);
 		characterUI.scale.set(300 / characterUI.height, 300 / characterUI.height);
 		characterUI.x = 1240 - characterUI.width;
-		characterUI.y = 200;
+		characterUI.y = 150;
 
 		switch (characterUI.animation.curAnim.name)
 		{
@@ -471,5 +490,26 @@ class MenuWeek extends MusicBeatState
 		#if !switch
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 		#end
+	}
+
+	function updateRank():Void
+	{
+		ranks.clear();
+
+		curWeekData = weekData[curWeek];
+
+		for (i in 0...curWeekData.length)
+			{
+				var rank:FlxSprite = new FlxSprite(958, 100);
+				rank.loadGraphic(Paths.image('rankings/'+rankTable[Highscore.getRank(curWeekData[i], curDifficulty)]));
+				rank.ID = i;
+				rank.setGraphicSize(0,80);
+				rank.updateHitbox();
+				rank.antialiasing = true;
+				rank.scrollFactor.set();
+				rank.y = 30 + i*65;
+					
+				ranks.add(rank);
+			}
 	}
 }

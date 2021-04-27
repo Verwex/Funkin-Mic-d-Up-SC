@@ -12,13 +12,13 @@ DIALOGUE SYSTEM TUTORIAL:
 
 == - shake amount, where your screen shakes for a duration of time. Accepted values are from zero to positive infinity, but 0.001 is the perfect base because it will shake so much when it's set to 1.
 
-++ - shake duration, which is second based. Can be a float.
+++ - To calculate this, it takes the writing speed and multiplies it by the number of characters you want it to be shake for, including spaces. So for example, if writing speed is 0.05 and the number of characters is 10, it will shake for 0.5 seconds.
 
--- - shake delay, whenever you want it to occur at a specific moment. Should be accounted for as a latter setting to adjust.
+-- - shake delay, whenever you want it to occur at a specific moment. To calculate this, it takes the writing speed and multiplies it by the number of characters you want it to be shake after, including spaces. So for example, if writing speed is 0.05 and the number of characters is 10, it will shake after 0.5 seconds.
 
-<< - flash duration, with a whiplash sound effect coming to it. Is second based.
+<< - flash duration, with a whiplash sound effect coming to it. To calculate this, it takes the writing speed and multiplies it by the number of characters you want it to flash for, including spaces. So for example, if writing speed is 0.05 and the number of characters is 10, it will flash for 0.5 seconds.
 
->> - flash delay, whenever you want it to occur at a specific moment. Should be accounted for as a latter setting to adjust.
+>> - flash delay, whenever you want it to occur at a specific moment. To calculate this, it takes the writing speed and multiplies it by the number of characters you want it to be flash after, including spaces. So for example, if writing speed is 0.05 and the number of characters is 10, it will flash after 0.5 seconds.
 
 ;; - writing speed of the dialogue, whenever you want to make them speak more intimidatingly or something. Be wary, as it will write another character per the duration you set it to, so it's best to have it around 0.04 as a base.
 
@@ -34,6 +34,8 @@ DIALOGUE SYSTEM TUTORIAL:
 
 .. - portrait color, for any special occasions. Can be blank, or filled in a #AARRGGBB fashion. AA - alpha, RR - red, GG - green, BB - blue, all valued in hex.
 
+~~ - time it takes to cut to the next line of dialogue. To calculate this, it takes the writing speed and multiplies it by the number of characters you want it to be skipped after, including spaces. So for example, if writing speed is 0.05 and the number of characters is 10, it will skip to the next dialogue after 0.5 seconds.
+
 DEFAULT VALUES:
 ]32]
 *100*
@@ -46,6 +48,7 @@ DEFAULT VALUES:
 !#FF3F2021!
 ?FFD89494?
 ..
+~~
 
 
 

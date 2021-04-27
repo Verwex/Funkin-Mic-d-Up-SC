@@ -6,8 +6,10 @@ class Highscore
 {
 	#if (haxe >= "4.0.0")
 	public static var songScores:Map<String, Int> = new Map();
+	public static var songRanks:Map<String, Int> = new Map();
 	#else
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
+	public static var songRanks:Map<String, Int> = new Map<String, Int>();
 	#end
 
 
@@ -28,6 +30,19 @@ class Highscore
 		}
 		else
 			setScore(daSong, score);
+	}
+
+	public static function saveRank(song:String, score:Int = 0, ?diff:Int = 0):Void
+	{
+		var daSong:String = formatSong(song, diff);
+
+		if (songRanks.exists(daSong))
+		{
+			if (songRanks.get(daSong) > score)
+				setRank(daSong, score);
+		}
+		else
+			setRank(daSong, score);
 	}
 
 	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0):Void
@@ -60,6 +75,14 @@ class Highscore
 		FlxG.save.flush();
 	}
 
+	static function setRank(song:String, score:Int):Void
+	{
+		// Reminder that I don't need to format this song, it should come formatted!
+		songRanks.set(song, score);
+		FlxG.save.data.songRanks = songRanks;
+		FlxG.save.flush();
+	}
+
 	public static function formatSong(song:String, diff:Int):String
 	{
 		var daSong:String = song;
@@ -86,6 +109,14 @@ class Highscore
 		return songScores.get(formatSong(song, diff));
 	}
 
+	public static function getRank(song:String, diff:Int):Int
+	{
+		if (!songRanks.exists(formatSong(song, diff)))
+			setRank(formatSong(song, diff), 16);
+
+		return songRanks.get(formatSong(song, diff));
+	}
+
 	public static function getWeekScore(week:Int, diff:Int):Int
 	{
 		if (!songScores.exists(formatSong('week' + week, diff)))
@@ -99,6 +130,10 @@ class Highscore
 		if (FlxG.save.data.songScores != null)
 		{
 			songScores = FlxG.save.data.songScores;
+		}
+		if (FlxG.save.data.songRanks != null)
+		{
+			songRanks = FlxG.save.data.songRanks;
 		}
 	}
 }

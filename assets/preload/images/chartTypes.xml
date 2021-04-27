@@ -8,6 +8,8 @@
 	<SubTexture name="flip select0000" x="4" y="616" width="1522" height="202"/>
 	<SubTexture name="onearrow idle0000" x="4" y="820" width="1522" height="202"/>
 	<SubTexture name="onearrow select0000" x="4" y="1024" width="1522" height="202"/>
-	<SubTexture name="standard idle0000" x="4" y="1228" width="1522" height="202"/>
-	<SubTexture name="standard select0000" x="4" y="1432" width="1522" height="202"/>
+	<SubTexture name="stair idle0000" x="4" y="1228" width="1522" height="202"/>
+	<SubTexture name="stair select0000" x="4" y="1432" width="1522" height="202"/>
+	<SubTexture name="standard idle0000" x="4" y="1636" width="1522" height="202"/>
+	<SubTexture name="standard select0000" x="4" y="1840" width="1522" height="202"/>
 </TextureAtlas>

@@ -27,7 +27,7 @@ using StringTools;
 class Substate_ChartType extends MusicBeatSubstate
 {
     var menuItems:FlxTypedGroup<FlxSprite>;
-    var optionShit:Array<String> = ['standard', 'flip', 'chaos', 'onearrow'];
+    var optionShit:Array<String> = ['standard', 'flip', 'chaos', 'onearrow', 'stair'];
     var selectedSomethin:Bool = false;
     public static var curSelected:Int = 0;
     var camFollow:FlxObject;

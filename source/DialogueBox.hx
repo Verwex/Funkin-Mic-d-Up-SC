@@ -69,6 +69,7 @@ class DialogueBox extends FlxSpriteGroup
 	var curBox:String = 'pixel_normal';
 	var oldBox:String = '';
 	var curSound:String = 'pixelText';
+	var timeCut:Int;
 
 
 
@@ -354,15 +355,15 @@ class DialogueBox extends FlxSpriteGroup
 		// swagDialogue.text = ;
 		swagDialogue.resetText(dialogueList[0]);
 
-		new FlxTimer().start(Std.parseFloat(curShakeDelay), function(tmr:FlxTimer)
+		new FlxTimer().start(Std.parseInt(curShakeDelay)*Std.parseFloat(curSpeed), function(tmr:FlxTimer)
 			{
-				FlxG.cameras.shake(Std.parseFloat(curShake), Std.parseFloat(curShakeTime));
+				FlxG.cameras.shake(Std.parseFloat(curShake), Std.parseInt(curShakeTime)*Std.parseFloat(curSpeed));
 			});
 
-		new FlxTimer().start(Std.parseFloat(curFlashDelay), function(tmr:FlxTimer)
+		new FlxTimer().start(Std.parseInt(curFlashDelay)*Std.parseFloat(curSpeed), function(tmr:FlxTimer)
 			{
-				FlxG.cameras.flash(0xFFFFFFFF, Std.parseFloat(curFlashTime));
-				if (Std.parseFloat(curFlashTime) > 0)
+				FlxG.cameras.flash(0xFFFFFFFF, Std.parseInt(curFlashTime)*Std.parseFloat(curSpeed));
+				if (Std.parseInt(curFlashTime) > 0)
 				{
 					switch (PlayState.curStage)
 					{
@@ -450,6 +451,16 @@ class DialogueBox extends FlxSpriteGroup
 		if (portraitColor != '')
 			portrait.color = FlxColor.fromString(portraitColor);
 
+		if (timeCut > 0)
+		{
+			new FlxTimer().start(Std.parseFloat(curSpeed)*timeCut, function(tmr:FlxTimer)
+				{
+					dialogueList.remove(dialogueList[0]);
+					FlxG.sound.play(Paths.sound('dialogueClicks/$clickSound'), 0.8* _variables.svolume/100);
+					startDialogue();
+				}, 1);
+		}
+
 		swagDialogue.start(Std.parseFloat(curSpeed), true);
 	}
 
@@ -523,6 +534,10 @@ class DialogueBox extends FlxSpriteGroup
 
 		splitData = dialogueList[0].split(".");
 		portraitColor = splitData[1];
+		dialogueList[0] = dialogueList[0].substr(splitData[1].length + 2).trim();
+
+		splitData = dialogueList[0].split("~");
+		timeCut = Std.parseInt(splitData[1]);
 		dialogueList[0] = dialogueList[0].substr(splitData[1].length + 2).trim();
 	}
 }

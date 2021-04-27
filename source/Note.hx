@@ -33,6 +33,10 @@ class Note extends FlxSprite
 	public static var GREEN_NOTE:Int = 2;
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
+	public static var canMissLeft:Bool = true;
+	public static var canMissRight:Bool = true;
+	public static var canMissUp:Bool = true;
+	public static var canMissDown:Bool = true;
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
 	{
@@ -179,19 +183,22 @@ class Note extends FlxSprite
 		if (mustPress)
 		{
 			// The * 0.5 is so that it's easier to hit them too late, instead of too early
-			if (strumTime >= Conductor.songPosition - Conductor.safeZoneOffset
-				&& strumTime <= Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
+			if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset
+				&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5)) {
 				canBeHit = true;
-			else
+				setCanMiss(noteData, false);
+			} else {
 				canBeHit = false;
-
-			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
+				setCanMiss(noteData, true);
+			}
+			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit) { 
 				tooLate = true;
+				setCanMiss(noteData, false);
+			}
 		}
 		else
 		{
 			canBeHit = false;
-
 			if (strumTime <= Conductor.songPosition)
 				wasGoodHit = true;
 		}
@@ -200,6 +207,20 @@ class Note extends FlxSprite
 		{
 			if (alpha > 0.3)
 				alpha = 0.3;
+		}
+	}
+
+	public static function setCanMiss(data:Int, bool:Bool)
+	{
+		switch(data) {
+			case 0:
+				canMissLeft = bool;
+			case 1:
+				canMissDown = bool;
+			case 2:
+				canMissUp = bool;
+			case 3:
+				canMissRight = bool;
 		}
 	}
 }

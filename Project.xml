@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Mic'd Up" file="Funkin MU" packageName="com.verwex.funkinMU" package="com.verwex.funkMU" main="Main" version=" MU 2.0" company="Verwex" />
+	<app title="Friday Night Funkin': Mic'd Up" file="Funkin MU" packageName="com.verwex.funkinMU" package="com.verwex.funkMU" main="Main" version="MU 2.0.1" company="Verwex" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -143,7 +143,7 @@
 	<!--<haxedef name="FLX_NO_GAMEPAD" />-->
 
 	<!--Disable the Flixel core sound tray-->
-	<haxedef name="FLX_NO_SOUND_TRAY" />
+	<!--<haxedef name="FLX_NO_SOUND_TRAY" />-->
 
 	<!--Disable the Flixel sound management code-->
 	<!--<haxedef name="FLX_NO_SOUND_SYSTEM" />-->

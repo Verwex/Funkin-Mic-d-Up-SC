@@ -43,6 +43,7 @@ typedef Variables =
     var fpsCounter:Bool;
     var comboP:Bool;
     var memory:Bool;
+    var cutscene:Bool;
 }
 
 class MainVariables
@@ -91,6 +92,7 @@ class MainVariables
                 nps: true,
                 comboP: true,
                 memory: true,
+                cutscene: true,
                 //up to do in week 7 update
                 scroll: 'up'
             };

@@ -50,6 +50,9 @@ class MenuFreeplay extends MusicBeatState
 
 	var sprDifficulty:FlxSprite;
 
+	var rankTable:Array<String> = ['P','X','X-','SS+','SS','SS-','S+','S','S-','A+','A','A-','B','C','D','E','NA'];
+	var rank:FlxSprite = new FlxSprite(0).loadGraphic(Paths.image('rankings/NA'));
+
 	private var vocals:FlxSound;
 
 	override function create()
@@ -118,6 +121,16 @@ class MenuFreeplay extends MusicBeatState
 		add(disc);
 		add(discIcon);
 		discIcon.antialiasing = disc.antialiasing = true;
+
+		rank.setGraphicSize(0,90);
+		rank.updateHitbox();
+		rank.scrollFactor.set();
+		rank.y = 690 - rank.height;
+		rank.x = disc.x + disc.width - 50;
+		add(rank);
+		rank.antialiasing = true;
+
+		rank.alpha = 0;
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -191,6 +204,7 @@ class MenuFreeplay extends MusicBeatState
 		scoreText.alpha = sprDifficulty.alpha = 0;
 		FlxTween.tween(scoreText, { alpha:1}, 0.5, { ease: FlxEase.quartInOut});
 		FlxTween.tween(sprDifficulty, { alpha:1}, 0.5, { ease: FlxEase.quartInOut});
+		FlxTween.tween(rank, { alpha:1}, 0.5, { ease: FlxEase.quartInOut});
 
 		FlxG.camera.zoom = 0.6;
 		FlxG.camera.alpha = 0;
@@ -228,6 +242,8 @@ class MenuFreeplay extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		rank.x = disc.x + disc.width - 50;
 
 		checker.x -= -0.27/(_variables.fps/60);
 		checker.y -= 0.63/(_variables.fps/60);
@@ -285,6 +301,7 @@ class MenuFreeplay extends MusicBeatState
 				FlxTween.tween(side, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
 				FlxTween.tween(sprDifficulty, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
 				FlxTween.tween(scoreText, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
+				FlxTween.tween(rank, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
 				FlxTween.tween(disc, { alpha:0, 'scale.x':0}, 0.3, { ease: FlxEase.quartInOut});
 
 				#if desktop
@@ -315,6 +332,7 @@ class MenuFreeplay extends MusicBeatState
 				FlxTween.tween(checker, { alpha:0}, 0.6, { ease: FlxEase.quartInOut});
 				FlxTween.tween(gradientBar, { alpha:0}, 0.6, { ease: FlxEase.quartInOut});
 				FlxTween.tween(side, { alpha:0}, 0.8, { ease: FlxEase.quartInOut});
+				FlxTween.tween(rank, { alpha:0}, 0.8, { ease: FlxEase.quartInOut});
 				FlxTween.tween(disc, { alpha:0, 'scale.x':0}, 0.8, { ease: FlxEase.quartInOut});
 				FlxTween.tween(scoreText, { y:750, alpha: 0}, 0.8, { ease: FlxEase.quartInOut});
 				FlxTween.tween(sprDifficulty, { y:750, alpha: 0}, 0.8, { ease: FlxEase.quartInOut});
@@ -357,6 +375,12 @@ class MenuFreeplay extends MusicBeatState
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+		rank.loadGraphic(Paths.image('rankings/'+rankTable[Highscore.getRank(songs[curSelected].songName, curDifficulty)]));
+		rank.setGraphicSize(0,90);
+		rank.updateHitbox();
+		rank.scrollFactor.set();
+		rank.y = 690 - rank.height;
+		rank.x = disc.x + disc.width - 50;
 		#end
 
 		switch (curDifficulty)
@@ -399,6 +423,12 @@ class MenuFreeplay extends MusicBeatState
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+		rank.loadGraphic(Paths.image('rankings/'+rankTable[Highscore.getRank(songs[curSelected].songName, curDifficulty)]));
+		rank.setGraphicSize(0,90);
+		rank.updateHitbox();
+		rank.scrollFactor.set();
+		rank.y = 690 - rank.height;
+		rank.x = disc.x + disc.width - 50;
 		// lerpScore = 0;
 		#end
 

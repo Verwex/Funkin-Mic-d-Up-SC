@@ -30,10 +30,11 @@ Play the Ludum Dare prototype of the original game [here](https://ninja-muffin24
 <h3>⚙️ Mod Creator:</h3>
 <a href='https://twitter.com/Vershift'><b>Verwex</b><br><img src="/art/Verwex.png" alt="Verwex" width="175" height="175"></a>
 <h3>🖥 Additional Programmers:</h3>
-<a href='https://twitter.com/kadedeveloper'><b>KadeDev</b><br><img src="/art/Kade.png" alt="KadeDeveloper" width="175" height="175"></a>
+<a href='https://twitter.com/kadedeveloper'><b>KadeDev</b><br><img src="/art/Kade.png" alt="KadeDeveloper" width="175" height="175"></a><br><br>
+<a href='https://steamcommunity.com/profiles/76561198353865795'><b>Ash237</b><br><img src="/art/Ash.png" alt="Ash237 (temporary link until I find his twitter account)" width="175" height="175"></a>
 
 <p align="center">
-	<a href="https://www.newgrounds.com/"><img src="/art/preloaderArt.png"></a>
+	<a href="https://ninja-muffin24.itch.io/funkin"><img src="/art/preloaderArt.png"></a>
 </p>
 
 **This mod was made with love to Friday Night Funkin' and its community. Extra love to the team behind it. 💖**

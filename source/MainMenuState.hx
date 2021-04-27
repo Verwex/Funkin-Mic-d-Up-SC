@@ -49,6 +49,7 @@ class MainMenuState extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
+		
 		if (!FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
@@ -138,6 +139,7 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.sound.music.volume += 0.5 * _variables.mvolume/100 * FlxG.elapsed;
 		}
+		
 
 		menuItems.forEach(function(spr:FlxSprite)
 			{

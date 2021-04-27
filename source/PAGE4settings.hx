@@ -30,7 +30,7 @@ class PAGE4settings extends MusicBeatSubstate
 {
 
     var menuItems:FlxTypedGroup<FlxSprite>;
-    var optionShit:Array<String> = ['page', 'offset', 'spam', 'accuType', 'combo+'];
+    var optionShit:Array<String> = ['page', 'offset', 'spam', 'accuType', 'combo+', 'cutscene'];
 
     private var grpSongs:FlxTypedGroup<Alphabet>;
     var selectedSomethin:Bool = false;
@@ -47,6 +47,7 @@ class PAGE4settings extends MusicBeatSubstate
     var acc:Float;
     var spa:Float;
     var com:Float;
+    var cut:Float;
 
     public function new()
     {
@@ -111,6 +112,11 @@ class PAGE4settings extends MusicBeatSubstate
                 acc = 1;
             else
                 acc = 0;
+
+            if (_variables.cutscene)
+                cut = 1;
+            else
+                cut = 0;
 
         }
 
@@ -219,6 +225,9 @@ class PAGE4settings extends MusicBeatSubstate
                 case "combo+":
                     ResultText.text = Std.string(_variables.comboP).toUpperCase();
                     ExplainText.text = "COMBO+:\nSet if your score should be affected by your combo.";
+                case "cutscene":
+                    ResultText.text = Std.string(_variables.cutscene).toUpperCase();
+                    ExplainText.text = "CUTSCENES:\nToggle Story Mode cutscenes on or off.";
             }
 
             menuItems.forEach(function(spr:FlxSprite)
@@ -307,6 +316,19 @@ class PAGE4settings extends MusicBeatSubstate
                     else
                         _variables.comboP = true;
         
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                 case "cutscene":
+                    cut += Change;
+                    if (cut > 1)
+                        cut = 0;
+                    if (cut < 0)
+                        cut = 1;
+                    
+                    if (cut == 0)
+                        _variables.cutscene = false;
+                    else
+                        _variables.cutscene = true;
+            
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "accuType":
                     acc += Change;
