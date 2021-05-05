@@ -37,9 +37,14 @@ class Substate_ChartType extends MusicBeatSubstate
     var checker:FlxBackdrop = new FlxBackdrop(Paths.image('Substate_Checker'), 0.2, 0.2, true, true);
 	var gradientBar:FlxSprite = new FlxSprite(0,0).makeGraphic(FlxG.width, 300, 0xFFAA00AA);
 
+    var blackBarThingie:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+
     public function new()
     {
         super();
+
+        add(blackBarThingie);
+        blackBarThingie.scrollFactor.set();
 
         gradientBar = FlxGradient.createGradientFlxSprite(Math.round(FlxG.width), 512, [0x00ff0000, 0x55FF70E7, 0xAA94EBFF], 1, 90, true); 
 		gradientBar.y = FlxG.height - gradientBar.height;
@@ -120,6 +125,9 @@ class Substate_ChartType extends MusicBeatSubstate
             if (controls.ACCEPT)
             {
                 selectedSomethin = true;
+
+                if (_variables.music == "funky")
+                    FlxG.sound.playMusic(Paths.music("titleShoot"), _variables.mvolume/100);
 
                 switch (FlxG.random.int(0, 3))
 		        {

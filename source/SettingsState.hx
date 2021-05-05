@@ -34,10 +34,25 @@ class SettingsState extends MusicBeatState
 	var checker:FlxBackdrop = new FlxBackdrop(Paths.image('Options_Checker'), 0.2, 0.2, true, true);
 	var gradientBar:FlxSprite = new FlxSprite(0,0).makeGraphic(FlxG.width, 300, 0xFFAA00AA);
 
+	public static var page:Int = 0;
+
 	override public function create():Void
 	{
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
+
+		if (!FlxG.sound.music.playing)
+			{
+				switch (_variables.music)
+				{
+					case 'classic':
+						FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+						Conductor.changeBPM(102);
+					case 'funky':
+						FlxG.sound.playMusic(Paths.music('funkyMenu'), _variables.mvolume/100);
+						Conductor.changeBPM(140);
+				}
+			}
 
 		super.create();
 
@@ -73,20 +88,38 @@ class SettingsState extends MusicBeatState
 
 		new FlxTimer().start(0.75, function(tmr:FlxTimer)
 		{
-			startIntro();
+			startIntro(page);
 		}); //gotta wait for a trnsition to be over because that apparently breaks it.
 	}
 
-	function startIntro()
+	function startIntro(page:Int)
 	{
-
-		FlxG.state.openSubState(new PAGE1settings());
+		switch (page)
+		{
+			case 0:
+				FlxG.state.openSubState(new PAGE1settings());
+			case 1:
+				FlxG.state.openSubState(new PAGE2settings());
+			case 2:
+				FlxG.state.openSubState(new PAGE3settings());
+			case 3:
+				FlxG.state.openSubState(new PAGE4settings());
+			case 4:
+				FlxG.state.openSubState(new PAGE5settings());
+			case 5:
+				FlxG.state.openSubState(new PAGE6settings());
+		}
 	}
 
 	override function update(elapsed:Float)
 	{
 		checker.x -= 0.21/(_variables.fps/60);
 		checker.y -= 0.51/(_variables.fps/60);
+
+		if (page < 0)
+			page = 5;
+		if (page > 5)
+			page = 0;
 
 		super.update(elapsed);
 	}

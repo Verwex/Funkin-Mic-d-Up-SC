@@ -64,10 +64,11 @@ https://twitter.com/phantomarcade3k
 https://twitter.com/kawaisprite
 https://twitter.com/evilsk8r
 
-Mic'd Up is made by Verwex (mod creator) and KadeDev (programmer)
+Mic'd Up is made by Verwex (mod creator), KadeDev and Ash237 (programmers)
 
 https://twitter.com/Vershift
 https://twitter.com/kadedeveloper
+https://steamcommunity.com/profiles/76561198353865795
 
 Pico is created by Tom Fulp
 Skid and Pump are created by SrPelo

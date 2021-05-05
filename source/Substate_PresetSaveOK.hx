@@ -125,13 +125,24 @@ class Substate_PresetSaveOK extends MusicBeatSubstate
             }
             
             eggImage.screenCenter();
-            eggImage.x = -40 - eggImage.width;
             add(eggImage);
+
+            eggImage.x = 450-eggImage.width;
+            eggImage.y = 270;
 
             easterImage = true;
         }
 
-        new FlxTimer().start(0.1, function(tmr:FlxTimer)
+        if (easterImage)
+        {
+            FlxTween.tween(resultName, {size: 40, x: 300, y: 350}, 0.2, {ease: FlxEase.backOut});
+        }
+        else
+        {
+            FlxTween.tween(resultName, {size: 150, y: 280}, 0.2, {ease: FlxEase.backOut});
+        }
+
+        new FlxTimer().start(0.25, function(tmr:FlxTimer)
 			{
 				selectable = true;
 			});
@@ -144,21 +155,6 @@ class Substate_PresetSaveOK extends MusicBeatSubstate
     override function update(elapsed:Float)
     {
         super.update(elapsed);
-
-        if (easterImage)
-        {
-            resultName.size = Std.int(FlxMath.lerp(resultName.size, 40, camLerp/(_variables.fps/60)));
-            resultName.y = FlxMath.lerp(resultName.y, 350, camLerp/(_variables.fps/60));
-            resultName.x = FlxMath.lerp(resultName.x, 300, camLerp/(_variables.fps/60));
-
-            eggImage.x = FlxMath.lerp(eggImage.x, 270-eggImage.width, camLerp/(_variables.fps/60));
-            eggImage.y = 260;
-        }
-        else
-        {
-            resultName.size = Std.int(FlxMath.lerp(resultName.size, 150, camLerp/(_variables.fps/60)));
-            resultName.y = FlxMath.lerp(resultName.y, 280, camLerp/(_variables.fps/60));
-        }
 
         blackBarThingie.y = 360 - blackBarThingie.height/2;
         blackBarThingie.x = 640 - blackBarThingie.width/2;
@@ -173,7 +169,10 @@ class Substate_PresetSaveOK extends MusicBeatSubstate
         
             if (controls.ACCEPT && canOK)
             {
-                ModifierVariables.savePreset(eggText);
+                if (Substate_PresetSave.coming == "Modifiers")
+                    ModifierVariables.savePreset(eggText);
+                else if (Substate_PresetSave.coming == "Marathon")
+                    MenuMarathon.savePreset(eggText);
 
                 goingBack = true;
                         
@@ -187,7 +186,10 @@ class Substate_PresetSaveOK extends MusicBeatSubstate
                 new FlxTimer().start(0.5, function(tmr:FlxTimer)
                 {
                     FlxG.state.closeSubState();
-                    FlxG.state.openSubState(new Substate_Preset());
+                    if (Substate_PresetSave.coming == "Modifiers")
+                        FlxG.state.openSubState(new Substate_Preset());
+                    else if (Substate_PresetSave.coming == "Marathon")
+                        FlxG.state.openSubState(new Marathon_Substate());
                 });
             }
         }

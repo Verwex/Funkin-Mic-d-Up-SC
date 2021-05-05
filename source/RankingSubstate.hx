@@ -114,7 +114,15 @@ class RankingSubstate extends MusicBeatSubstate
 				case "Story":
 					if (PlayState.storyPlaylist.length <= 0)
 					{
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+						switch (_variables.music)
+            			{
+    			            case 'classic':
+    			                FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+								Conductor.changeBPM(102);
+    			            case 'funky':
+    			                FlxG.sound.playMusic(Paths.music('funkyMenu'), _variables.mvolume/100);
+								Conductor.changeBPM(140);
+    			        }
 						FlxG.switchState(new MenuWeek());
 					}
 					else

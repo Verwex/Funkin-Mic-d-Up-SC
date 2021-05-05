@@ -168,20 +168,20 @@ class ModifierVariables
     public static function saveCurrent():Void
     {
 
-        if (!FileSystem.isDirectory('presets'))
-            FileSystem.createDirectory('presets');
+        if (!FileSystem.isDirectory('presets/modifiers'))
+            FileSystem.createDirectory('presets/modifiers');
 
-        File.saveContent(('presets/current'), Json.stringify(_modifiers));
+        File.saveContent(('presets/modifiers/current'), Json.stringify(_modifiers));
     }
 
     public static function savePreset(input:String):Void
         {
-            File.saveContent(('presets/'+input), Json.stringify(_modifiers)); //just an example for now
+            File.saveContent(('presets/modifiers/'+input), Json.stringify(_modifiers)); //just an example for now
         }
 
     public static function loadPreset(input:String):Void
     {
-        var data:String = File.getContent('presets/'+input);
+        var data:String = File.getContent('presets/modifiers/'+input);
         _modifiers = Json.parse(data);
         
         replaceValues();
@@ -189,9 +189,9 @@ class ModifierVariables
 
     public static function loadCurrent():Void
     {
-        if (FileSystem.exists('presets/current'))
+        if (FileSystem.exists('presets/modifiers/current'))
         {
-            var data:String = File.getContent('presets/current');
+            var data:String = File.getContent('presets/modifiers/current');
             _modifiers = Json.parse(data);
         }
 

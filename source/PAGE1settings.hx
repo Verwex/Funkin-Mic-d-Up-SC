@@ -30,7 +30,7 @@ class PAGE1settings extends MusicBeatSubstate
 {
 
     var menuItems:FlxTypedGroup<FlxSprite>;
-    var optionShit:Array<String> = ['page', 'resolution', 'fullscreen', 'fpsCounter', 'fps', 'memory', 'brightness', 'gamma', 'filter'];
+    var optionShit:Array<String> = ['page', 'resolution', 'fullscreen', 'fpsCounter', 'fps', 'memory', 'brightness', 'gamma', 'filter', 'watermark'];
 
     private var grpSongs:FlxTypedGroup<Alphabet>;
     var selectedSomethin:Bool = false;
@@ -40,10 +40,7 @@ class PAGE1settings extends MusicBeatSubstate
     var ResultText:FlxText = new FlxText(20, 69, FlxG.width, "", 48);
     var ExplainText:FlxText = new FlxText(20, 69, FlxG.width/2, "", 48);
 
-    var full:Int = 0;
     var fil:Int = 0;
-    var fps:Int = 0;
-    var mem:Int = 0;
 
     var camLerp:Float = 0.32;
 
@@ -119,20 +116,6 @@ class PAGE1settings extends MusicBeatSubstate
 
     function updateResults():Void
         {
-            if (_variables.fullscreen)
-                full = 1;
-            else
-                full = 0;
-
-            if (_variables.fpsCounter)
-                fps = 1;
-            else
-                fps = 0;
-
-            if (_variables.memory)
-                mem = 1;
-            else
-                mem = 0;
 
             switch (_variables.filter)
         {
@@ -226,7 +209,7 @@ class PAGE1settings extends MusicBeatSubstate
                     ExplainText.text = "FPS CAP:\nChange your FPS cap when you want some smoother footage.";
                 case "page":
                     ResultText.text = "GENERAL";
-                    ExplainText.text = "Previous Page: GAMEPLAY \nNext Page: SFX";
+                    ExplainText.text = "Previous Page: CLEAR \nNext Page: SFX";
                 case "filter":
                     ResultText.text = _variables.filter;
                     ExplainText.text = "FILTER: \nChange how colors of the game work, either for fun or if you're colorblind.";
@@ -239,6 +222,9 @@ class PAGE1settings extends MusicBeatSubstate
                 case "memory":
                     ResultText.text = Std.string(_variables.memory).toUpperCase();
                     ExplainText.text = "MEMORY: \nSee how your memory's acting in game.";
+                case "watermark":
+                    ResultText.text = Std.string(_variables.watermark).toUpperCase();
+                    ExplainText.text = "WATERMARK: \nSwitch your watermark on or off.";
             }
 
             menuItems.forEach(function(spr:FlxSprite)
@@ -293,47 +279,25 @@ class PAGE1settings extends MusicBeatSubstate
                     FlxG.fullscreen = false;
                     FlxG.fullscreen = _variables.fullscreen;
                 case "fullscreen":
-                    full += Change;
-                    if (full > 1)
-						full = 0;
-                    if (full < 0)
-						full = 1;
-
-                    if (full == 0)
-                        _variables.fullscreen = false;
-                    else
-                        _variables.fullscreen = true;
+                    _variables.fullscreen = !_variables.fullscreen;
 
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                     FlxG.fullscreen = _variables.fullscreen;
                 case "fpsCounter":
-                    fps += Change;
-                    if (fps > 1)
-                        fps = 0;
-                    if (fps < 0)
-                        fps = 1;
-    
-                    if (fps == 0)
-                        _variables.fpsCounter = false;
-                    else
-                        _variables.fpsCounter = true;
+                    _variables.fpsCounter = !_variables.fpsCounter;
     
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                     Main.toggleFPS(_variables.fpsCounter);
                 case "memory":
-                    mem += Change;
-                    if (mem > 1)
-                        mem = 0;
-                    if (mem < 0)
-                        mem = 1;
-        
-                    if (mem == 0)
-                        _variables.memory = false;
-                    else
-                        _variables.memory = true;
-        
+                    _variables.memory = !_variables.memory;
+
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                     Main.toggleMem(_variables.memory);
+                case "watermark":
+                    _variables.watermark = !_variables.watermark;
+            
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                    Main.watermark.visible = _variables.watermark;
                 case "fps":
                     _variables.fps += 10*Change;
                     if (_variables.fps < 60)
@@ -348,6 +312,7 @@ class PAGE1settings extends MusicBeatSubstate
                             FlxG.updateFramerate = _variables.fps;
                         }); // it was prone to skip certain values so I had to put it in a timer
                 case 'page':
+                    SettingsState.page += Change;
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                     selectedSomethin = true;
         
@@ -365,7 +330,7 @@ class PAGE1settings extends MusicBeatSubstate
                             if (Change == 1)
                                 openSubState(new PAGE2settings());
                             else
-                                openSubState(new PAGE4settings());
+                                openSubState(new PAGE6settings());
                         });
                     case "filter":
                         fil += Change;

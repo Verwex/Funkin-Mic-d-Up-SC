@@ -246,6 +246,7 @@ class Alphabet extends FlxSpriteGroup
 			case "Vertical":
 				y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.5), 0.16/(_variables.fps/60));
 				x = FlxMath.lerp(x, (targetY * 0) + 308, 0.16/(_variables.fps/60));
+				x += targetX/(_variables.fps/60);
 			
 			case "C-Shape":
 				y = FlxMath.lerp(y, (scaledY * 65) + (FlxG.height * 0.39), 0.16/(_variables.fps/60));
@@ -256,6 +257,15 @@ class Alphabet extends FlxSpriteGroup
 
 				if (x > FlxG.width + 30)
 					x = FlxG.width + 30;
+			case "D-Shape":
+				y = FlxMath.lerp(y, (scaledY * 90) + (FlxG.height * 0.45), 0.16/(_variables.fps/60));
+	
+				x = FlxMath.lerp(x, Math.exp(scaledY * 0.8) * -70 + (FlxG.width * 0.35), 0.16/(_variables.fps/60));
+				if (scaledY < 0)
+					x = FlxMath.lerp(x, Math.exp(scaledY * -0.8) * -70 + (FlxG.width * 0.35), 0.16/(_variables.fps/60));
+	
+				if (x < -900)
+					x = -900;
 		}
 
 		super.update(elapsed);

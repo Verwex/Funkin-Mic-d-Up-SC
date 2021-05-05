@@ -1,5 +1,8 @@
 package;
 
+import openfl.net.FileFilter;
+import sys.FileSystem;
+import sys.io.File;
 import flixel.addons.ui.FlxUIText;
 import Conductor.BPMChangeEvent;
 import Section.SwagSection;
@@ -38,6 +41,7 @@ using StringTools;
 class ChartingState extends MusicBeatState
 {
 	var _file:FileReference;
+	var _load:FileReference;
 
 	var UI_box:FlxUITabMenu;
 
@@ -209,6 +213,11 @@ class ChartingState extends MusicBeatState
 			saveLevel();
 		});
 
+		var loadButton:FlxButton = new FlxButton(saveButton.x, saveButton.y + 30, "Load", function()
+			{
+				load();
+			});
+
 		var reloadSong:FlxButton = new FlxButton(saveButton.x + saveButton.width + 10, saveButton.y, "Reload Audio", function()
 		{
 			loadSong(_song.song);
@@ -263,6 +272,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(check_voices);
 		tab_group_song.add(check_mute_inst);
 		tab_group_song.add(saveButton);
+		tab_group_song.add(loadButton);
 		tab_group_song.add(reloadSong);
 		tab_group_song.add(reloadSongJson);
 		tab_group_song.add(loadAutosaveBtn);
@@ -696,6 +706,10 @@ class ChartingState extends MusicBeatState
 			PlayState.SONG = _song;
 			FlxG.sound.music.stop();
 			vocals.stop();
+
+			PlayState.gameplayArea = 'Charting';
+			FlxG.mouse.visible = false;
+
 			FlxG.switchState(new PlayState());
 		}
 
@@ -1274,5 +1288,56 @@ class ChartingState extends MusicBeatState
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
 		FlxG.log.error("Problem saving Level data");
+	}
+
+	private function load()
+	{
+		_load = new FileReference();
+		_load.addEventListener(Event.SELECT, selectFile);
+
+		var Filter = new FileFilter("JSON Files", "*.json");
+		_load.browse([Filter]);
+	}
+
+	function selectFile(_):Void
+	{
+		_load.addEventListener(Event.COMPLETE, onLoadComplete);
+		_load.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+		_load.load();
+	}
+
+	function onLoadError(_):Void
+	{
+		_load.removeEventListener(Event.COMPLETE, onLoadComplete);
+		_load.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+		_load = null;
+		FlxG.log.error("Problem loading Level data");
+	}
+
+	function onLoadComplete(_):Void
+	{
+		_load.removeEventListener(Event.COMPLETE, onLoadComplete);
+		_load.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+
+		if ((_load.data != null) && (_load.data.length > 0))
+		{
+			var songName:String = _load.name;
+			songName = songName.substring(0, songName.length - 5);
+
+			var cut:String = songName;
+			if (songName.contains('-noob') || songName.contains('-easy') || songName.contains('-hard'))
+				cut = cut.substring(0, cut.length - 5);
+			else if (songName.contains('-normal') || songName.contains('-expert') || songName.contains('-insane'))
+				cut = cut.substring(0, cut.length - 7);
+
+			trace(songName);
+			trace(cut);
+
+			PlayState.SONG = Song.loadFromJson(songName.toLowerCase(), cut.toLowerCase());
+			FlxG.resetState();
+
+			_load = null;
+			FlxG.log.notice("Successfully loaded LEVEL DATA.");
+		}
 	}
 }

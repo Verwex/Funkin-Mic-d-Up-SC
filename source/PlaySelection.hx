@@ -31,7 +31,7 @@ class PlaySelection extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = ['week', 'freeplay', 'modifier'];
+	var optionShit:Array<String> = ['week', 'freeplay', 'marathon', 'endless', 'modifier'];
 	var camFollow:FlxObject;
 
 	var bg:FlxSprite = new FlxSprite(-89).loadGraphic(Paths.image('pBG_Main'));
@@ -48,7 +48,15 @@ class PlaySelection extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+			switch (_variables.music)
+            {
+                case 'classic':
+                    FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+					Conductor.changeBPM(102);
+                case 'funky':
+                    FlxG.sound.playMusic(Paths.music('funkyMenu'), _variables.mvolume/100);
+					Conductor.changeBPM(140);
+            }
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -225,6 +233,16 @@ class PlaySelection extends MusicBeatState
 									FlxG.switchState(new MenuModifiers());
 									#if desktop
 										DiscordClient.changePresence("Time to spice the game.",  null);
+									#end
+								case 'marathon':
+									FlxG.switchState(new MenuMarathon());
+									#if desktop
+										DiscordClient.changePresence("I wanna make a marathon.",  null);
+									#end
+								case 'endless':
+									FlxG.switchState(new MenuEndless());
+									#if desktop
+										DiscordClient.changePresence("Endless easy SMM2 moment.",  null);
 									#end
 							}
 						});

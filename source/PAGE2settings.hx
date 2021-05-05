@@ -30,7 +30,7 @@ class PAGE2settings extends MusicBeatSubstate
 {
 
     var menuItems:FlxTypedGroup<FlxSprite>;
-    var optionShit:Array<String> = ['page', 'mvolume', 'svolume', 'vvolume', 'muteMiss'];
+    var optionShit:Array<String> = ['page', 'mvolume', 'svolume', 'vvolume', 'music', 'muteMiss'];
 
     private var grpSongs:FlxTypedGroup<Alphabet>;
     var selectedSomethin:Bool = false;
@@ -43,7 +43,7 @@ class PAGE2settings extends MusicBeatSubstate
     var pause:Int = 0;
 
     var camLerp:Float = 0.32;
-    var miss:Float;
+    var mus:Int;
 
     public function new()
     {
@@ -82,6 +82,8 @@ class PAGE2settings extends MusicBeatSubstate
 
         createResults();
 
+        updateResults();
+
         FlxG.camera.follow(camFollow, null, camLerp);
 
         #if desktop
@@ -111,11 +113,18 @@ class PAGE2settings extends MusicBeatSubstate
             ExplainText.setBorderStyle(OUTLINE, 0xFF000000, 5, 1);
             ExplainText.alpha = 0;
             FlxTween.tween(ExplainText, { alpha: 1}, 0.15, { ease: FlxEase.expoInOut });
+        }
 
-            if (_variables.scoreDisplay)
-                miss = 1;
-            else
-                miss = 0;
+    function updateResults():Void
+        {
+    
+            switch (_variables.music)
+            {
+                case 'classic':
+                    mus = 0;
+                case 'funky':
+                    mus = 1;
+            }
         }
 
     override function update(elapsed:Float)
@@ -199,6 +208,9 @@ class PAGE2settings extends MusicBeatSubstate
                 case "muteMiss":
                     ResultText.text = Std.string(_variables.muteMiss).toUpperCase();
                     ExplainText.text = "MUTE ON MISS:\nMute vocals when you miss a note.";
+                case "music":
+                    ResultText.text = Std.string(_variables.music).toUpperCase();
+                    ExplainText.text = "MENU MUSIC:\nChange your very own menu music.";
             }
 
             menuItems.forEach(function(spr:FlxSprite)
@@ -243,19 +255,11 @@ class PAGE2settings extends MusicBeatSubstate
 			switch (optionShit[curSelected])
 			{
                 case "muteMiss":
-                    miss += Change;
-                    if (miss > 1)
-                        miss = 0;
-                    if (miss < 0)
-                        miss = 1;
-        
-                    if (miss == 0)
-                        _variables.muteMiss = false;
-                    else
-                        _variables.muteMiss = true;
+                    _variables.muteMiss = !_variables.muteMiss;
         
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case 'page':
+                    SettingsState.page += Change;
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                     selectedSomethin = true;
         
@@ -275,6 +279,24 @@ class PAGE2settings extends MusicBeatSubstate
                             else
                                 openSubState(new PAGE1settings());
                         });
+                case "music":
+                    mus += Change;
+                    if (mus > 1)
+                        mus = 0;
+                    if (mus < 0)
+                        mus = 1;
+                
+                    switch (mus)
+                        {
+                            case 0:
+                                _variables.music = 'classic';
+                                FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+                                Conductor.changeBPM(102);
+                            case 1:
+                                _variables.music = 'funky';
+                                FlxG.sound.playMusic(Paths.music('funkyMenu'), _variables.mvolume/100);
+                                Conductor.changeBPM(140);
+                        }
 			}
 
             new FlxTimer().start(0.2, function(tmr:FlxTimer)

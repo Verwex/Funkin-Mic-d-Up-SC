@@ -30,7 +30,7 @@ class PAGE4settings extends MusicBeatSubstate
 {
 
     var menuItems:FlxTypedGroup<FlxSprite>;
-    var optionShit:Array<String> = ['page', 'offset', 'spam', 'accuType', 'combo+', 'cutscene'];
+    var optionShit:Array<String> = ['page', 'offset', 'spam', 'lateD', 'accuType', 'combo+', 'cutscene'];
 
     private var grpSongs:FlxTypedGroup<Alphabet>;
     var selectedSomethin:Bool = false;
@@ -45,9 +45,6 @@ class PAGE4settings extends MusicBeatSubstate
     var camLerp:Float = 0.32;
 
     var acc:Float;
-    var spa:Float;
-    var com:Float;
-    var cut:Float;
 
     public function new()
     {
@@ -97,26 +94,15 @@ class PAGE4settings extends MusicBeatSubstate
 
     function updateResults():Void
         {
-
-            if (_variables.spamPrevention)
-                spa = 1;
-            else
-                spa = 0;
-
-            if (_variables.comboP)
-                com = 1;
-            else
-                com = 0;
-
-            if (_variables.accuracyType == 'complex')
-                acc = 1;
-            else
-                acc = 0;
-
-            if (_variables.cutscene)
-                cut = 1;
-            else
-                cut = 0;
+            switch (_variables.accuracyType)
+            {
+                case 'simple':
+                        acc = 0;
+                case 'rating-based':
+                        acc = 1;
+                case 'complex':
+                        acc = 2;
+            }
 
         }
 
@@ -215,7 +201,7 @@ class PAGE4settings extends MusicBeatSubstate
                     ExplainText.text = "NOTE OFFSET:\nChange the offset of your notes. The higher the time, the later they go.";
                 case "page":
                     ResultText.text = "GAMEPLAY";
-                    ExplainText.text = "Previous Page: GFX \nNext Page: GENERAL";
+                    ExplainText.text = "Previous Page: GFX \nNext Page: MISCELLANEOUS";
                 case "spam":
                     ResultText.text = Std.string(_variables.spamPrevention).toUpperCase();
                     ExplainText.text = "SPAM PREVENTION:\nSet your ability to spam key presses without any worries. False means you can.";
@@ -228,6 +214,9 @@ class PAGE4settings extends MusicBeatSubstate
                 case "cutscene":
                     ResultText.text = Std.string(_variables.cutscene).toUpperCase();
                     ExplainText.text = "CUTSCENES:\nToggle Story Mode cutscenes on or off.";
+                case "lateD":
+                    ResultText.text = Std.string(_variables.lateD).toUpperCase();
+                    ExplainText.text = "LATE DAMAGE:\nChange if you want to damage your health when hitting too late.";
             }
 
             menuItems.forEach(function(spr:FlxSprite)
@@ -272,6 +261,7 @@ class PAGE4settings extends MusicBeatSubstate
 			switch (optionShit[curSelected])
 			{
                 case 'page':
+                    SettingsState.page += Change;
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                     selectedSomethin = true;
         
@@ -287,60 +277,42 @@ class PAGE4settings extends MusicBeatSubstate
                     new FlxTimer().start(0.2, function(tmr:FlxTimer)
                         {
                             if (Change == 1)
-                                openSubState(new PAGE1settings());
+                                openSubState(new PAGE5settings());
                             else
                                 openSubState(new PAGE3settings());
                         });
                 case "spam":
-                    spa += Change;
-                    if (spa > 1)
-                        spa = 0;
-                    if (spa < 0)
-                        spa = 1;
-            
-                    if (spa == 0)
-                        _variables.spamPrevention = false;
-                    else
-                        _variables.spamPrevention = true;
+                    _variables.spamPrevention = !_variables.spamPrevention;
         
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "combo+":
-                    com += Change;
-                    if (com > 1)
-                        com = 0;
-                    if (com < 0)
-                        com = 1;
-                
-                    if (com == 0)
-                        _variables.comboP = false;
-                    else
-                        _variables.comboP = true;
+                    _variables.comboP = !_variables.comboP;
         
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                  case "cutscene":
-                    cut += Change;
-                    if (cut > 1)
-                        cut = 0;
-                    if (cut < 0)
-                        cut = 1;
-                    
-                    if (cut == 0)
-                        _variables.cutscene = false;
-                    else
-                        _variables.cutscene = true;
+                    _variables.cutscene = !_variables.cutscene;
             
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "lateD":
+                    _variables.lateD = !_variables.lateD;
+                
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "accuType":
                     acc += Change;
-                    if (acc > 1)
+                    if (acc > 2)
                         acc = 0;
                     if (acc < 0)
-                        acc = 1;
-                
-                    if (acc == 0)
-                        _variables.accuracyType = 'simple';
-                    else
-                        _variables.accuracyType = 'complex';
+                        acc = 2;
+
+                    switch (acc)
+                    {
+                        case 0:
+                            _variables.accuracyType = 'simple';
+                        case 1:
+                            _variables.accuracyType = 'rating-based';
+                        case 2:
+                            _variables.accuracyType = 'complex';
+                    }
             
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
 			}

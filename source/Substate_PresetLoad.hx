@@ -39,11 +39,16 @@ class Substate_PresetLoad extends MusicBeatSubstate
     private var grpPresets:FlxTypedGroup<Alphabet>;
     var presetText:Alphabet;
 
+    public static var coming:String = "";
+
     public function new()
     {
         super();
 
-        initPresets = Substate_Preset.presets;
+        if (coming == "Modifiers")
+            initPresets = Substate_Preset.presets;
+        else if (coming == "Marathon")
+            initPresets = Marathon_Substate.presets;
 
 		add(blackBarThingie);
         blackBarThingie.scrollFactor.set();
@@ -102,14 +107,22 @@ class Substate_PresetLoad extends MusicBeatSubstate
                     new FlxTimer().start(0.5, function(tmr:FlxTimer)
                         {
                             FlxG.state.closeSubState();
-                            FlxG.state.openSubState(new Substate_Preset());
+                            if (coming == "Modifiers")
+                                FlxG.state.openSubState(new Substate_Preset());
+                            else if (coming == "Marathon")
+                                FlxG.state.openSubState(new Marathon_Substate());
                         });
                 }
         
             if (controls.ACCEPT)
             {
-                ModifierVariables.loadPreset(initPresets[curSelected]);
-                MenuModifiers.calculateStart();
+                if (coming == "Modifiers")
+                {
+                    ModifierVariables.loadPreset(initPresets[curSelected]);
+                    MenuModifiers.calculateStart();
+                }
+                else if (coming == "Marathon")
+                    MenuMarathon.loadPreset(initPresets[curSelected]);
 
                 goingBack = true;
                         

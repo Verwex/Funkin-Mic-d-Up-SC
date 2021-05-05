@@ -69,25 +69,4 @@ class Conductor
 		crochet = ((60 / bpm) * 1000);
 		stepCrochet = crochet / 4;
 	}
-
-	public static function changeSongBPM(newBpm:Float)
-		{
-			if (_modifiers.VibeSwitch)
-				{
-					switch (_modifiers.Vibe)
-					{
-					case 0.8:
-						bpm = newBpm * 1.2; //can't figure the value out, someone help me pls.
-					case 1.2:
-						bpm = newBpm * 0.8; //can't figure the value out, someone help me pls.
-					default:
-						bpm = newBpm;
-					}
-				}
-			else
-				bpm = newBpm;
-	
-			crochet = ((60 / bpm) * 1000);
-			stepCrochet = crochet / 4;
-		}
 }

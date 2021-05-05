@@ -301,9 +301,17 @@ class TitleState extends MusicBeatState
 
 			FlxTween.tween(FlxG.camera, {y: FlxG.height}, 1.6, {ease: FlxEase.expoIn, startDelay: 0.4});
 
+			if (_variables.music == "funky")
+				FlxG.sound.music.fadeOut(1.7, 0);
+
 			new FlxTimer().start(1.7, function(tmr:FlxTimer)
 			{
 				//FlxG.switchState(new GameplayCustomization());
+				if (_variables.music == "funky")
+				{
+					FlxG.sound.music.stop();
+					Conductor.changeBPM(140);
+				}
 				FlxG.switchState(new MainMenuState());
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);

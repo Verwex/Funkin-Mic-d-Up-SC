@@ -99,7 +99,15 @@ class MenuWeek extends MusicBeatState
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+				switch (_variables.music)
+            	{
+                case 'classic':
+                    FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+					Conductor.changeBPM(102);
+                case 'funky':
+                    FlxG.sound.playMusic(Paths.music('funkyMenu'), _variables.mvolume/100);
+					Conductor.changeBPM(140);
+            	}
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -308,6 +316,7 @@ class MenuWeek extends MusicBeatState
 			grpWeekText.members[curWeek].startFlashing();
 
 			PlayState.storyPlaylist = weekData[curWeek];
+			trace(PlayState.storyPlaylist);
 			PlayState.gameplayArea = "Story";
 			selectedSomethin = true;
 
@@ -332,7 +341,6 @@ class MenuWeek extends MusicBeatState
 			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
 			PlayState.storyWeek = curWeek;
 			PlayState.campaignScore = 0;
-			PlayState.campaignAccuracy = 0;
 
 			FlxTween.tween(bg, { alpha:0}, 0.6, { ease: FlxEase.quartInOut});
 			FlxTween.tween(checker, { alpha:0}, 0.6, { ease: FlxEase.quartInOut});

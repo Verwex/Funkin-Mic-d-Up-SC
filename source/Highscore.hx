@@ -6,9 +6,11 @@ class Highscore
 {
 	#if (haxe >= "4.0.0")
 	public static var songScores:Map<String, Int> = new Map();
+	public static var endlessScores:Map<String, Int> = new Map();
 	public static var songRanks:Map<String, Int> = new Map();
 	#else
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
+	public static var endlessScores:Map<String, Int> = new Map<String, Int>();
 	public static var songRanks:Map<String, Int> = new Map<String, Int>();
 	#end
 
@@ -64,6 +66,28 @@ class Highscore
 			setScore(daWeek, score);
 	}
 
+	public static function saveMarathonScore(score:Int = 0):Void
+		{
+			if (score > FlxG.save.data.marathonScore || FlxG.save.data.marathonScore == null)
+			{
+				FlxG.save.data.marathonScore = score;
+				FlxG.save.flush();
+			}
+		}
+
+	public static function saveEndlessScore(song:String, score:Int = 0):Void
+		{
+			var daSong:String = song;
+
+			if (endlessScores.exists(daSong))
+			{
+				if (endlessScores.get(daSong) < score)
+					setEndless(daSong, score);
+			}
+			else
+				setEndless(daSong, score);
+		}
+
 	/**
 	 * YOU SHOULD FORMAT SONG WITH formatSong() BEFORE TOSSING IN SONG VARIABLE
 	 */
@@ -72,6 +96,14 @@ class Highscore
 		// Reminder that I don't need to format this song, it should come formatted!
 		songScores.set(song, score);
 		FlxG.save.data.songScores = songScores;
+		FlxG.save.flush();
+	}
+
+	static function setEndless(song:String, score:Int):Void
+	{
+		// Reminder that I don't need to format this song, it should come formatted!
+		endlessScores.set(song, score);
+		FlxG.save.data.endlessScores = endlessScores;
 		FlxG.save.flush();
 	}
 
@@ -109,6 +141,14 @@ class Highscore
 		return songScores.get(formatSong(song, diff));
 	}
 
+	public static function getEndless(song:String):Int
+		{
+			if (!endlessScores.exists(song))
+				setEndless((song), 0);
+	
+			return endlessScores.get(song);
+		}
+
 	public static function getRank(song:String, diff:Int):Int
 	{
 		if (!songRanks.exists(formatSong(song, diff)))
@@ -130,6 +170,10 @@ class Highscore
 		if (FlxG.save.data.songScores != null)
 		{
 			songScores = FlxG.save.data.songScores;
+		}
+		if (FlxG.save.data.endlessScores != null)
+		{
+			endlessScores = FlxG.save.data.endlessScores;
 		}
 		if (FlxG.save.data.songRanks != null)
 		{

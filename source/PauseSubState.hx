@@ -18,6 +18,8 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
+	var loopNum:Int = 0;
+
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
 	var curSelected:Int = 0;
 
@@ -27,7 +29,18 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
-		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
+		switch (PlayState.gameplayArea)
+		{
+			case "Marathon" | "Endless":
+				menuItems = ['Resume', 'Exit to menu'];
+				loopNum = PlayState.loops+1;
+			case "Charting":
+				menuItems = ['Resume', 'Chart', 'Restart Song','Exit to menu'];
+			default:
+				menuItems = ['Resume', 'Restart Song', 'Exit to menu'];
+		}
+
+		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast', 'shared'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 
@@ -47,6 +60,10 @@ class PauseSubState extends MusicBeatSubstate
 
 		var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, "", 32);
 		levelDifficulty.text += CoolUtil.difficultyString();
+		if (PlayState.gameplayArea == "Endless")
+			levelDifficulty.text = 'Loop '+loopNum;
+		else if (PlayState.gameplayArea == "Charting")
+			levelDifficulty.text = 'Charting State';
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('vcr.ttf'), 32);
 		levelDifficulty.updateHitbox();
@@ -109,14 +126,25 @@ class PauseSubState extends MusicBeatSubstate
 				case "Restart Song":
 					FlxG.resetState();
 					PlayState.ended = false;
+				case "Chart":
+					PlayState.ended = false;
+					FlxG.switchState(new ChartingState());
 				case "Exit to menu":
 					PlayState.ended = false;
+					PlayState.loops = 0;
+					PlayState.speed = 0;
 					switch (PlayState.gameplayArea)
 					{
 					case "Story":
 						FlxG.switchState(new MenuWeek());
 					case "Freeplay":
 						FlxG.switchState(new MenuFreeplay());
+					case "Marathon":
+						FlxG.switchState(new MenuMarathon());
+					case "Endless":
+						FlxG.switchState(new MenuEndless());
+					case "Charting":
+						FlxG.switchState(new SettingsState());
 
 					}
 			}

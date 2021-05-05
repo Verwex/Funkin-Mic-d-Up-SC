@@ -1,5 +1,6 @@
 package;
 
+import openfl.Lib;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -30,7 +31,7 @@ class PAGE3settings extends MusicBeatSubstate
 {
 
     var menuItems:FlxTypedGroup<FlxSprite>;
-    var optionShit:Array<String> = ['page', 'iconZoom', 'cameraZoom', 'cameraSpeed', 'score', 'misses', 'accuracy', 'nps', 'rating', 'timing', 'combo', 'songPos'];
+    var optionShit:Array<String> = ['page', 'iconZoom', 'cameraZoom', 'cameraSpeed', 'rainbow', 'score', 'misses', 'accuracy', 'nps', 'rating', 'timing', 'combo', 'songPos'];
 
     private var grpSongs:FlxTypedGroup<Alphabet>;
     var selectedSomethin:Bool = false;
@@ -43,15 +44,6 @@ class PAGE3settings extends MusicBeatSubstate
     var pause:Int = 0;
 
     var camLerp:Float = 0.32;
-
-    var sco:Float;
-    var mis:Float;
-    var acc:Float;
-    var rat:Float;
-    var tim:Float;
-    var com:Float;
-    var pos:Float;
-    var nps:Float;
 
     public function new()
     {
@@ -90,8 +82,6 @@ class PAGE3settings extends MusicBeatSubstate
 
         createResults();
 
-        updateResults();
-
         FlxG.camera.follow(camFollow, null, camLerp);
 
         #if desktop
@@ -99,51 +89,7 @@ class PAGE3settings extends MusicBeatSubstate
 		#end
     }
 
-    function updateResults():Void
-        {
-            if (_variables.scoreDisplay)
-                sco = 1;
-            else
-                sco = 0;
-
-            if (_variables.songPosition)
-                pos = 1;
-            else
-                pos = 0;
-
-            if (_variables.missesDisplay)
-                mis = 1;
-            else
-                mis = 0;
-
-            if (_variables.accuracyDisplay)
-                acc = 1;
-            else
-                acc = 0;
-
-            if (_variables.ratingDisplay)
-                rat = 1;
-            else
-                rat = 0;
-
-            if (_variables.timingDisplay)
-                tim = 1;
-            else
-                tim = 0;
-
-            if (_variables.comboDisplay)
-                com = 1;
-            else
-                com = 0;
-
-            if (_variables.nps)
-                nps = 1;
-            else
-                nps = 0;
-
-        }
-
-        function createResults():Void
+    function createResults():Void
             {
                 add(ResultText);
                 ResultText.scrollFactor.x = 0;
@@ -259,6 +205,9 @@ class PAGE3settings extends MusicBeatSubstate
                 case "nps":
                     ResultText.text = Std.string(_variables.nps).toUpperCase();
                     ExplainText.text = "NOTES PER SECOND DISPLAY:\nSet your display of notes pressed per second visible or invisible.";
+                case "rainbow":
+                    ResultText.text = Std.string(_variables.rainbow).toUpperCase();
+                    ExplainText.text = "RAINBOW FPS:\nMake your PFS counter all rainbow.";
             }
 
             menuItems.forEach(function(spr:FlxSprite)
@@ -303,6 +252,7 @@ class PAGE3settings extends MusicBeatSubstate
 			switch (optionShit[curSelected])
 			{
                 case 'page':
+                    SettingsState.page += Change;
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                     selectedSomethin = true;
         
@@ -323,107 +273,42 @@ class PAGE3settings extends MusicBeatSubstate
                                 openSubState(new PAGE2settings());
                         });
                 case "score":
-                    sco += Change;
-                    if (sco > 1)
-                        sco = 0;
-                    if (sco < 0)
-                        sco = 1;
-        
-                    if (sco == 0)
-                        _variables.scoreDisplay = false;
-                    else
-                        _variables.scoreDisplay = true;
+                    _variables.scoreDisplay = !_variables.scoreDisplay;
         
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "misses":
-                    mis += Change;
-                    if (mis > 1)
-                        mis = 0;
-                    if (mis < 0)
-                        mis = 1;
-        
-                    if (mis == 0)
-                        _variables.missesDisplay = false;
-                    else
-                        _variables.missesDisplay = true;
+                    _variables.missesDisplay = !_variables.missesDisplay;
             
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "songPos":
-                    pos += Change;
-                    if (pos > 1)
-                        pos = 0;
-                    if (pos < 0)
-                        pos = 1;
-            
-                    if (pos == 0)
-                        _variables.songPosition = false;
-                    else
-                        _variables.songPosition = true;
+                    _variables.songPosition = !_variables.songPosition;
                 
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "accuracy":
-                    acc += Change;
-                    if (acc > 1)
-                        acc = 0;
-                    if (acc < 0)
-                        acc = 1;
-                
-                    if (acc == 0)
-                        _variables.accuracyDisplay = false;
-                    else
-                        _variables.accuracyDisplay = true;
+                    _variables.accuracyDisplay = !_variables.accuracyDisplay;
             
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "rainbow":
+                    _variables.rainbow = !_variables.rainbow;
+                    
+                    if (!_variables.rainbow)
+                        (cast (Lib.current.getChildAt(0), Main)).changeColor(0xFFFFFFFF);
+                
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "rating":
-                    rat += Change;
-                    if (rat > 1)
-                        rat = 0;
-                    if (rat < 0)
-                        rat = 1;
-            
-                    if (rat == 0)
-                        _variables.ratingDisplay = false;
-                    else
-                        _variables.ratingDisplay = true;
+                    _variables.ratingDisplay = !_variables.ratingDisplay;
             
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "timing":
-                    tim += Change;
-                    if (tim > 1)
-                        tim = 0;
-                    if (tim < 0)
-                        tim = 1;
-            
-                    if (tim == 0)
-                        _variables.timingDisplay = false;
-                    else
-                        _variables.timingDisplay = true;
+                    _variables.timingDisplay = !_variables.timingDisplay;
                 
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "combo":
-                    com += Change;
-                    if (com > 1)
-                        com = 0;
-                    if (com < 0)
-                        com = 1;
-                
-                    if (com == 0)
-                        _variables.comboDisplay = false;
-                    else
-                        _variables.comboDisplay = true;
+                    _variables.comboDisplay = !_variables.comboDisplay;
                 
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "nps":
-                    nps += Change;
-                    if (nps > 1)
-                        nps = 0;
-                    if (nps < 0)
-                        nps = 1;
-                    
-                    if (nps == 0)
-                        _variables.nps = false;
-                    else
-                        _variables.nps = true;
+                    _variables.nps = !_variables.nps;
                     
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "iconZoom":

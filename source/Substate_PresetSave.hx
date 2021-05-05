@@ -44,6 +44,7 @@ class Substate_PresetSave extends MusicBeatSubstate
 
     var name:FlxUIInputText;
     public static var nameResult:String = "";
+    public static var coming:String = "";
 
     public function new()
     {
@@ -88,8 +89,13 @@ class Substate_PresetSave extends MusicBeatSubstate
 
         name.hasFocus = true;
 
-        if (name.text.toLowerCase() == "gaster")
-            System.exit(0);
+        switch (name.text.toLowerCase())
+        {
+            case 'gaster':
+                System.exit(0);
+            case 'error':
+                FlxG.game.stage.window.alert('Got you!', 'Boo!');
+        }
         
         blackBarThingie.y = 360 - blackBarThingie.height/2;
         blackBarThingie.x = 640 - blackBarThingie.width/2;
@@ -106,7 +112,10 @@ class Substate_PresetSave extends MusicBeatSubstate
                     new FlxTimer().start(0.5, function(tmr:FlxTimer)
                         {
                             FlxG.state.closeSubState();
-                            FlxG.state.openSubState(new Substate_Preset());
+                            if (coming == "Modifiers")
+                                FlxG.state.openSubState(new Substate_Preset());
+                            else if (coming == "Marathon")
+                                FlxG.state.openSubState(new Marathon_Substate());
                         });
                 }
         

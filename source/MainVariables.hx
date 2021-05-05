@@ -44,6 +44,12 @@ typedef Variables =
     var comboP:Bool;
     var memory:Bool;
     var cutscene:Bool;
+    var music:String;
+    var watermark:Bool;
+    var rainbow:Bool;
+    var lateD:Bool;
+    var sickX:Float;
+    var sickY:Float;
 }
 
 class MainVariables
@@ -93,6 +99,12 @@ class MainVariables
                 comboP: true,
                 memory: true,
                 cutscene: true,
+                music: "classic",
+                watermark: true,
+                rainbow: false,
+                lateD: false,
+                sickX: 650,
+                sickY: 320,
                 //up to do in week 7 update
                 scroll: 'up'
             };
@@ -111,6 +123,7 @@ class MainVariables
         FlxG.updateFramerate = _variables.fps;
         Main.toggleFPS(_variables.fpsCounter);
         Main.toggleMem(_variables.memory);
+        Main.watermark.visible = _variables.watermark;
 
         UpdateColors();
     }
