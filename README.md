@@ -1,5 +1,5 @@
 <p align="center">
-	<a href="https://gamebanana.com/gamefiles/15309" target="_blank"><img src="/art/FNF Logo.png"></a>
+	<a href="https://gamebanana.com/gamefiles/15309" target="_blank"><img src="/art/FNF Logo.png" alt="Logo" width="658.5px" height="487.5px"></a>
 </p>
 
 ### This is the repository for Friday Night Funkin: Mic'd Up, previously named FNF: EX Replayability, a non-profit modification of Friday Night Funkin'.
@@ -10,42 +10,66 @@ Play the original build on the [Itch.io page](https://ninja-muffin24.itch.io/fun
 
 Play the Ludum Dare prototype of the original game [here](https://ninja-muffin24.itch.io/friday-night-funkin)!
 
-## Credits / Shoutouts
+Go support the original repository for the game [here](https://github.com/ninjamuffin99/Funkin)!
 
-<p align="right">
-<h2>Original Game Creators:</h2>
-<h3>🖥 Programmers:</h3>
-<a href='https://twitter.com/ninja_muffin99'><b>NinjaMuffin99</b><br><img src="/art/Ninja.png" alt="NinjaMuffin99" width="175" height="175"></a>
-<h3>🖼 Artists:</h3>
-<b><a href='https://twitter.com/phantomarcade3k'>PhantomArcade3K</a><br>
-<a href='https://twitter.com/phantomarcade3k'><img src="/art/Phantom.png" alt="PhantomArcade3K" width="175" height="175"></a><br><br>
-<a href='https://twitter.com/evilsk8r'>Evilsk8r</a><br>
-<a href='https://twitter.com/evilsk8r'><img src="/art/Evil.png" alt="Evilsk8r" width="175" height="175"></a></b>
-<h3>🎶 Musicians:</h3>
-<b><a href='https://twitter.com/kawaisprite'>Kawaisprite</a></b><br>
-<a href='https://twitter.com/kawaisprite'><img src="/art/Kawai.png" alt="Kawaisprite" width="175" height="175"></a></b>
-</p>
+## Credits / Shoutouts
+<!--me lol-->
+<table style="span:90%">
+	<tr>
+		<th style="text-align:left"><h3>🖥 Programmers:</h3></th>
+		<th style="text-align:middle"><h3>🖼 Artists:</h3></th>
+		<th style="text-align:right"><h3>🎶 Musicians:</h3></th>
+	</tr>
+	<tr>
+	<td>
+		<a href='https://twitter.com/ninja_muffin99'><b>NinjaMuffin99</b></a><br>
+		<img src="art/Ninja.png" alt="NinjaMuffin99" width="175" height="175">
+	</td>
+	<td>
+		<a href='https://twitter.com/phantomarcade3k'><b>PhantomArcade3K</b></a> and <a href='https://twitter.com/evilsk8r'><b>Evilsk8r</b></a><br>
+		<img src="art/Phantom.png" alt="PhantomArcade3K" width="175" height="175">
+		<img src="art/Evil.png" alt="Evilsk8r" width="175" height="175"><br>
+	</td>
+	<td>
+		<a href='https://twitter.com/kawaisprite'><b>Kawaisprite</b></a><br>
+		<img src="/art/Kawai.png" alt="Kawaisprite" width="175" height="175">
+	</tr>
+</table>
 
 <h2>Mod Creators:</h2>
-<h3>⚙️ Mod Creator:</h3>
-<a href='https://twitter.com/Vershift'><b>Verwex</b><br><img src="/art/Verwex.png" alt="Verwex" width="175" height="175"></a>
-<h3>🖥 Additional Programmers:</h3>
-<a href='https://twitter.com/kadedeveloper'><b>KadeDev</b><br><img src="/art/Kade.png" alt="KadeDeveloper" width="175" height="175"></a><br><br>
-<a href='https://steamcommunity.com/profiles/76561198353865795'><b>Ash237</b><br><img src="/art/Ash.png" alt="Ash237 (temporary link until I find his twitter account)" width="175" height="175"></a>
+
+<table style="span:90%">
+	<tr>
+		<th style=”text-align:left”><h3>⚙️ Mod Creator:</h3></th>
+		<th style="text-align:right" colspan="2"><h3>🖥 Additional Programmers:</h3></th>
+	</tr>
+	<tr>
+	<td>
+		<a href='https://twitter.com/Vershift'><b>Verwex</b><br>
+		<img src="/art/Verwex.png" alt="Verwex" width="175" height="175"></a>
+	</td>
+	<td>
+		<a href='https://twitter.com/kadedeveloper'><b>KadeDev</b></a> and <a href='https://steamcommunity.com/profiles/76561198353865795'><b>Ash237</b><br>
+		<img src="/art/Kade.png" alt="KadeDeveloper" width="175" height="175"></a>
+		<img src="/art/Ash.png" alt="Ash237 (temporary link until I find his twitter account)" width="175" height="175"></a>
+	</td>
+	</tr>
+</table>
+</table>
 
 <p align="center">
-	<a href="https://ninja-muffin24.itch.io/funkin"><img src="/art/preloaderArt.png"></a>
+	<a href="https://ninja-muffin24.itch.io/funkin"><img src="/art/preloaderArt.png" width"658.5px" height="369.75px"></a>
 </p>
 
 **This mod was made with love to Friday Night Funkin' and its community. Extra love to the team behind it. 💖**
 
-## What can I do with compiling the mod? Why should I compile the mod instead of downloading it from [the Gamabanana page of the mod](https://gamebanana.com/gamefiles/15309)?
+## What can I do with compiling the mod? Why should I compile the mod instead of downloading it from [the GamaBanana page of the mod](https://gamebanana.com/gamefiles/15309)?
 
-Compiling the mod gives access to the `/source` folder, allowing you to change the code of the mod. You can add a lot of cool things with the open source code!
+Compiling the mod gives access to the `/source` folder, allowing you to change the code of the mod. You can add a lot of cool things with the open-source code!
 
 I recommend having a good idea on how to program. Compiling the mod is not for everyone!
 
-If you just want to download and play the mod normally, you can click [here to go to the Gamebanana page of the mod](https://gamebanana.com/gamefiles/15309)!
+If you just want to download and play the mod normally, you can click [here to go to the GameBanana page of the mod](https://gamebanana.com/gamefiles/15309)!
 
 ### **If you do want to compile, continue reading!**
 
@@ -152,8 +176,8 @@ Desktop building can be a bit tedious. Each different version requires a differe
 6. Type `lime run windows -debug` after the mod is compiled to run the windows version of the mod. (You can also run the mod from `funkin/export/debug/windows/bin`)
 
 # All done!
-You should have been able to compile the whole mod now! What can you do now? Well, you can mod to your heart's desire! Since this mod is open source, the creator loves seeing what other talented artists and programmers can make!
-Special thanks to the amazing group of dedicated people that are making the original game amazing, and the modding teak for making this mod possible!
+You should have been able to compile the whole mod now! What can you do now? Well, you can mod to your heart's desire! Since this mod is open-source, the creator loves seeing what other talented artists and programmers can make!
+Special thanks to the amazing group of dedicated people that are making the original game amazing, and the modding team for making this mod possible!<!--And the person who fixed this README.md-->
 
 <p align="center">
 	💖💖
