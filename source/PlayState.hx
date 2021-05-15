@@ -95,6 +95,8 @@ class PlayState extends MusicBeatState
 
 	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
+	private var player2Strums:FlxTypedGroup<FlxSprite>;
+	private var strums2:Array<Array<Bool>> = [[false, false], [false, false], [false, false], [false, false]];
 	private var hearts:FlxTypedGroup<FlxSprite>;
 
 	private var camZooming:Bool = false;
@@ -884,6 +886,7 @@ class PlayState extends MusicBeatState
 		}
 
 		playerStrums = new FlxTypedGroup<FlxSprite>();
+		player2Strums = new FlxTypedGroup<FlxSprite>();
 
 		// startCountdown();
 
@@ -1813,9 +1816,16 @@ class PlayState extends MusicBeatState
 
 			babyArrow.ID = i;
 
-			if (player == 1)
+			switch (player)
 			{
-				playerStrums.add(babyArrow);
+				case 0:
+				{
+					player2Strums.add(babyArrow);
+				}
+				case 1:
+				{
+					playerStrums.add(babyArrow);
+				}
 			}
 
 			babyArrow.animation.play('static');
@@ -2510,6 +2520,15 @@ class PlayState extends MusicBeatState
 								case 3:
 									dad.playAnim('singRIGHT' + altAnim, true);
 							}
+							
+							player2Strums.forEach(function(spr:FlxSprite)
+								{
+									if (Math.abs(daNote.noteData) == spr.ID)
+									{
+										spr.animation.play('confirm', true);
+										sustain2(spr.ID, daNote);
+									}
+								});
 		
 							dad.holdTimer = 0;
 		
@@ -2606,7 +2625,74 @@ class PlayState extends MusicBeatState
 					endSong();
 				#end
 			}
-		
+
+			function sustain2(strum:Int, note:Note):Void
+				{
+					var length:Float = note.sustainLength;
+			
+					if (length > 0)
+					{
+						switch (strum)
+						{
+							case 0:
+								strums2[0][0] = true;
+							case 1:
+								strums2[1][0] = true;
+							case 2:
+								strums2[2][0] = true;
+							case 3:
+								strums2[3][0] = true;
+						}
+					}
+			
+					var bps:Float = Conductor.bpm/60;
+					var spb:Float = 1/bps;
+			
+					if (!note.isSustainNote)
+					{
+			
+						new FlxTimer().start(length == 0 ? 0.2 : (length / Conductor.crochet * spb) + 0.1, function(tmr:FlxTimer)
+						{
+							switch (strum)
+							{
+								case 0:
+									if (!strums2[0][0])
+									{
+										strums2[0][1] = true;
+									} else if (length > 0) {
+										strums2[0][0] = false;
+										strums2[0][1] = true;
+									}
+								case 1:
+									if (!strums2[1][0])
+									{
+										strums2[1][1] = true;
+									} else if (length > 0) {
+										strums2[1][0] = false;
+										strums2[1][1] = true;
+									}
+								case 2:
+									if (!strums2[2][0])
+									{
+										strums2[2][1] = true;
+									} else if (length > 0) {
+										strums2[2][0] = false;
+										strums2[2][1] = true;
+									}
+								case 3:
+									if (!strums2[3][0])
+									{
+										strums2[3][1] = true;
+									} else if (length > 0) {
+										strums2[3][0] = false;
+										strums2[3][1] = true;
+									}
+							}
+			
+						});
+					}
+				}
+
 			function endSong():Void
 			{
 				canPause = false;
@@ -3317,6 +3403,40 @@ private function keyShit():Void
 			else
 				spr.centerOffsets();
 		});
+		
+		player2Strums.forEach(function(spr:FlxSprite)
+			{
+				switch (spr.ID)
+				{
+					case 0:
+						if (strums2[0][1])
+							spr.animation.play('static');
+							strums2[0][1] = false;
+					case 1:
+						if (strums2[1][1])
+							spr.animation.play('static');
+							strums2[1][1] = false;
+	
+					case 2:
+						if (strums2[2][1])
+							spr.animation.play('static');
+							strums2[2][1] = false;
+					case 3:
+						if (strums2[3][1])
+							spr.animation.play('static');
+							strums2[3][1] = false;
+	
+				}
+	
+				if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
+				{
+					spr.centerOffsets();
+					spr.offset.x -= 13;
+					spr.offset.y -= 13;
+				}
+				else
+					spr.centerOffsets();
+			});
 	}
 
 	function noteMiss(direction:Int = 1):Void
