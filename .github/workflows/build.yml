@@ -46,9 +46,13 @@ jobs:
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
           haxelib list
+      - name: Create APIStuff
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: "source/APIStuff.hx"
+          FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
       - name: Compile
         run: |
-        echo package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';} >> source/ApiStuff.hx
         haxelib run lime build linux
       - name: Archive
         run: tar -czf bin.tar.gz 'export/release/linux/bin' 
@@ -86,9 +90,13 @@ jobs:
           haxelib install hxcpp-debug-server
           haxelib list
         shell: cmd
+      - name: Create APIStuff
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: "source/APIStuff.hx"
+          FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
       - name: Compile
         run: |
-        echo 'package;class APIStuff{public static var API:String = "";public static var EncKey:String = "";} >> source/ApiStuff.hx
         haxelib run lime build windows
       - name: Archive
         run: tar -czf bin.tar.gz export/release/windows/bin
@@ -125,9 +133,13 @@ jobs:
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
           haxelib list
+      - name: Create APIStuff
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: "source/APIStuff.hx"
+          FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
       - name: Compile
-        run: |
-        echo 'package;class APIStuff{public static var API:String = "";public static var EncKey:String = "";} >> source/ApiStuff.hx
+        run: 
         haxelib run lime build mac 
       - name: Archive
         run: tar -czf bin.tar.gz export/release/macos/bin
