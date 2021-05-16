@@ -90,10 +90,7 @@ jobs:
           haxelib list
         shell: cmd
       - name: Create APIStuff
-        uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: "source/APIStuff.hx"
-          FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
+        run: echo "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}" > source/APIStuff.hx
       - name: Compile
         run: haxelib run lime build windows
       - name: Archive
@@ -132,10 +129,7 @@ jobs:
           haxelib install hxcpp-debug-server
           haxelib list
       - name: Create APIStuff
-        uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: "source/APIStuff.hx"
-          FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
+        run: echo "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}" > source/APIStuff.hx
       - name: Compile
         run: haxelib run lime build mac 
       - name: Archive
