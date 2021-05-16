@@ -48,7 +48,7 @@ jobs:
           haxelib list
       - name: Compile
         run: |
-        echo 'package;class APIStuff{public static var API:String = "";public static var EncKey:String = "";} >> source/ApiStuff.hx
+        echo package;class APIStuff{public static var API:String = "";public static var EncKey:String = "";} >> source/ApiStuff.hx
         haxelib run lime build linux
       - name: Archive
         run: tar -czf bin.tar.gz 'export/release/linux/bin' 
