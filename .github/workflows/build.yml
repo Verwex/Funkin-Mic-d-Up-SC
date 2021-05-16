@@ -52,8 +52,7 @@ jobs:
           FILE_NAME: "source/APIStuff.hx"
           FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
       - name: Compile
-        run: |
-        haxelib run lime build linux
+        run: haxelib run lime build linux
       - name: Archive
         run: tar -czf bin.tar.gz 'export/release/linux/bin' 
       - name: Publish Artifact
@@ -96,8 +95,7 @@ jobs:
           FILE_NAME: "source/APIStuff.hx"
           FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
       - name: Compile
-        run: |
-        haxelib run lime build windows
+        run: haxelib run lime build windows
       - name: Archive
         run: tar -czf bin.tar.gz export/release/windows/bin
       - name: Publish Artifact
@@ -139,8 +137,7 @@ jobs:
           FILE_NAME: "source/APIStuff.hx"
           FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
       - name: Compile
-        run: 
-        haxelib run lime build mac 
+        run: haxelib run lime build mac 
       - name: Archive
         run: tar -czf bin.tar.gz export/release/macos/bin
       - name: Publish Artifact
