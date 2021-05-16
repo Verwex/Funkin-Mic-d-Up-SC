@@ -128,7 +128,7 @@ You should be good from there! Now, onto compiling!
 
 ## HTML Building:
 
-HTML Compiling currently does not work as Mic'd Up! writes data to files with desktop-only features.
+HTML Compiling currently does not work as Mic'd Up! currently requires desktop-only libraries to function properly.
 
 ## Desktop Building:
 
