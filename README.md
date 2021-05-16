@@ -128,12 +128,7 @@ You should be good from there! Now, onto compiling!
 
 ## HTML Building:
 
-Compiling the mod is rather simple for HTML5 builds.
-1. Open your machine's command prompt/terminal and navigate to your root folder of the mod. [An easy guide can be found here!](https://ninjamuffin99.newgrounds.com/news/post/1090480)
-2. Type `lime build html5 -debug` to build the HTML5 version of the mod.
-3. Type `lime run html5 -debug` to run the HTML5 version of the mod from the command prompt/terminal. (You can also run the mod from `funkin/export/debug/html5/bin`)
-
-You should be all good to play the HTML5 version of the mod!
+HTML Compiling currently does not work as Mic'd Up! writes data to files with desktop-only features.
 
 ## Desktop Building:
 
