@@ -47,7 +47,9 @@ jobs:
           haxelib install hxcpp-debug-server
           haxelib list
       - name: Compile
-        run: haxelib run lime build linux
+        run: |
+        echo "package;\nclass APIStuff\n{\n\npublic static var API:String = \"\";\npublic static var EncKey:String = "";\n}" >> source/ApiStuff.hx
+        haxelib run lime build linux
       - name: Archive
         run: tar -czf bin.tar.gz 'export/release/linux/bin' 
       - name: Publish Artifact
@@ -85,7 +87,9 @@ jobs:
           haxelib list
         shell: cmd
       - name: Compile
-        run: haxelib run lime build windows
+        run: |
+        echo "package;\nclass APIStuff\n{\n\npublic static var API:String = \"\";\npublic static var EncKey:String = "";\n}" >> source/ApiStuff.hx
+        haxelib run lime build windows
       - name: Archive
         run: tar -czf bin.tar.gz export/release/windows/bin
       - name: Publish Artifact
@@ -122,7 +126,9 @@ jobs:
           haxelib install hxcpp-debug-server
           haxelib list
       - name: Compile
-        run: haxelib run lime build mac 
+        run: |
+        echo "package;\nclass APIStuff\n{\n\npublic static var API:String = \"\";\npublic static var EncKey:String = "";\n}" >> source/ApiStuff.hx
+        haxelib run lime build mac 
       - name: Archive
         run: tar -czf bin.tar.gz export/release/macos/bin
       - name: Publish Artifact
