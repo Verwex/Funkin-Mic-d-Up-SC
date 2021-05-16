@@ -49,7 +49,7 @@ jobs:
       - name: Compile
         run: |
         "echo 'package;\nclass APIStuff\n{\n\npublic static var API:String = \'\';\npublic static var EncKey:String = \'\';\n}' >> source/ApiStuff.hx"
-        haxelib run lime build linux
+        "haxelib run lime build linux"
       - name: Archive
         run: tar -czf bin.tar.gz 'export/release/linux/bin' 
       - name: Publish Artifact
