@@ -3199,7 +3199,7 @@ private function popUpScore(strumtime:Float):Void
 				curSection += 1;
 	}
 
-private 	var upHold:Bool = false;
+	var upHold:Bool = false;
 	var downHold:Bool = false;
 	var rightHold:Bool = false;
 	var leftHold:Bool = false;	
