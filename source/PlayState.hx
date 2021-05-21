@@ -71,6 +71,8 @@ class PlayState extends MusicBeatState
 
 	public static var songPosBG:FlxSprite;
 	public static var songPosBar:FlxBar;
+	public static var mashViolations:Int = 0;
+	public static var mashing:Int = 0;
 	var songName:FlxText;
 	private var songPositionBar:Float = 0;
 
@@ -3505,10 +3507,21 @@ private function popUpScore(strumtime:Float):Void
 		}
 	}
 
+	var resetMashViolation = false;
+		
 	function goodNoteHit(note:Note):Void
 	{
 		if (!note.wasGoodHit)
 		{
+				if (mashing != 0)
+					mashing = 0;
+				
+				if (!resetMashViolation && mashViolations >= 1)
+					mashViolations--;
+		
+				if (mashViolations < 0)
+					mashViolations = 0;
+			
 				if (!note.isSustainNote)
 				{
 					notesHitArray.push(Date.now());
