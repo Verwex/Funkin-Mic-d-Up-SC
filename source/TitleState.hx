@@ -372,12 +372,12 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 4:
-				createCoolText(['Verwex,   Kadedev', 'Ash237', 'present']);
+				createCoolText(['Big Development', 'Mod', 'present']);
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();
 			case 6:
 				deleteCoolText();
-				createCoolText(['A modification', 'for']);
+				createCoolText(['Extra weeks', 'for']);
 			case 7:
 				fnfSpr.x = -1500;
 				fnfSpr.visible = true;

@@ -33,14 +33,16 @@ class MenuWeek extends MusicBeatState
 		['Pico', 'Philly', "Blammed"],
 		['Satin-Panties', "High", "Milf"],
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
-		['Senpai', 'Roses', 'Thorns']
+		['Senpai', 'Roses', 'Thorns'],
+		['Ugh', 'Guns', 'Stress'],
+		['Surrounded', 'disappointed']
 	];
 	
 	var curWeekData:Array<Dynamic> = [];
 
 	public static var curDifficulty:Int = 2;
 
-	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
+	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true, true, true];
 
 	var weekCharacters:Array<String> = [
 		"gf",
@@ -49,7 +51,9 @@ class MenuWeek extends MusicBeatState
 		"pico",
 		"mom",
 		"parents-christmas",
-		"senpai"
+		"senpai",
+		"tankman",
+		"skittles"
 	];
 
 	var weekNames:Array<String> = [
@@ -59,7 +63,9 @@ class MenuWeek extends MusicBeatState
 		"PICO",
 		"MOMMY MUST MURDER",
 		"RED SNOW",
-		"hating simulator ft. moawling"
+		"hating simulator ft. moawling",
+		"Tankman",
+		"Vengance"
 	];
 
 	var txtWeekTitle:FlxText;

@@ -816,6 +816,15 @@ class PlayState extends MusicBeatState
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+			case 'tankman':
+				camPos.x += 600;
+				dad.y += 300;
+			case 'skittles':
+				camPos.x += 600;
+				dad.y += 300;
+			case 'steve':
+				camPos.x += 600;
+				dad.y += 300;
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -1206,6 +1215,18 @@ class PlayState extends MusicBeatState
 			}
 		
 		}
+	
+	function newIntro(?dialogueBox:DialogueBox):Void
+	{
+	    var senpaiEvil:FlxSprite = new FlxSprite();
+		senpaiEvil.frames = Paths.getSparrowAtlas('images/ughCutscene', 'week6');
+		senpaiEvil.animation.addByPrefix('idle', 'Senpai Pre Explosion', 24, false);
+		senpaiEvil.setGraphicSize(Std.int(senpaiEvil.width * 6));
+		senpaiEvil.scrollFactor.set();
+		senpaiEvil.updateHitbox();
+		senpaiEvil.screenCenter();
+	
+	}
 
 	function schoolIntro(?dialogueBox:DialogueBox):Void
 	{
