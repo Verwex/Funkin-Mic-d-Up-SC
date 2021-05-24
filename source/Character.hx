@@ -541,35 +541,39 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
-				case 'tankman':
+			case 'tankman':
 				frames = Paths.getSparrowAtlas('characters/tankman_assets','shared');
 				animation.addByPrefix('idle', 'Tankman idle', 24, false);
 				animation.addByPrefix('singUP', 'Tankman Up Note', 24, false);
 				animation.addByPrefix('singDOWN', 'Tankman Down Note', 24, false);
 				animation.addByPrefix('singLEFT', 'Tankman Left Note', 24, false);
 				animation.addByPrefix('singRIGHT', 'Tankman Right Note', 24, false);
+				 char.animation.addByPrefix('singUP-alt', 'TANKMAN UGH', 24, false);
 
 				addOffset('idle');
 				addOffset("singUP", 24, 56);
 				addOffset("singRIGHT", -1, -7);
 				addOffset("singLEFT", 100, -14);
 				addOffset("singDOWN", 98, -90);
+				addOffset('singDOWN-alt', 0, 15);
 
 				playAnim('idle');
 
 			case 'skittles':
 				frames = Paths.getSparrowAtlas('characters/skittles_assets','shared');
-				animation.addByPrefix('idle', 'skittles Idle', 24, false);
-				animation.addByPrefix('singUP', 'skittles Up', 24, false);
-				animation.addByPrefix('singDOWN', 'skittles Down', 24, false);
-				animation.addByPrefix('singLEFT', 'skittles Left', 24, false);
-				animation.addByPrefix('singRIGHT', 'skittles Right', 24, false);
-
+				animation.addByPrefix('idle', 'Skittles Idle', 24, false);
+				animation.addByPrefix('singUP', 'Skittles Up', 24, false);
+				animation.addByPrefix('singDOWN', 'Skittles DOWN', 24, false);
+				animation.addByPrefix('singLEFT', 'Skittles Left', 24, false);
+				animation.addByPrefix('singRIGHT', 'Skittles Right', 24, false);
+				animation.addByPrefix('singUP-alt', 'Skittles UGH', 24, false);
+				
 				addOffset('idle');
 				addOffset("singUP", 24, 56);
 				addOffset("singRIGHT", -1, -7);
 				addOffset("singLEFT", 100, -14);
 				addOffset("singDOWN", 98, -90);
+				addOffset('singDOWN-alt', 0, 15);
 
 				playAnim('idle');
 
