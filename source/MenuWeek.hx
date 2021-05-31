@@ -493,6 +493,8 @@ class MenuWeek extends MusicBeatState
 				characterUI.offset.set(67, 47);
 			case 'senpai':
 				characterUI.offset.set(46, 4);
+			case 'discord':
+				characterUI.offset.set(0);
 		}
 
 		#if !switch

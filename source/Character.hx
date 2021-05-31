@@ -540,6 +540,21 @@ class Character extends FlxSprite
 				addOffset("singDOWN-alt", -30, -27);
 
 				playAnim('idle');
+			case 'discord':
+				frames = Paths.getSparrowAtlas('VS._Discord_Assets/spritesheet/Discord_Assets', 'ping');
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addBYPrefix('up', 'up', 24, false);
+				animation.addByPrefix('down', 'down', 24, false);
+				animation.addByPrefix('left', 'left', 24, false);
+				animation.addByPrefix('right', 'right', 24, false);
+
+				addOffset('idle');
+				addOffset('up');
+				addOffset('down');
+				addOffset('left');
+				addOffset('right');
+
+				playAnim('idle');
 		}
 
 		dance();

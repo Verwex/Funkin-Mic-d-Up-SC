@@ -64,7 +64,7 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		FlxG.save.bind('save', "Funkin Mic'd Up");
+		FlxG.save.bind('save', "Funkin VS. Discord");
 
 		Highscore.load();
 
@@ -81,7 +81,7 @@ class TitleState extends MusicBeatState
 	}
 
 	var logoBl:FlxSprite;
-	var gfDance:FlxSprite;
+	var discordBop:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
 
@@ -137,12 +137,12 @@ class TitleState extends MusicBeatState
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
 
-		gfDance = new FlxSprite(FlxG.width * 0.35, FlxG.height * 1.2);
-		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
-		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		gfDance.antialiasing = true;
-		add(gfDance);
+		discordBop = new FlxSprite(FlxG.width * 0.35, FlxG.height * 1.2);
+		discordBop.frames = Paths.getSparrowAtlas('discordTitleBop');
+		discordBop.animation.addByIndices('bopOnce', 'bop', [8, 0, 1, 2, 3, 4, 5, 6, 7, 8], "", 24, false);
+		discordBop.animation.addByIndices('bopTwice', 'bop', [8, 0, 1, 2, 3, 4, 5, 6, 7, 8], "", 24, false);
+		discordBop.antialiasing = true;
+		add(discordBop);
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 		logo.screenCenter();
@@ -363,9 +363,9 @@ class TitleState extends MusicBeatState
 		danceLeft = !danceLeft;
 
 		if (danceLeft)
-			gfDance.animation.play('danceRight');
+			discordBop.animation.play('danceRight');
 		else
-			gfDance.animation.play('danceLeft');
+			discordBop.animation.play('danceLeft');
 
 		FlxG.log.add(curBeat);
 
@@ -419,7 +419,7 @@ class TitleState extends MusicBeatState
 
 			FlxG.camera.flash(FlxColor.WHITE, 4, null, true);
 			FlxTween.tween(logoBl, {'scale.x': 0.45, 'scale.y': 0.45, x: -165, y: -125}, 1.3, {ease: FlxEase.expoInOut, startDelay: 1.3});
-			FlxTween.tween(gfDance, {y: 20}, 2.3, {ease: FlxEase.expoInOut, startDelay: 0.8});
+			FlxTween.tween(discordBop, {y: 20}, 2.3, {ease: FlxEase.expoInOut, startDelay: 0.8});
 			remove(credGroup);
 			titleText.visible = true;
 			logoBl.visible = true;
