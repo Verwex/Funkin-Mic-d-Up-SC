@@ -1,0 +1,11 @@
+﻿<TextureAtlas imagePath="campaign_menu_UI_assets.png">
+	<SubTexture name="bop0000" x="0" y="0" w="327" h="241"/>
+	<SubTexture name="bop0001" x="0" y="0" w="327" h="241"/>
+	<SubTexture name="bop0002" x="327" y="0" w="327" h="241"/>
+	<SubTexture name="bop0003" x="327" y="0" w="327" h="241"/>
+	<SubTexture name="bop0004" x="654" y="0" w="327" h="241"/>
+	<SubTexture name="bop0005" x="654" y="0" w="327" h="241"/>
+	<SubTexture name="bop0006" x="0" y="241" w="327" h="241"/>
+	<SubTexture name="bop0007" x="0" y="241" w="327" h="241"/>
+	<SubTexture name="bop0008" x="0" y="0" w="327" h="241"/>
+</TextureAtlas>
