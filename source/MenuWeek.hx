@@ -462,14 +462,14 @@ class MenuWeek extends MusicBeatState
 		var stringThing:Array<String> = weekData[curWeek];
 
 		for (i in stringThing)
-		{
 			txtTracklist.text += "\n" + i;
-		}
 
 		txtTracklist.text = txtTracklist.text.toUpperCase();
 
 		txtTracklist.screenCenter(X);
 		txtTracklist.x -= FlxG.width * 0.35;
+
+		txtTracklist.text += "\n";
 
 		characterUI.animation.addByPrefix(weekCharacters[curWeek], weekCharacters[curWeek], 24);
 		characterUI.animation.play(weekCharacters[curWeek]);
