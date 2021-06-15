@@ -4,6 +4,13 @@ name: Build Debug
 
 # Controls when the action will run. 
 on:
+    
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master, main]
+  pull_request:
+    branches: [ master, main]
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -47,13 +54,11 @@ jobs:
           FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
       - name: Compile
         run: haxelib run lime build linux -debug
-      - name: Archive
-        run: tar -czf bin.tar.gz 'export/release/linux/bin' 
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
         with:
           name: linuxBuild
-          path: bin.tar.gz
+          path: 'export/release/linux/bin' 
   buildWindows:
     runs-on: windows-latest
     
@@ -87,13 +92,18 @@ jobs:
         run: echo "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}" > source/APIStuff.hx
       - name: Compile
         run: haxelib run lime build windows -debug
-      - name: Archive
-        run: tar -czf bin.tar.gz export/release/windows/bin
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
         with:
           name: windowsBuild
-          path: bin.tar.gz
+          path: export/release/windows/bin
+      - name: Compile 32 bit
+        run: haxelib run lime build windows -32 -D32bit -debug
+      - name: Publish 32 bit
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows32Build
+          path: export/32bit/windows/bin
   buildMac:
     runs-on: macos-latest
 
@@ -126,10 +136,8 @@ jobs:
         run: echo "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}" > source/APIStuff.hx
       - name: Compile
         run: haxelib run lime build mac -debug
-      - name: Archive
-        run: tar -czf bin.tar.gz export/release/macos/bin
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
         with:
           name: macBuild
-          path: bin.tar.gz
+          path: export/release/macos/bin
