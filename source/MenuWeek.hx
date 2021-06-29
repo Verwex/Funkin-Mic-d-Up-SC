@@ -1,24 +1,21 @@
 package;
 
+import sys.io.File;
+import sys.FileSystem;
 import flixel.tweens.FlxEase;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.net.curl.CURLCode;
 import flixel.addons.display.FlxBackdrop;
 import MainVariables._variables;
 import flixel.util.FlxGradient;
-#if desktop
 import Discord.DiscordClient;
-#end
 
 using StringTools;
 
@@ -30,30 +27,22 @@ class MenuWeek extends MusicBeatState
 		['Tutorial'],
 		['Bopeebo', 'Fresh', 'Dadbattle'],
 		['Spookeez', 'South', "Monster"],
-		['Pico', 'Philly', "Blammed"],
-		['Satin-Panties', "High", "Milf"],
-		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
+		['Pico', 'Philly Nice', "Blammed"],
+		['Satin Panties', "High", "Milf"],
+		['Cocoa', 'Eggnog', 'Winter Horrorland'],
 		['Senpai', 'Roses', 'Thorns']
 	];
-	
+
 	var curWeekData:Array<Dynamic> = [];
 
 	public static var curDifficulty:Int = 2;
 
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
 
-	var weekCharacters:Array<String> = [
-		"gf",
-		"dad",
-		"spooky",
-		"pico",
-		"mom",
-		"parents-christmas",
-		"senpai"
-	];
+	var weekCharacters:Array<String> = ["gf", "dad", "spooky", "pico", "mom", "parents-christmas", "senpai"];
 
 	var weekNames:Array<String> = [
-		"",
+		"How to FUNK",
 		"Daddy Dearest",
 		"Spooky Month",
 		"PICO",
@@ -74,22 +63,22 @@ class MenuWeek extends MusicBeatState
 
 	var bg:FlxSprite = new FlxSprite(-89).loadGraphic(Paths.image('wBG_Main'));
 	var checker:FlxBackdrop = new FlxBackdrop(Paths.image('Week_Checker'), 0.2, 0.2, true, true);
-	var gradientBar:FlxSprite = new FlxSprite(0,0).makeGraphic(FlxG.width, 300, 0xFFAA00AA);
+	var gradientBar:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, 300, 0xFFAA00AA);
 	var side:FlxSprite = new FlxSprite(0).loadGraphic(Paths.image('Week_Top'));
 	var bottom:FlxSprite = new FlxSprite(0).loadGraphic(Paths.image('Week_Bottom'));
-	var boombox:FlxSprite = new FlxSprite(0,0).loadGraphic(Paths.image('Boombox'));
+	var boombox:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('Boombox'));
 
-	var rankTable:Array<String> = ['P','X','X-','SS+','SS','SS-','S+','S','S-','A+','A','A-','B','C','D','E','NA'];
+	var rankTable:Array<String> = [
+		'P-small', 'X-small', 'X--small', 'SS+-small', 'SS-small', 'SS--small', 'S+-small', 'S-small', 'S--small', 'A+-small', 'A-small', 'A--small',
+		'B-small', 'C-small', 'D-small', 'E-small', 'NA'
+	];
 	var ranks:FlxTypedGroup<FlxSprite>;
 
 	var characterUI:FlxSprite = new FlxSprite(20, 20);
 
 	override function create()
 	{
-		FlxG.game.scaleX = 1;
-		FlxG.game.x = 0;
-		FlxG.game.scaleY = 1;
-		FlxG.game.y = 0;
+		lime.app.Application.current.window.title = lime.app.Application.current.meta.get('name');
 
 		ranks = new FlxTypedGroup<FlxSprite>();
 
@@ -99,15 +88,18 @@ class MenuWeek extends MusicBeatState
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)
-				switch (_variables.music)
-            	{
-                case 'classic':
-                    FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+			{
+				if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
+				{
+					FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+					Conductor.changeBPM(Std.parseFloat(File.getContent('assets/music/menu/' + _variables.music + '_BPM.txt')));
+				}
+				else
+				{
+					FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
 					Conductor.changeBPM(102);
-                case 'funky':
-                    FlxG.sound.playMusic(Paths.music('funkyMenu'), _variables.mvolume/100);
-					Conductor.changeBPM(140);
-            	}
+				}
+			}
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -120,7 +112,7 @@ class MenuWeek extends MusicBeatState
 		bg.antialiasing = true;
 		add(bg);
 
-		gradientBar = FlxGradient.createGradientFlxSprite(Math.round(FlxG.width), 512, [0x00ff0000, 0x55F8FFAB, 0xAAFFDEF2], 1, 90, true); 
+		gradientBar = FlxGradient.createGradientFlxSprite(Math.round(FlxG.width), 512, [0x00ff0000, 0x55F8FFAB, 0xAAFFDEF2], 1, 90, true);
 		gradientBar.y = FlxG.height - gradientBar.height;
 		add(gradientBar);
 		gradientBar.scrollFactor.set(0, 0);
@@ -132,16 +124,16 @@ class MenuWeek extends MusicBeatState
 		add(grpWeekText);
 
 		for (i in 0...weekData.length)
-			{
-				var weekThing:MenuItem = new MenuItem(0, 40, i);
-				weekThing.y += ((weekThing.height + 20) * i);
-				weekThing.targetY = i;
-				grpWeekText.add(weekThing);
-	
-				weekThing.screenCenter(X);
-				weekThing.antialiasing = true;
-				// weekThing.updateHitbox();
-			}
+		{
+			var weekThing:MenuItem = new MenuItem(0, 40, i);
+			weekThing.y += ((weekThing.height + 20) * i);
+			weekThing.targetY = i;
+			grpWeekText.add(weekThing);
+
+			weekThing.screenCenter(X);
+			weekThing.antialiasing = true;
+			// weekThing.updateHitbox();
+		}
 
 		side.scrollFactor.x = 0;
 		side.scrollFactor.y = 0;
@@ -149,7 +141,7 @@ class MenuWeek extends MusicBeatState
 		side.screenCenter();
 		add(side);
 		side.y = 0 - side.height;
-		side.x = FlxG.width/2 - side.width/2;
+		side.x = FlxG.width / 2 - side.width / 2;
 
 		bottom.scrollFactor.x = 0;
 		bottom.scrollFactor.y = 0;
@@ -195,11 +187,11 @@ class MenuWeek extends MusicBeatState
 
 		trace("Line 150");
 
-		txtTracklist = new FlxText(FlxG.width * 0.05, 200, 0, "INCLUDES FAMOUS\n TRACKS LIKE:\n", 32);
+		txtTracklist = new FlxText(FlxG.width * 0.05, 200, 0, "INCLUDES FAMOUS\n TRACKS LIKE:\n\n", 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.font = scoreText.font;
 		txtTracklist.setBorderStyle(OUTLINE, 0xFF000000, 5, 1);
-		txtTracklist.color = 0xFFe55777;
+		txtTracklist.color = 0xFFFCB697;
 		txtTracklist.y = bottom.y + 60;
 		add(txtTracklist);
 		add(scoreText);
@@ -211,53 +203,51 @@ class MenuWeek extends MusicBeatState
 		add(characterUI);
 
 		updateText();
+		changeWeek();
 
 		trace("Line 165");
 
 		super.create();
 
-		FlxTween.tween(bg, { alpha:1}, 0.8, { ease: FlxEase.quartInOut});
-		FlxTween.tween(side, { y:0}, 0.8, { ease: FlxEase.quartInOut});
-		FlxTween.tween(bottom, { y:FlxG.height - bottom.height}, 0.8, { ease: FlxEase.quartInOut});
+		FlxTween.tween(bg, {alpha: 1}, 0.8, {ease: FlxEase.quartInOut});
+		FlxTween.tween(side, {y: 0}, 0.8, {ease: FlxEase.quartInOut});
+		FlxTween.tween(bottom, {y: FlxG.height - bottom.height}, 0.8, {ease: FlxEase.quartInOut});
 
 		scoreText.alpha = sprDifficulty.alpha = characterUI.alpha = txtWeekTitle.alpha = 0;
-		FlxTween.tween(scoreText, { alpha:1}, 0.8, { ease: FlxEase.quartInOut});
-		FlxTween.tween(sprDifficulty, { alpha:1}, 0.8, { ease: FlxEase.quartInOut});
-		FlxTween.tween(txtTracklist, { y:characterUI.y + 300}, 0.8, { ease: FlxEase.quartInOut});
-		FlxTween.tween(characterUI, { alpha:1}, 0.8, { ease: FlxEase.quartInOut});
-		FlxTween.tween(txtWeekTitle, { alpha:0.7}, 0.8, { ease: FlxEase.quartInOut});
+		FlxTween.tween(scoreText, {alpha: 1}, 0.8, {ease: FlxEase.quartInOut});
+		FlxTween.tween(sprDifficulty, {alpha: 1}, 0.8, {ease: FlxEase.quartInOut});
+		FlxTween.tween(txtTracklist, {y: characterUI.y + 300}, 0.8, {ease: FlxEase.quartInOut});
+		FlxTween.tween(characterUI, {alpha: 1}, 0.8, {ease: FlxEase.quartInOut});
+		FlxTween.tween(txtWeekTitle, {alpha: 0.7}, 0.8, {ease: FlxEase.quartInOut});
 
 		FlxG.camera.zoom = 0.6;
 		FlxG.camera.alpha = 0;
-		FlxTween.tween(FlxG.camera, { zoom:1, alpha:1}, 0.7, { ease: FlxEase.quartInOut});
+		FlxTween.tween(FlxG.camera, {zoom: 1, alpha: 1}, 0.7, {ease: FlxEase.quartInOut});
 
 		new FlxTimer().start(0.7, function(tmr:FlxTimer)
-			{
-				selectable = true;
-			});
+		{
+			selectable = true;
+		});
 	}
 
 	var selectable:Bool = false;
 
 	override function update(elapsed:Float)
 	{
-		checker.x -= -0.12/(_variables.fps/60);
-		checker.y -= -0.34/(_variables.fps/60);
+		checker.x -= -0.12 / (_variables.fps / 60);
+		checker.y -= -0.34 / (_variables.fps / 60);
 
 		boombox.screenCenter();
 
 		// scoreText.setFormat('VCR OSD Mono', 32);
-		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.5/(_variables.fps/60)));
+		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.5 / (_variables.fps / 60)));
 
 		if (Math.abs(lerpScore - intendedScore) <= 10)
 			lerpScore = intendedScore;
 
 		scoreText.text = "WEEK SCORE:" + lerpScore;
 
-		scoreText.x = side.x + side.width/2 - scoreText.width/2;
-		txtWeekTitle.x = side.x + side.width/2 - txtWeekTitle.width/2;
-
-		txtWeekTitle.text = weekNames[curWeek].toUpperCase();
+		scoreText.x = side.x + side.width / 2 - scoreText.width / 2;
 
 		// FlxG.watch.addQuick('font', scoreText.font);
 
@@ -286,20 +276,18 @@ class MenuWeek extends MusicBeatState
 
 		if (controls.BACK && !selectedSomethin && selectable)
 		{
-			FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume/100);
+			FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume / 100);
 			selectedSomethin = true;
 			FlxG.switchState(new PlaySelection());
 
-			#if desktop
-				DiscordClient.changePresence("Going Back!", null);
-			#end
+			DiscordClient.changePresence("Going Back!", null);
 
-			FlxTween.tween(FlxG.camera, { zoom:0.6, alpha:-0.6}, 0.8, { ease: FlxEase.quartInOut});
-			FlxTween.tween(bg, { alpha:0}, 0.8, { ease: FlxEase.quartInOut});
-			FlxTween.tween(checker, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
-			FlxTween.tween(gradientBar, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
-			FlxTween.tween(side, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
-			FlxTween.tween(bottom, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
+			FlxTween.tween(FlxG.camera, {zoom: 0.6, alpha: -0.6}, 0.8, {ease: FlxEase.quartInOut});
+			FlxTween.tween(bg, {alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
+			FlxTween.tween(checker, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
+			FlxTween.tween(gradientBar, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
+			FlxTween.tween(side, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
+			FlxTween.tween(bottom, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
 		}
 
 		super.update(elapsed);
@@ -311,11 +299,12 @@ class MenuWeek extends MusicBeatState
 	{
 		if (weekUnlocked[curWeek])
 		{
-			FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume/100);
+			FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume / 100);
 
 			grpWeekText.members[curWeek].startFlashing();
 
 			PlayState.storyPlaylist = weekData[curWeek];
+			LoadingState.no = weekData[curWeek];
 			trace(PlayState.storyPlaylist);
 			PlayState.gameplayArea = "Story";
 			selectedSomethin = true;
@@ -342,35 +331,33 @@ class MenuWeek extends MusicBeatState
 			PlayState.storyWeek = curWeek;
 			PlayState.campaignScore = 0;
 
-			FlxTween.tween(bg, { alpha:0}, 0.6, { ease: FlxEase.quartInOut});
-			FlxTween.tween(checker, { alpha:0}, 0.6, { ease: FlxEase.quartInOut});
-			FlxTween.tween(characterUI, { x:3700}, 0.6, { ease: FlxEase.quartInOut});
-			FlxTween.tween(txtTracklist, { x:-2600}, 0.6, { ease: FlxEase.quartInOut});
-			FlxTween.tween(gradientBar, { alpha:0}, 0.6, { ease: FlxEase.quartInOut});
-			FlxTween.tween(side, { alpha:0}, 0.8, { ease: FlxEase.quartInOut});
-			FlxTween.tween(bottom, { alpha:0}, 0.8, { ease: FlxEase.quartInOut});
-			FlxTween.tween(scoreText, { y:-50, alpha:0}, 0.8, { ease: FlxEase.quartInOut});
-			FlxTween.tween(txtWeekTitle, { y:-50, alpha:0}, 0.8, { ease: FlxEase.quartInOut});
-			FlxTween.tween(sprDifficulty, { y:-120, alpha:0}, 0.8, { ease: FlxEase.quartInOut});
+			FlxTween.tween(bg, {alpha: 0}, 0.6, {ease: FlxEase.quartInOut});
+			FlxTween.tween(checker, {alpha: 0}, 0.6, {ease: FlxEase.quartInOut});
+			FlxTween.tween(characterUI, {x: 3700}, 0.6, {ease: FlxEase.quartInOut});
+			FlxTween.tween(txtTracklist, {x: -2600}, 0.6, {ease: FlxEase.quartInOut});
+			FlxTween.tween(gradientBar, {alpha: 0}, 0.6, {ease: FlxEase.quartInOut});
+			FlxTween.tween(side, {alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
+			FlxTween.tween(bottom, {alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
+			FlxTween.tween(scoreText, {y: -50, alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
+			FlxTween.tween(txtWeekTitle, {y: -50, alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
+			FlxTween.tween(sprDifficulty, {y: -120, alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
 
 			for (item in ranks.members)
-				{
-					FlxTween.tween(item, { x:2600}, 0.6, { ease: FlxEase.quartInOut});
-				}
+			{
+				FlxTween.tween(item, {x: 2600}, 0.6, {ease: FlxEase.quartInOut});
+			}
 
-			#if desktop
-					DiscordClient.changePresence("Selecting chart types.", null);
-			#end
+			DiscordClient.changePresence("Selecting chart types.", null);
 
 			for (item in grpWeekText.members)
-				{
-					FlxTween.tween(item, { alpha:0}, 0.9, { ease: FlxEase.quartInOut});
-				}
+			{
+				FlxTween.tween(item, {alpha: 0}, 0.9, {ease: FlxEase.quartInOut});
+			}
 
 			new FlxTimer().start(0.9, function(tmr:FlxTimer)
-				{
-					FlxG.state.openSubState(new Substate_ChartType());
-				});
+			{
+				FlxG.state.openSubState(new Substate_ChartType());
+			});
 		}
 	}
 
@@ -406,16 +393,14 @@ class MenuWeek extends MusicBeatState
 		sprDifficulty.alpha = 0;
 
 		// USING THESE WEIRD VALUES SO THAT IT DOESNT FLOAT UP
-		sprDifficulty.y = txtWeekTitle.y + 5 ;
+		sprDifficulty.y = txtWeekTitle.y + 5;
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 
 		#if !switch
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 		#end
 
-		#if desktop
-			DiscordClient.changePresence("Deciding to play week "+curWeek+" on "+sprDifficulty.animation.name+"!", null);
-		#end
+		DiscordClient.changePresence("Deciding to play week " + curWeek + " on " + sprDifficulty.animation.name + "!", null);
 
 		FlxTween.tween(sprDifficulty, {y: txtWeekTitle.y + 62, alpha: 1}, 0.07);
 	}
@@ -432,6 +417,9 @@ class MenuWeek extends MusicBeatState
 		if (curWeek < 0)
 			curWeek = weekData.length - 1;
 
+		txtWeekTitle.text = weekNames[curWeek].toUpperCase();
+		txtWeekTitle.x = side.x + side.width / 2 - txtWeekTitle.width / 2;
+
 		updateRank();
 
 		var bullShit:Int = 0;
@@ -446,30 +434,28 @@ class MenuWeek extends MusicBeatState
 			bullShit++;
 		}
 
-		#if desktop
-			DiscordClient.changePresence("Deciding to play week "+curWeek+" on "+sprDifficulty.animation.name+"!", null);
-		#end
+		DiscordClient.changePresence("Deciding to play week " + curWeek + " on " + sprDifficulty.animation.name + "!", null);
 
-		FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+		FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume / 100);
 
 		updateText();
 	}
 
 	function updateText()
 	{
-		txtTracklist.text = "INCLUDES FAMOUS\n TRACKS LIKE:\n";
+		txtTracklist.text = "INCLUDES FAMOUS\n TRACKS LIKE:\n\n";
 
 		var stringThing:Array<String> = weekData[curWeek];
 
 		for (i in stringThing)
-			txtTracklist.text += "\n" + i;
+		{
+			txtTracklist.text += i + "\n";
+		}
 
 		txtTracklist.text = txtTracklist.text.toUpperCase();
 
 		txtTracklist.screenCenter(X);
 		txtTracklist.x -= FlxG.width * 0.35;
-
-		txtTracklist.text += "\n";
 
 		characterUI.animation.addByPrefix(weekCharacters[curWeek], weekCharacters[curWeek], 24);
 		characterUI.animation.play(weekCharacters[curWeek]);
@@ -507,17 +493,17 @@ class MenuWeek extends MusicBeatState
 		curWeekData = weekData[curWeek];
 
 		for (i in 0...curWeekData.length)
-			{
-				var rank:FlxSprite = new FlxSprite(958, 100);
-				rank.loadGraphic(Paths.image('rankings/'+rankTable[Highscore.getRank(curWeekData[i], curDifficulty)]));
-				rank.ID = i;
-				rank.setGraphicSize(0,80);
-				rank.updateHitbox();
-				rank.antialiasing = true;
-				rank.scrollFactor.set();
-				rank.y = 30 + i*65;
-					
-				ranks.add(rank);
-			}
+		{
+			var rank:FlxSprite = new FlxSprite(958, 100);
+			rank.loadGraphic(Paths.image('rankings/' + rankTable[Highscore.getRank(curWeekData[i], curDifficulty)]));
+			rank.ID = i;
+			rank.scale.x = rank.scale.y = 80 / rank.height;
+			rank.updateHitbox();
+			rank.antialiasing = true;
+			rank.scrollFactor.set();
+			rank.y = 30 + i * 65;
+
+			ranks.add(rank);
+		}
 	}
 }

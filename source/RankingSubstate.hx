@@ -1,12 +1,9 @@
 package;
 
-import Controls.Control;
+import sys.FileSystem;
+import sys.io.File;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxSubState;
-import flixel.addons.transition.FlxTransitionableState;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.input.keyboard.FlxKey;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -30,7 +27,13 @@ class RankingSubstate extends MusicBeatSubstate
 		super();
 
 		generateRanking();
-		Highscore.saveRank(PlayState.SONG.song, rankingNum, PlayState.storyDifficulty);
+
+		var image = lime.graphics.Image.fromFile('assets/images/iconOG.png');
+		lime.app.Application.current.window.setIcon(image);
+
+		if (!PlayState.cheated && !_variables.botplay)
+			Highscore.saveRank(PlayState.SONG.song, rankingNum, PlayState.storyDifficulty);
+
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
@@ -46,18 +49,18 @@ class RankingSubstate extends MusicBeatSubstate
 		rank.scrollFactor.set();
 		add(rank);
 		rank.antialiasing = true;
-		rank.setGraphicSize(0,450);
+		rank.setGraphicSize(0, 450);
 		rank.updateHitbox();
 		rank.screenCenter();
 
 		combo = new FlxSprite(-20, 40).loadGraphic(Paths.image('rankings/$comboRank'));
 		combo.scrollFactor.set();
 		combo.screenCenter();
-		combo.x = rank.x - combo.width/2;
-		combo.y = rank.y - combo.height/2;
+		combo.x = rank.x - combo.width / 2;
+		combo.y = rank.y - combo.height / 2;
 		add(combo);
 		combo.antialiasing = true;
-		combo.setGraphicSize(0,130);
+		combo.setGraphicSize(0, 130);
 
 		var press:FlxText = new FlxText(20, 15, 0, "Press ANY to continue.", 32);
 		press.scrollFactor.set();
@@ -84,6 +87,21 @@ class RankingSubstate extends MusicBeatSubstate
 			case 'SDCB':
 				hint.text = "Nice. Try not missing at all for FC.";
 		}
+
+		if (PlayState.cheated)
+			hint.text = "BOOOO, YOU CHEATER! YOU SHOULD BE ASHAMED OF YOURSELF!";
+
+		if (_variables.botplay)
+		{
+			hint.y -= 35;
+			hint.text = "If you wanna gather that rank, disable botplay.";
+		}
+
+		if (PlayState.curDeaths >= 30)
+		{
+			hint.text = "skill issue\nnoob";
+		}
+
 		hint.screenCenter(X);
 
 		hint.alpha = press.alpha = 0;
@@ -100,8 +118,8 @@ class RankingSubstate extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
-		if (pauseMusic.volume < 0.5 * _variables.mvolume/100)
-			pauseMusic.volume += 0.01 * _variables.mvolume/100 * elapsed;
+		if (pauseMusic.volume < 0.5 * _variables.mvolume / 100)
+			pauseMusic.volume += 0.01 * _variables.mvolume / 100 * elapsed;
 
 		super.update(elapsed);
 
@@ -114,15 +132,17 @@ class RankingSubstate extends MusicBeatSubstate
 				case "Story":
 					if (PlayState.storyPlaylist.length <= 0)
 					{
-						switch (_variables.music)
-            			{
-    			            case 'classic':
-    			                FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
-								Conductor.changeBPM(102);
-    			            case 'funky':
-    			                FlxG.sound.playMusic(Paths.music('funkyMenu'), _variables.mvolume/100);
-								Conductor.changeBPM(140);
-    			        }
+						if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
+						{
+							FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+							Conductor.changeBPM(Std.parseFloat(File.getContent('assets/music/menu/' + _variables.music + '_BPM.txt')));
+						}
+						else
+						{
+							FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
+							Conductor.changeBPM(102);
+						}
+
 						FlxG.switchState(new MenuWeek());
 					}
 					else
@@ -154,7 +174,7 @@ class RankingSubstate extends MusicBeatSubstate
 					}
 				case "Freeplay":
 					FlxG.switchState(new MenuFreeplay());
-			}	
+			}
 		}
 	}
 
@@ -166,81 +186,84 @@ class RankingSubstate extends MusicBeatSubstate
 	}
 
 	function generateRanking():String
+	{
+		if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
+			comboRank = "MFC";
+		else if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
+			comboRank = "GFC";
+		else if (PlayState.misses == 0) // Regular FC
+			comboRank = "FC";
+		else if (PlayState.misses < 10) // Single Digit Combo Breaks
+			comboRank = "SDCB";
+
+		// WIFE TIME :)))) (based on Wife3)
+
+		var wifeConditions:Array<Bool> = [
+			PlayState.accuracy >= 99.9935, // P
+			PlayState.accuracy >= 99.980, // X
+			PlayState.accuracy >= 99.950, // X-
+			PlayState.accuracy >= 99.90, // SS+
+			PlayState.accuracy >= 99.80, // SS
+			PlayState.accuracy >= 99.70, // SS-
+			PlayState.accuracy >= 99.50, // S+
+			PlayState.accuracy >= 99, // S
+			PlayState.accuracy >= 96.50, // S-
+			PlayState.accuracy >= 93, // A+
+			PlayState.accuracy >= 90, // A
+			PlayState.accuracy >= 85, // A-
+			PlayState.accuracy >= 80, // B
+			PlayState.accuracy >= 70, // C
+			PlayState.accuracy >= 60, // D
+			PlayState.accuracy < 60 // E
+		];
+
+		for (i in 0...wifeConditions.length)
 		{
-			if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
-				comboRank = "MFC";
-			else if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
-				comboRank = "GFC";
-			else if (PlayState.misses == 0) // Regular FC
-				comboRank = "FC";
-			else if (PlayState.misses < 10) // Single Digit Combo Breaks
-				comboRank = "SDCB";
-	
-			// WIFE TIME :)))) (based on Wife3)
-	
-			var wifeConditions:Array<Bool> = [
-				PlayState.accuracy >= 99.9935, // P
-				PlayState.accuracy >= 99.980, // X
-				PlayState.accuracy >= 99.950, // X-
-				PlayState.accuracy >= 99.90, // SS+
-				PlayState.accuracy >= 99.80, // SS
-				PlayState.accuracy >= 99.70, // SS-
-				PlayState.accuracy >= 99.50, // S+
-				PlayState.accuracy >= 99, // S
-				PlayState.accuracy >= 96.50, // S-
-				PlayState.accuracy >= 93, // A+
-				PlayState.accuracy >= 90, // A
-				PlayState.accuracy >= 85, // A-
-				PlayState.accuracy >= 80, // B
-				PlayState.accuracy >= 70, // C
-				PlayState.accuracy >= 60, // D
-				PlayState.accuracy < 60 // E
-			];
-	
-			for(i in 0...wifeConditions.length)
+			var b = wifeConditions[i];
+			if (b)
 			{
-				var b = wifeConditions[i];
-				if (b)
+				rankingNum = i;
+				switch (i)
 				{
-					rankingNum = i;
-					switch(i)
-					{
-						case 0:
-							ranking = "P";
-						case 1:
-							ranking = "X";
-						case 2:
-							ranking = "X-";
-						case 3:
-							ranking = "SS+";
-						case 4:
-							ranking = "SS";
-						case 5:
-							ranking = "SS-";
-						case 6:
-							ranking = "S+";
-						case 7:
-							ranking = "S";
-						case 8:
-							ranking = "S-";
-						case 9:
-							ranking = "A+";
-						case 10:
-							ranking = "A";
-						case 11:
-							ranking = "A-";
-						case 12:
-							ranking = "B";
-						case 13:
-							ranking = "C";
-						case 14:
-							ranking = "D";
-						case 15:
-							ranking = "E";
-					}
-					break;
+					case 0:
+						ranking = "P";
+					case 1:
+						ranking = "X";
+					case 2:
+						ranking = "X-";
+					case 3:
+						ranking = "SS+";
+					case 4:
+						ranking = "SS";
+					case 5:
+						ranking = "SS-";
+					case 6:
+						ranking = "S+";
+					case 7:
+						ranking = "S";
+					case 8:
+						ranking = "S-";
+					case 9:
+						ranking = "A+";
+					case 10:
+						ranking = "A";
+					case 11:
+						ranking = "A-";
+					case 12:
+						ranking = "B";
+					case 13:
+						ranking = "C";
+					case 14:
+						ranking = "D";
+					case 15:
+						ranking = "E";
 				}
+
+				if (PlayState.cheated || PlayState.curDeaths >= 30 || PlayState.accuracy == 0)
+					ranking = "F";
+				break;
 			}
-			return ranking;
 		}
+		return ranking;
+	}
 }

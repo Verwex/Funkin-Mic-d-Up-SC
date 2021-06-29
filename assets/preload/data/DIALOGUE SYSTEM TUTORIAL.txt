@@ -3,6 +3,7 @@ DIALOGUE SYSTEM TUTORIAL:
 :: - character data, can range from bf to senpai or even the ones you make. To create a new character, make a file in assets/shared/images/portraits and name it however you want, then make an xml file named the same, it will be useful for animations. There are no limits to this one.
 
 !! - character's emotion, signified by an animation name. To make one, make a graphic for it inside of an image representing the character and then declare it inside of its xml file. There are no limits to this one.
+WARNING: IF YOU HAVE SPRITES THAT VERY EITHER IN WIDTH, OR HEIGHT, MAKE A BOUNDING BOx FOR THEM FIRST OR THEY'LL SINK, FLOAT, AND/OR SHIFT!
 
 [[ - font name. If you don't know what font you could use, check your fonts folder and check what name they have when you open them. NOTE: IF THEY DON'T DISPLAY PROPERLY, THIS MEANS YOU DON'T HAVE THAT FONT INSTALLED. INSTALL A FONT TO FIX THIS ISSUE. MOD MAKERS: IF YOU HAVE A FONT SUPPLIED THAT MOST PEOPLE WOULDN'T HAVE INSTALLED, MAKE SURE TO PACK THEM WITH YOUR RELEASE!
 

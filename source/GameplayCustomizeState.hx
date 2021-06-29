@@ -6,13 +6,8 @@ import flixel.math.FlxMath;
 import flixel.FlxCamera;
 import flixel.math.FlxPoint;
 import flixel.FlxObject;
-#if windows
 import Discord.DiscordClient;
-import sys.thread.Thread;
-#end
-
 import flixel.group.FlxGroup.FlxTypedGroup;
-import openfl.ui.Keyboard;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import MainVariables._variables;
@@ -31,24 +26,28 @@ class GameplayCustomizeState extends MusicBeatState
     var strumLine:FlxSprite;
     var strumLineNotes:FlxTypedGroup<FlxSprite>;
     var playerStrums:FlxTypedGroup<FlxSprite>;
+
     private var camHUD:FlxCamera;
+    private var camGame:FlxCamera;
 
     var zoomLerp:Float = 0.09;
     
     public override function create() {
-        #if windows
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Customizing Gameplay", null);
-		#end
 
-		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
-        super.create();
-
+        camGame = new FlxCamera();
+        FlxG.cameras.reset(camGame);
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
         FlxG.cameras.add(camHUD);
+
+        FlxCamera.defaultCameras = [camGame];
+
+		persistentUpdate = true;
+		persistentDraw = true;
 
         background.scrollFactor.set(0.9,0.9);
         curt.scrollFactor.set(0.9,0.9);
@@ -66,15 +65,13 @@ class GameplayCustomizeState extends MusicBeatState
 
 		camFollow.setPosition(camPos.x, camPos.y);
 
+        bf.debugMode = true;
         add(bf);
         add(dad);
-
-        add(sick);
 
 		add(camFollow);
 
 		FlxG.camera.follow(camFollow, LOCKON, 0.01);
-		// FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
 		FlxG.camera.zoom = 0.45;
         camHUD.zoom = 0.5;
 
@@ -84,14 +81,13 @@ class GameplayCustomizeState extends MusicBeatState
 		strumLine.scrollFactor.set();
 		
 		if (_variables.scroll == 'down')
-			strumLine.y = FlxG.height - 165;
+			camHUD.flashSprite.scaleY = -1;
 
 		strumLineNotes = new FlxTypedGroup<FlxSprite>();
 		add(strumLineNotes);
 
 		playerStrums = new FlxTypedGroup<FlxSprite>();
 
-        sick.cameras = [camHUD];
         strumLine.cameras = [camHUD];
         playerStrums.cameras = [camHUD];
         
@@ -102,6 +98,9 @@ class GameplayCustomizeState extends MusicBeatState
 		sick.antialiasing = true;
 
         sick.updateHitbox();
+        add(sick);
+
+        super.create();
 
         sick.x = _variables.sickX;
         sick.y = _variables.sickY;

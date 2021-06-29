@@ -1,3 +1,5 @@
 export/
 .vscode/
-APIStuff.hx
+._*
+source/APIStuff.hx
+art/flashFiles/RECOVER_BoyFriend_Assets.fla

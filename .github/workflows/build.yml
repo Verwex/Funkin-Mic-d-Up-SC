@@ -5,15 +5,15 @@ name: Build
 # Controls when the action will run. 
 on:
   #checks every friday because friday is the funkin time
-  schedule: 
-  - cron: "0 12 * * *"
-    
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master, main]
-  pull_request:
-    branches: [ master, main]
+  #schedule: 
+  #- cron: "0 12 * * *"
 
+  # Triggers the workflow on push or pull request events but only for the master branch
+  #push:
+    #branches: [ master, main]
+  #pull_request:
+    #branches: [ master, main]
+    
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -44,26 +44,33 @@ jobs:
           haxelib run lime setup
           haxelib install flixel-tools
           haxelib install flixel-ui
-          haxelib install flixel-addons
+          haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons
           haxelib install newgrounds
           haxelib git polymod https://github.com/larsiusprime/polymod.git
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
+          haxelib install seedyrng
+          haxelib install random
+          haxelib git hscript-plus https://github.com/DleanJeans/hscript-plus/
+          haxelib git systools https://github.com/haya3218/systools
           haxelib list
       - name: Create APIStuff
         uses: "finnp/create-file-action@master"
         env:
           FILE_NAME: "source/APIStuff.hx"
           FILE_DATA: "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}"
+      - name: Rebuild systools
+        run: haxelib run lime rebuild systools linux
       - name: Compile
         run: haxelib run lime build linux
       - name: Archive
         run: tar -czf bin.tar.gz 'export/release/linux/bin' 
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: linuxBuild
-          path: bin.tar.gz
+#      - name: Publish Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: linuxBuild
+#          path: bin.tar.gz
+#          retention-days: 1
   buildWindows:
     runs-on: windows-latest
     
@@ -86,24 +93,31 @@ jobs:
           haxelib run lime setup
           haxelib install flixel-tools
           haxelib install flixel-ui
-          haxelib install flixel-addons
+          haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons
           haxelib install newgrounds
           haxelib git polymod https://github.com/larsiusprime/polymod.git
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
+          haxelib install seedyrng
+          haxelib install random
+          haxelib git hscript-plus https://github.com/DleanJeans/hscript-plus/
+          haxelib git systools https://github.com/haya3218/systools
           haxelib list
         shell: cmd
       - name: Create APIStuff
         run: echo "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}" > source/APIStuff.hx
+      - name: Rebuild systools
+        run: haxelib run lime rebuild systools windows
       - name: Compile
         run: haxelib run lime build windows
       - name: Archive
         run: tar -czf bin.tar.gz export/release/windows/bin
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: windowsBuild
-          path: bin.tar.gz
+#      - name: Publish Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: windowsBuild
+#          path: bin.tar.gz
+#          retention-days: 1
   buildMac:
     runs-on: macos-latest
 
@@ -126,20 +140,28 @@ jobs:
           haxelib run lime setup
           haxelib install flixel-tools
           haxelib install flixel-ui
-          haxelib install flixel-addons
+          haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons
           haxelib install newgrounds
           haxelib git polymod https://github.com/larsiusprime/polymod.git
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
+          haxelib install seedyrng
+          haxelib install random
+          haxelib git hscript-plus https://github.com/DleanJeans/hscript-plus/
+          haxelib git systools https://github.com/haya3218/systools
           haxelib list
       - name: Create APIStuff
         run: echo "package;class APIStuff{public static var API:String = '';public static var EncKey:String = '';}" > source/APIStuff.hx
+      - name: Rebuild systools
+        run: haxelib run lime rebuild systools mac
       - name: Compile
         run: haxelib run lime build mac 
       - name: Archive
         run: tar -czf bin.tar.gz export/release/macos/bin
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: macBuild
-          path: bin.tar.gz
+#      - name: Publish Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: macBuild
+#          path: bin.tar.gz
+#          retention-days: 1
+

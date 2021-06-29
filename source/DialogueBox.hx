@@ -6,9 +6,7 @@ import flixel.math.FlxMath;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.text.FlxTypeText;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxSpriteGroup;
-import flixel.input.FlxKeyManager;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
@@ -19,8 +17,8 @@ using StringTools;
 
 typedef Dialogue =
 {
-    var addY:Int;
-    var canFlip:Bool;
+	var addY:Int;
+	var canFlip:Bool;
 }
 
 class DialogueBox extends FlxSpriteGroup
@@ -31,9 +29,7 @@ class DialogueBox extends FlxSpriteGroup
 
 	var camLerp:Float = 0.14;
 
-
-
-	//there's going to be a ton of these for making the system robust
+	// there's going to be a ton of these for making the system robust
 	var bgALPHA:Int;
 	var bgRED:Int;
 	var bgGREEN:Int;
@@ -51,7 +47,6 @@ class DialogueBox extends FlxSpriteGroup
 	var bgFIL:Int;
 	var handSprite:String = '#FFFFFFFF';
 	var clickSound:String = '#FF000000';
-	
 
 	var curCharacter:String = '';
 	var oldCharacter:String = '';
@@ -70,8 +65,6 @@ class DialogueBox extends FlxSpriteGroup
 	var oldBox:String = '';
 	var curSound:String = 'pixelText';
 	var timeCut:Int;
-
-
 
 	var dialogue:Alphabet;
 	var dialogueList:Array<String> = [];
@@ -104,24 +97,28 @@ class DialogueBox extends FlxSpriteGroup
 
 		setUp();
 
-		if (_modifiers.VibeSwitch)
-			{
-				switch (_modifiers.Vibe)
+		if (_variables.cutscene && (_variables.skipCS == -1 || (_variables.skipCS > 0 && PlayState.curDeaths < _variables.skipCS)))
+		{
+			if (_modifiers.VibeSwitch)
 				{
-				case 0.8:
-					FlxG.sound.playMusic(Paths.music('dialogueMusic/'+curMusic+'_HIFI'), 0);
-				case 1.2:
-					FlxG.sound.playMusic(Paths.music('dialogueMusic/'+curMusic+'_LOFI'), 0);
-				default:
-					FlxG.sound.playMusic(Paths.music('dialogueMusic/'+curMusic), 0);
+					switch (_modifiers.Vibe)
+					{
+						case 0.8:
+							FlxG.sound.playMusic(Paths.music('dialogueMusic/' + curMusic + '_HIFI'), 0);
+						case 1.2:
+							FlxG.sound.playMusic(Paths.music('dialogueMusic/' + curMusic + '_LOFI'), 0);
+						default:
+							FlxG.sound.playMusic(Paths.music('dialogueMusic/' + curMusic), 0);
+					}
 				}
-			}
-		else
-			FlxG.sound.playMusic(Paths.music('dialogueMusic/'+curMusic), 0);
+				else
+					FlxG.sound.playMusic(Paths.music('dialogueMusic/' + curMusic), 0);
 
-		FlxG.sound.music.fadeIn(1, 0, 0.8 * Std.parseInt(curVolume)/100 * _variables.mvolume/100);
+			FlxG.sound.music.fadeIn(1, 0, 0.8 * Std.parseInt(curVolume) / 100 * _variables.mvolume / 100);
+		}
 
-		bgFade = new FlxSprite(-200, -200).makeGraphic(Std.int(FlxG.width * 1.3), Std.int(FlxG.height * 1.3), FlxColor.fromRGB(bgRED, bgGREEN, bgBLUE, bgALPHA));
+		bgFade = new FlxSprite(-200,
+			-200).makeGraphic(Std.int(FlxG.width * 1.3), Std.int(FlxG.height * 1.3), FlxColor.fromRGB(bgRED, bgGREEN, bgBLUE, bgALPHA));
 		bgFade.scrollFactor.set();
 		bgFade.alpha = 0;
 		add(bgFade);
@@ -133,16 +130,8 @@ class DialogueBox extends FlxSpriteGroup
 				bgFade.alpha = 1;
 		}, bgFIL);
 
-		switch (PlayState.SONG.song.toLowerCase())
-		{
-			case 'thorns':
-				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward'));
-				face.setGraphicSize(Std.int(face.width * 6));
-				add(face);
-		}
-		
 		portrait = new FlxSprite(-20, 40);
-		portrait.frames = Paths.getSparrowAtlas('portraits/$curCharacter');
+		portrait.frames = Paths.getSparrowAtlas('portraits/$curCharacter', 'shared');
 		portrait.animation.addByPrefix('neutral', 'neutral', 24, false);
 		portrait.setGraphicSize(Std.int(portrait.width * PlayState.daPixelZoom * 0.9));
 		portrait.updateHitbox();
@@ -152,8 +141,16 @@ class DialogueBox extends FlxSpriteGroup
 		add(portrait);
 		portrait.visible = false;
 
+		switch (PlayState.SONG.song.toLowerCase())
+		{
+			case 'thorns':
+				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward', 'week6'));
+				face.setGraphicSize(Std.int(face.width * 6));
+				add(face);
+		}
+
 		box = new FlxSprite(-20, 45);
-		box.frames = Paths.getSparrowAtlas('dialogueBoxes/$curBox');
+		box.frames = Paths.getSparrowAtlas('dialogueBoxes/$curBox', 'shared');
 		box.animation.addByPrefix('open', 'open', 24, false);
 		box.animation.addByPrefix('normal', 'normal', 24, true);
 		box.animation.play('open');
@@ -169,15 +166,15 @@ class DialogueBox extends FlxSpriteGroup
 
 		if (curBox != null)
 		{
-			var data:String = File.getContent(Paths.json('dialogueBoxes/'+curBox));
-        	_dialogue = Json.parse(data);
+			var data:String = File.getContent(Paths.json('dialogueBoxes/' + curBox));
+			_dialogue = Json.parse(data);
 		}
 
 		box.y += _dialogue.addY;
 
 		portrait.screenCenter(Y);
 
-		handSelect = new FlxSprite(1240, 680).loadGraphic(Paths.image('dialogueHands/$handSprite'));
+		handSelect = new FlxSprite(1240, 680).loadGraphic(Paths.image('dialogueHands/$handSprite', 'shared'));
 		handSelect.setGraphicSize(Std.int(100));
 		handSelect.updateHitbox();
 		handSelect.x -= handSelect.width;
@@ -192,7 +189,7 @@ class DialogueBox extends FlxSpriteGroup
 		swagDialogue = new FlxTypeText(240, 480, Std.int(FlxG.width * 0.6), "", Std.parseInt(curFontScale));
 		swagDialogue.font = curFont;
 		swagDialogue.color = FlxColor.fromString(dialogueColor);
-		swagDialogue.sounds = [FlxG.sound.load(Paths.sound(curSound), 0.6*_variables.svolume/100)];
+		swagDialogue.sounds = [FlxG.sound.load(Paths.sound(curSound), 0.6 * _variables.svolume / 100)];
 		add(swagDialogue);
 
 		dialogue = new Alphabet(0, 80, "", false, true);
@@ -205,14 +202,14 @@ class DialogueBox extends FlxSpriteGroup
 
 	override function update(elapsed:Float)
 	{
-
 		if (dialogueStarted)
 		{
-			FlxG.sound.music.volume = FlxMath.lerp(FlxG.sound.music.volume, 0.8 * Std.parseInt(curVolume)/100 * _variables.mvolume/100, camLerp/(_variables.fps/60));
+			FlxG.sound.music.volume = FlxMath.lerp(FlxG.sound.music.volume, 0.8 * Std.parseInt(curVolume) / 100 * _variables.mvolume / 100,
+				camLerp / (_variables.fps / 60));
 			if (curFlip == 'true')
-				portrait.x = FlxMath.lerp(portrait.x, 580 - portrait.width,(camLerp*2)/(_variables.fps/60));
+				portrait.x = FlxMath.lerp(portrait.x, 580 - portrait.width, (camLerp * 2) / (_variables.fps / 60));
 			else
-				portrait.x = FlxMath.lerp(portrait.x, 700,(camLerp*2)/(_variables.fps/60));
+				portrait.x = FlxMath.lerp(portrait.x, 700, (camLerp * 2) / (_variables.fps / 60));
 		}
 
 		dropText.text = swagDialogue.text;
@@ -232,11 +229,11 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if (FlxG.keys.justPressed.ANY  && dialogueStarted == true)
+		if (FlxG.keys.justPressed.ANY && dialogueStarted == true)
 		{
 			remove(dialogue);
-				
-			FlxG.sound.play(Paths.sound('dialogueClicks/$clickSound'), 0.8* _variables.svolume/100);
+
+			FlxG.sound.play(Paths.sound('dialogueClicks/$clickSound'), 0.8 * _variables.svolume / 100);
 
 			if (dialogueList[1] == null && dialogueList[0] != null)
 			{
@@ -256,7 +253,7 @@ class DialogueBox extends FlxSpriteGroup
 						dropText.alpha = swagDialogue.alpha;
 					}, fadeOutLoop);
 
-					new FlxTimer().start(fadeOutTime * (fadeOutLoop+1), function(tmr:FlxTimer)
+					new FlxTimer().start(fadeOutTime * (fadeOutLoop + 1), function(tmr:FlxTimer)
 					{
 						finishThing();
 						kill();
@@ -269,7 +266,7 @@ class DialogueBox extends FlxSpriteGroup
 				startDialogue();
 			}
 		}
-		
+
 		super.update(elapsed);
 	}
 
@@ -355,30 +352,30 @@ class DialogueBox extends FlxSpriteGroup
 		// swagDialogue.text = ;
 		swagDialogue.resetText(dialogueList[0]);
 
-		new FlxTimer().start(Std.parseInt(curShakeDelay)*Std.parseFloat(curSpeed), function(tmr:FlxTimer)
-			{
-				FlxG.cameras.shake(Std.parseFloat(curShake), Std.parseInt(curShakeTime)*Std.parseFloat(curSpeed));
-			});
+		new FlxTimer().start(Std.parseInt(curShakeDelay) * Std.parseFloat(curSpeed), function(tmr:FlxTimer)
+		{
+			FlxG.cameras.shake(Std.parseFloat(curShake), Std.parseInt(curShakeTime) * Std.parseFloat(curSpeed));
+		});
 
-		new FlxTimer().start(Std.parseInt(curFlashDelay)*Std.parseFloat(curSpeed), function(tmr:FlxTimer)
+		new FlxTimer().start(Std.parseInt(curFlashDelay) * Std.parseFloat(curSpeed), function(tmr:FlxTimer)
+		{
+			FlxG.cameras.flash(0xFFFFFFFF, Std.parseInt(curFlashTime) * Std.parseFloat(curSpeed));
+			if (Std.parseInt(curFlashTime) > 0)
 			{
-				FlxG.cameras.flash(0xFFFFFFFF, Std.parseInt(curFlashTime)*Std.parseFloat(curSpeed));
-				if (Std.parseInt(curFlashTime) > 0)
+				switch (PlayState.curStage)
 				{
-					switch (PlayState.curStage)
-					{
-						case 'school'|'schoolEvil':
-							FlxG.sound.play(Paths.sound('shocker-pixel'), _variables.svolume/100);
-						default:
-							FlxG.sound.play(Paths.sound('shocker'), _variables.svolume/100);
-					}
+					case 'school' | 'schoolEvil':
+						FlxG.sound.play(Paths.sound('shocker-pixel'), _variables.svolume / 100);
+					default:
+						FlxG.sound.play(Paths.sound('shocker'), _variables.svolume / 100);
 				}
-			});
+			}
+		});
 
 		portrait.frames = Paths.getSparrowAtlas('portraits/$curCharacter');
 		portrait.visible = true;
 
-		if (portrait.width < 256)
+		if (portrait.width < 98)
 		{
 			portrait.setGraphicSize(Std.int(portrait.width * 6));
 			portrait.antialiasing = false;
@@ -391,16 +388,16 @@ class DialogueBox extends FlxSpriteGroup
 		if (curFlip == 'true')
 			portrait.flipX = true;
 		else
-			portrait.flipX = false;	
+			portrait.flipX = false;
 
 		if (curCharacter != oldCharacter)
 		{
 			portrait.alpha = 0;
 
 			new FlxTimer().start(fadeInTime, function(tmr:FlxTimer)
-				{
-					portrait.alpha += 1 / fadeInLoop;
-				}, fadeInLoop);
+			{
+				portrait.alpha += 1 / fadeInLoop;
+			}, fadeInLoop);
 
 			if (curFlip == 'true')
 				portrait.x = 280 - portrait.width;
@@ -428,8 +425,8 @@ class DialogueBox extends FlxSpriteGroup
 			box.screenCenter(X);
 			box.y = 710 - box.height;
 
-			var data:String = File.getContent(Paths.json('dialogueBoxes/'+curBox));
-            _dialogue = Json.parse(data);
+			var data:String = File.getContent(Paths.json('dialogueBoxes/' + curBox));
+			_dialogue = Json.parse(data);
 
 			box.y += _dialogue.addY;
 		}
@@ -443,7 +440,9 @@ class DialogueBox extends FlxSpriteGroup
 		dropText.font = swagDialogue.font = curFont;
 		dropText.size = swagDialogue.size = Std.parseInt(curFontScale);
 
-		swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogueSounds/$curSound'), 0.6*_variables.svolume/100)];
+		swagDialogue.sounds = [
+			FlxG.sound.load(Paths.sound('dialogueSounds/$curSound'), 0.6 * _variables.svolume / 100)
+		];
 
 		dropText.color = FlxColor.fromString(shadowColor);
 		swagDialogue.color = FlxColor.fromString(dialogueColor);
@@ -453,12 +452,12 @@ class DialogueBox extends FlxSpriteGroup
 
 		if (timeCut > 0)
 		{
-			new FlxTimer().start(Std.parseFloat(curSpeed)*timeCut, function(tmr:FlxTimer)
-				{
-					dialogueList.remove(dialogueList[0]);
-					FlxG.sound.play(Paths.sound('dialogueClicks/$clickSound'), 0.8* _variables.svolume/100);
-					startDialogue();
-				}, 1);
+			new FlxTimer().start(Std.parseFloat(curSpeed) * timeCut, function(tmr:FlxTimer)
+			{
+				dialogueList.remove(dialogueList[0]);
+				FlxG.sound.play(Paths.sound('dialogueClicks/$clickSound'), 0.8 * _variables.svolume / 100);
+				startDialogue();
+			}, 1);
 		}
 
 		swagDialogue.start(Std.parseFloat(curSpeed), true);

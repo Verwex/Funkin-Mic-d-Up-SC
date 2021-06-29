@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf-christmas.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="anime instance 10000" x="2" y="2" width="423" height="391"/>
+	<SubTexture name="crying instance 10000" x="427" y="2" width="425" height="390"/>
+	<SubTexture name="damage instance 10000" x="854" y="2" width="424" height="390"/>
+	<SubTexture name="default instance 10000" x="1280" y="2" width="423" height="390"/>
+	<SubTexture name="horny instance 10000" x="2" y="395" width="422" height="390"/>
+	<SubTexture name="kiss instance 10000" x="426" y="395" width="423" height="391"/>
+	<SubTexture name="shaking instance 10000" x="851" y="395" width="423" height="390"/>
+	<SubTexture name="uneasy instance 10000" x="1276" y="395" width="423" height="390"/>
+</TextureAtlas>

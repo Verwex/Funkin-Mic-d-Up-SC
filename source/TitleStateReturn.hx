@@ -1,34 +1,17 @@
 package;
 
-#if desktop
+import openfl.Lib;
 import Discord.DiscordClient;
-import sys.thread.Thread;
-#end
-
 import flixel.util.FlxGradient;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.addons.transition.TransitionData;
-import flixel.graphics.FlxGraphic;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
-import flixel.math.FlxPoint;
-import flixel.math.FlxRect;
-import flixel.system.FlxSound;
-import flixel.system.ui.FlxSoundTray;
-import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import io.newgrounds.NG;
-import lime.app.Application;
-import openfl.Assets;
 import MainVariables._variables;
 
 using StringTools;
@@ -38,7 +21,7 @@ class TitleStateReturn extends MusicBeatState
 	static var initialized:Bool = false;
 
 	var blackScreen:FlxSprite;
-	var gradientBar:FlxSprite = new FlxSprite(0,0).makeGraphic(FlxG.width, 1, 0xFFAA00AA);
+	var gradientBar:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, 1, 0xFFAA00AA);
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
@@ -59,11 +42,8 @@ class TitleStateReturn extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
-		#if desktop
-			DiscordClient.changePresence("In the Title Screen", null);
-		#end
+		DiscordClient.changePresence("In the Title Screen", null);
 
-		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -77,7 +57,7 @@ class TitleStateReturn extends MusicBeatState
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
-		logoBl.scale.set(0.6,0.6);
+		logoBl.scale.set(0.6, 0.6);
 		logoBl.updateHitbox();
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
@@ -97,7 +77,7 @@ class TitleStateReturn extends MusicBeatState
 		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
 		// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
 
-		gradientBar = FlxGradient.createGradientFlxSprite(Math.round(FlxG.width), 512, [0x00ff0000, 0x553D0468, 0xAABF1943], 1, 90, true); 
+		gradientBar = FlxGradient.createGradientFlxSprite(Math.round(FlxG.width), 512, [0x00ff0000, 0x553D0468, 0xAABF1943], 1, 90, true);
 		gradientBar.y = FlxG.height - gradientBar.height;
 		gradientBar.scale.y = 0;
 		gradientBar.updateHitbox();
@@ -117,7 +97,12 @@ class TitleStateReturn extends MusicBeatState
 		add(titleText);
 
 		FlxG.camera.flash(FlxColor.WHITE, 4);
-		FlxTween.tween(logoBl, {'scale.x': 0.45, 'scale.y': 0.45, x: -165, y: -125}, 1.3, {ease: FlxEase.expoInOut, startDelay: 1.3});
+		FlxTween.tween(logoBl, {
+			'scale.x': 0.45,
+			'scale.y': 0.45,
+			x: -165,
+			y: -125
+		}, 1.3, {ease: FlxEase.expoInOut, startDelay: 1.3});
 		FlxTween.tween(gfDance, {y: 20}, 2.3, {ease: FlxEase.expoInOut, startDelay: 0.8});
 	}
 
@@ -135,12 +120,12 @@ class TitleStateReturn extends MusicBeatState
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
 		Timer += 1;
-		gradientBar.scale.y += Math.sin(Timer/10)*0.001/(_variables.fps/60);
+		gradientBar.scale.y += Math.sin(Timer / 10) * 0.001 / (_variables.fps / 60);
 		gradientBar.updateHitbox();
 		gradientBar.y = FlxG.height - gradientBar.height;
-		//gradientBar = FlxGradient.createGradientFlxSprite(Math.round(FlxG.width), Math.round(gradientBar.height), [0x00ff0000, 0xaaAE59E4, 0xff19ECFF], 1, 90, true); 
+		// gradientBar = FlxGradient.createGradientFlxSprite(Math.round(FlxG.width), Math.round(gradientBar.height), [0x00ff0000, 0xaaAE59E4, 0xff19ECFF], 1, 90, true);
 
-		logoBl.angle = Math.sin(Timer/270) * 5/(_variables.fps/60);
+		logoBl.angle = Math.sin(Timer / 270) * 5 / (_variables.fps / 60);
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 
@@ -167,17 +152,54 @@ class TitleStateReturn extends MusicBeatState
 			#end
 		}
 
+		if (FlxG.keys.justPressed.F)
+		{
+			_variables.fullscreen = !_variables.fullscreen;
+			Lib.application.window.maximized = false;
+			FlxG.fullscreen = _variables.fullscreen;
+
+			MainVariables.Save();
+		}
+
+		if (controls.LEFT)
+		{
+			_variables.hue -= 1;
+
+			if (_variables.hue < 0)
+				_variables.hue = 359;
+			if (_variables.hue > 359)
+				_variables.hue = 0;
+
+			MainVariables.UpdateColors();
+			MainVariables.Save();
+		}
+
+		if (controls.RIGHT)
+		{
+			_variables.hue += 1;
+
+			if (_variables.hue < 0)
+				_variables.hue = 359;
+			if (_variables.hue > 359)
+				_variables.hue = 0;
+
+			MainVariables.UpdateColors();
+			MainVariables.Save();
+		}
+
+		if (FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.R)
+		{
+			TitleState.restart();
+		}
+
 		if (pressedEnter && !transitioning)
 		{
-
 			titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1, null, true);
-			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7*_variables.svolume/100);
+			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7 * _variables.svolume / 100);
 
-			#if desktop
 			DiscordClient.changePresence("Proceeding to the Main Menu", null);
-			#end
 
 			transitioning = true;
 			// FlxG.sound.music.stop();

@@ -7,7 +7,6 @@ import ModifierVariables._modifiers;
  * ...
  * @author
  */
-
 typedef BPMChangeEvent =
 {
 	var stepTime:Int;
@@ -24,7 +23,7 @@ class Conductor
 	public static var lastSongPos:Float;
 	public static var offset:Float = 0;
 
-	public static var safeFrames:Int = 10;
+	public static var safeFrames:Int = 23; // new input system made me do this :/
 	public static var safeZoneOffset:Float = (safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
 	public static var timeScale:Float = Conductor.safeZoneOffset / 166;
 
@@ -44,7 +43,7 @@ class Conductor
 		var totalPos:Float = 0;
 		for (i in 0...song.notes.length)
 		{
-			if(song.notes[i].changeBPM && song.notes[i].bpm != curBPM)
+			if (song.notes[i].changeBPM && song.notes[i].bpm != curBPM)
 			{
 				curBPM = song.notes[i].bpm;
 				var event:BPMChangeEvent = {

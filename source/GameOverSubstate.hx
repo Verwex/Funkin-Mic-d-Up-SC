@@ -6,8 +6,6 @@ import flixel.text.FlxText;
 import flixel.math.FlxMath;
 import flixel.FlxG;
 import flixel.FlxObject;
-import flixel.FlxSubState;
-import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import MainVariables._variables;
@@ -90,7 +88,8 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (controls.BACK)
 		{
-				FlxG.sound.music.stop();
+			PlayState.curDeaths = 0;
+			FlxG.sound.music.stop();
 
 			switch (PlayState.gameplayArea)
 			{

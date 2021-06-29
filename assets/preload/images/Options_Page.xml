@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Options_Page.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="PI_idle instance 10000" x="4" y="4" width="70" height="14"/>
+	<SubTexture name="PI_select instance 10000" x="4" y="28" width="70" height="20"/>
+</TextureAtlas>

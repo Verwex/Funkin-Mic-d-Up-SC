@@ -10,16 +10,12 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.effects.FlxFlicker;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import io.newgrounds.NG;
-import lime.app.Application;
 import MainVariables._variables;
 import flixel.math.FlxMath;
 
@@ -120,7 +116,7 @@ class MenuModifiers extends MusicBeatState
 		add(side);
 		side.y = FlxG.height - side.height;
 
-		camFollow = new FlxObject(-1420, 360, 1, 1);
+		camFollow = new FlxObject(-1420, 20, 1, 1);
 		add(camFollow);
 
 		calculateStart();
@@ -179,9 +175,7 @@ class MenuModifiers extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, camLerp);
 
-        #if desktop
-			DiscordClient.changePresence("Settings up modifiers", null);
-		#end
+		DiscordClient.changePresence("Settings up modifiers", null);
     }
 
 	var selectable:Bool = false;
@@ -204,9 +198,14 @@ class MenuModifiers extends MusicBeatState
 				menuItem.antialiasing = true;
 				menuItem.scrollFactor.x = 1;
 				menuItem.scrollFactor.y = 1;
+				menuItem.scale.set(0.6, 0.6);
+				menuItem.x = 300 + (i * 250*0.6);
+				menuItem.updateHitbox();
 				menuItem.y = 500;
 	
 				var coolCheckmark:FlxSprite = new FlxSprite(300, 500).loadGraphic(Paths.image('checkmark'));
+				coolCheckmark.scale.set(0.6, 0.6);
+				coolCheckmark.updateHitbox();
 				coolCheckmark.visible = modifierList[i].value;
 				
 				menuItems.add(menuItem);
@@ -222,6 +221,9 @@ class MenuModifiers extends MusicBeatState
 					awesomeCheckmark.antialiasing = true;
 					awesomeCheckmark.scrollFactor.x = 1;
 					awesomeCheckmark.scrollFactor.y = 1;
+					awesomeCheckmark.scale.set(0.6, 0.6);
+					awesomeCheckmark.updateHitbox();
+					awesomeCheckmark.x = 300 + 50*0.6 + (i * 250*0.6);
 					awesomeCheckmark.y = 500;
 					
 					menuChecks.add(awesomeCheckmark);
@@ -299,9 +301,7 @@ class MenuModifiers extends MusicBeatState
 					FlxTween.tween(gradientBar, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
 					FlxTween.tween(side, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
 
-					#if desktop
 					DiscordClient.changePresence("Going Back!", null);
-					#end
 
 					FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume/100);
 
@@ -323,17 +323,16 @@ class MenuModifiers extends MusicBeatState
 
 					if (spr.ID == curSelected)
 					{
-						camFollow.x = FlxMath.lerp(camFollow.x, spr.getGraphicMidpoint().x, camLerp/(_variables.fps/60));
-						camFollow.y = FlxMath.lerp(camFollow.y, spr.getGraphicMidpoint().y, camLerp/(_variables.fps/60));
+						camFollow.x = FlxMath.lerp(camFollow.x, spr.getGraphicMidpoint().x - 35, camLerp/(_variables.fps/60));
 						name.text = modifierList[spr.ID].name.toUpperCase();
 						explain.text = modifierList[spr.ID].explanation;
 					}
 
 					spr.updateHitbox();
 
-					spr.y = 360 - Math.exp(Math.abs(camFollow.x - 30 - spr.x + spr.width/2)/80);
+					spr.y = 0 - Math.exp(Math.abs(camFollow.x - 30 - spr.x - spr.width/10)/80);
 					if (spr.y > -500)
-						spr.y = 360 - Math.exp(Math.abs(camFollow.x - 30 - spr.x + spr.width/2)/80);
+						spr.y = 0 - Math.exp(Math.abs(camFollow.x - 30 - spr.x - spr.width/10)/80);
 					else
 						spr.y = -500;
 
@@ -349,6 +348,9 @@ class MenuModifiers extends MusicBeatState
 
 	function changeItem(huh:Int = 0)
 		{
+			if (controls.CENTER)
+				huh *= 2;
+
 			curSelected += huh;
 			
 			if (curSelected >= menuItems.length)
@@ -482,7 +484,11 @@ class MenuModifiers extends MusicBeatState
 
 	function scrollValue(change:Float = 0)
 		{
-			modifierList[curSelected].curValue += change;
+			if (controls.CENTER)
+				change *= 2;
+
+			modifierList[curSelected].curValue += FlxMath.roundDecimal(change, 5);
+			modifierList[curSelected].curValue = FlxMath.roundDecimal(modifierList[curSelected].curValue, 5);
 			
 			if (modifierList[curSelected].curValue >= modifierList[curSelected].maxValue)
 				modifierList[curSelected].curValue = modifierList[curSelected].maxValue;

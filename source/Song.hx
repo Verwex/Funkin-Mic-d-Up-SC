@@ -1,8 +1,8 @@
 package;
 
+import lime.app.Application;
 import Section.SwagSection;
 import haxe.Json;
-import haxe.format.JsonParser;
 import lime.utils.Assets;
 import ModifierVariables._modifiers;
 
@@ -44,7 +44,20 @@ class Song
 
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
+		#if !sys
 		var rawJson = Assets.getText(Paths.json(folder.toLowerCase() + '/' + jsonInput.toLowerCase())).trim();
+		#else
+		var rawJson:String = null;
+		try
+		{
+			rawJson = sys.io.File.getContent(Paths.json(folder.toLowerCase() + '/' + jsonInput.toLowerCase())).trim();
+		}
+		catch (error)
+		{
+			Application.current.window.alert('Chart is unreadable!\nDETAILS: ' + error, 'Er....');
+			rawJson = sys.io.File.getContent(Paths.json('test' + '/' + 'test.json')).trim();
+		}
+		#end
 
 		while (!rawJson.endsWith("}"))
 		{

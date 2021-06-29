@@ -1,7 +1,5 @@
 package;
 
-import cpp.abi.Abi;
-import sys.FileStat;
 import haxe.Json;
 import sys.io.File;
 import sys.FileSystem;
@@ -61,10 +59,14 @@ typedef ModiVariables =
     var Love:Float;
     var FrightSwitch:Bool;
     var Fright:Float;
+    var MustDieSwitch:Bool;
+    var MustDie:Float;
     var FreezeSwitch:Bool;
     var Freeze:Float;
     var PaparazziSwitch:Bool;
     var Paparazzi:Float;
+    var JacktasticSwitch:Bool;
+    var Jacktastic:Float;
 }
 
 class ModifierVariables
@@ -138,30 +140,36 @@ class ModifierVariables
             Widen: MenuModifiers.modifierList[22].curValue,
             WidenSwitch: MenuModifiers.modifierList[22].value,
 
-            Seasick: MenuModifiers.modifierList[23].curValue,
-            SeasickSwitch: MenuModifiers.modifierList[23].value,
+            Jacktastic: MenuModifiers.modifierList[23].curValue,
+            JacktasticSwitch: MenuModifiers.modifierList[23].value,
 
-            UpsideDown: MenuModifiers.modifierList[24].value,
+            Seasick: MenuModifiers.modifierList[24].curValue,
+            SeasickSwitch: MenuModifiers.modifierList[24].value,
 
-            Mirror: MenuModifiers.modifierList[25].value,
+            UpsideDown: MenuModifiers.modifierList[25].value,
 
-            Camera: MenuModifiers.modifierList[26].curValue,
-            CameraSwitch: MenuModifiers.modifierList[26].value,
+            Mirror: MenuModifiers.modifierList[26].value,
 
-            Earthquake: MenuModifiers.modifierList[27].curValue,
-            EarthquakeSwitch: MenuModifiers.modifierList[27].value,
+            Camera: MenuModifiers.modifierList[27].curValue,
+            CameraSwitch: MenuModifiers.modifierList[27].value,
 
-            Love: MenuModifiers.modifierList[28].curValue,
-            LoveSwitch: MenuModifiers.modifierList[28].value,
+            Earthquake: MenuModifiers.modifierList[28].curValue,
+            EarthquakeSwitch: MenuModifiers.modifierList[28].value,
 
-            Fright: MenuModifiers.modifierList[29].curValue,
-            FrightSwitch: MenuModifiers.modifierList[29].value,
+            Love: MenuModifiers.modifierList[29].curValue,
+            LoveSwitch: MenuModifiers.modifierList[29].value,
 
-            Freeze: MenuModifiers.modifierList[30].curValue,
-            FreezeSwitch: MenuModifiers.modifierList[30].value,
+            Fright: MenuModifiers.modifierList[30].curValue,
+            FrightSwitch: MenuModifiers.modifierList[30].value,
 
-            Paparazzi: MenuModifiers.modifierList[31].curValue,
-            PaparazziSwitch: MenuModifiers.modifierList[31].value
+            MustDie: MenuModifiers.modifierList[31].curValue,
+            MustDieSwitch: MenuModifiers.modifierList[31].value,
+
+            Freeze: MenuModifiers.modifierList[32].curValue,
+            FreezeSwitch: MenuModifiers.modifierList[32].value,
+
+            Paparazzi: MenuModifiers.modifierList[33].curValue,
+            PaparazziSwitch: MenuModifiers.modifierList[33].value
         };
     }
 
@@ -171,12 +179,12 @@ class ModifierVariables
         if (!FileSystem.isDirectory('presets/modifiers'))
             FileSystem.createDirectory('presets/modifiers');
 
-        File.saveContent(('presets/modifiers/current'), Json.stringify(_modifiers));
+        File.saveContent(('presets/modifiers/current'), Json.stringify(_modifiers, null, '    '));
     }
 
     public static function savePreset(input:String):Void
         {
-            File.saveContent(('presets/modifiers/'+input), Json.stringify(_modifiers)); //just an example for now
+            File.saveContent(('presets/modifiers/'+input), Json.stringify(_modifiers, null, '    ')); //just an example for now
         }
 
     public static function loadPreset(input:String):Void
@@ -264,30 +272,36 @@ class ModifierVariables
         MenuModifiers.modifierList[22].curValue = _modifiers.Widen;
         MenuModifiers.modifierList[22].value = _modifiers.WidenSwitch;
 
-        MenuModifiers.modifierList[23].curValue = _modifiers.Seasick;
-        MenuModifiers.modifierList[23].value = _modifiers.SeasickSwitch;
+        MenuModifiers.modifierList[23].curValue = _modifiers.Jacktastic;
+        MenuModifiers.modifierList[23].value = _modifiers.JacktasticSwitch;
 
-        MenuModifiers.modifierList[24].value = _modifiers.UpsideDown;
+        MenuModifiers.modifierList[24].curValue = _modifiers.Seasick;
+        MenuModifiers.modifierList[24].value = _modifiers.SeasickSwitch;
 
-        MenuModifiers.modifierList[25].value = _modifiers.Mirror;
+        MenuModifiers.modifierList[25].value = _modifiers.UpsideDown;
 
-        MenuModifiers.modifierList[26].curValue = _modifiers.Camera;
-        MenuModifiers.modifierList[26].value = _modifiers.CameraSwitch;
+        MenuModifiers.modifierList[26].value = _modifiers.Mirror;
 
-        MenuModifiers.modifierList[27].curValue = _modifiers.Earthquake;
-        MenuModifiers.modifierList[27].value = _modifiers.EarthquakeSwitch;
+        MenuModifiers.modifierList[27].curValue = _modifiers.Camera;
+        MenuModifiers.modifierList[27].value = _modifiers.CameraSwitch;
 
-        MenuModifiers.modifierList[28].curValue = _modifiers.Love;
-        MenuModifiers.modifierList[28].value = _modifiers.LoveSwitch;
+        MenuModifiers.modifierList[28].curValue = _modifiers.Earthquake;
+        MenuModifiers.modifierList[28].value = _modifiers.EarthquakeSwitch;
 
-        MenuModifiers.modifierList[29].curValue = _modifiers.Fright;
-        MenuModifiers.modifierList[29].value = _modifiers.FrightSwitch;
+        MenuModifiers.modifierList[29].curValue = _modifiers.Love;
+        MenuModifiers.modifierList[29].value = _modifiers.LoveSwitch;
 
-        MenuModifiers.modifierList[30].curValue = _modifiers.Freeze;
-        MenuModifiers.modifierList[30].value = _modifiers.FreezeSwitch;
+        MenuModifiers.modifierList[30].curValue = _modifiers.Fright;
+        MenuModifiers.modifierList[30].value = _modifiers.FrightSwitch;
 
-        MenuModifiers.modifierList[31].curValue = _modifiers.Paparazzi;
-        MenuModifiers.modifierList[31].value = _modifiers.PaparazziSwitch;
+        MenuModifiers.modifierList[31].curValue = _modifiers.MustDie;
+        MenuModifiers.modifierList[31].value = _modifiers.MustDieSwitch;
+
+        MenuModifiers.modifierList[32].curValue = _modifiers.Freeze;
+        MenuModifiers.modifierList[32].value = _modifiers.FreezeSwitch;
+
+        MenuModifiers.modifierList[33].curValue = _modifiers.Paparazzi;
+        MenuModifiers.modifierList[33].value = _modifiers.PaparazziSwitch;
     }
 
     public static function nullify():Void
@@ -312,7 +326,7 @@ class ModifierVariables
             {name: 'HP Loss', value: false, conflicts: [0,1], multi: 0.2, realmulti: 0, equation: '', abs: false,  revAtLow: true, type: 'number', minValue: 0, maxValue: 10, curValue: 1, offAt: 1, addChange: 0.5, string: 'x\nHEALTH LOSS', explanation: "Why are you bruising so hard? Set how fast you can lose your health, or not lose any at all. The higher, the faster you can lose health. Adds 0.1 to the score rate with each amount. Can be changed numerically."},
             {name: 'Start Health', value: false, conflicts: [0,1], multi: -0.0025, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: -100, maxValue: 100, curValue: 0, offAt: 0, addChange: 5, string: '%\nMORE START\nHEALTH', explanation: "How much slapping did you get before going here? Set how high your heal should be at the start. The higher, the higher. Adds 0.0125 to the score rate with each amount. Can be changed numerically."},
             {name: 'Enigma', value: false, conflicts: [1], multi: 0.3, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'switch', minValue: 0, maxValue: 0, curValue: 0, offAt: 0, addChange: 0, string: '', explanation: "Your vision is blind, woooow. You won't be able to see your mistakes. Set if you want your health to be invisible. Adds 0.3 to the score rate. Can be switched on or off."},
-            {name: 'Vibe', value: false, conflicts: [], multi: -0.9, realmulti: 0, equation: '', abs: false,  revAtLow: true, type: 'number', minValue: 0.8, maxValue: 1.2, curValue: 1, offAt: 1, addChange: 0.2, string: 'x\nTHE VIBE', explanation: "Are you up for a vibin' time? Set ifyou want to listen to speedy hifi- classic, or vibin' lo-fi. 1 is classic, 1.2 is lofi and 0.8 is hifi music. Can be changed numberically."},
+            {name: 'Vibe', value: false, conflicts: [], multi: -0.9, realmulti: 0, equation: '', abs: false,  revAtLow: true, type: 'number', minValue: 0.8, maxValue: 1.2, curValue: 1, offAt: 1, addChange: 0.2, string: 'x\nTHE VIBE', explanation: "Are you up for a vibin' time? Set if you want to listen to speedy hi-fi classic, or vibin' lo-fi. 1 is classic, 1.2 is lofi and 0.8 is hifi music. Can be changed numberically."},
             {name: 'Offbeat', value: false, conflicts: [], multi: 0.001, realmulti: 0, equation: '', abs: true,  revAtLow: false, type: 'number', minValue: -1000, maxValue: 1000, curValue: 0, offAt: 0, addChange: 10, string: '%\nMORE NOTE\nOFFSET', explanation: "Cut the music! CUT!! Set how late or early should notes go. Higher is later. It affects vocals as well. Adds 0.1 to the score rate with each amount, even on negative aomunts. Can be changed numerically. WARNING: YOU CAN BLUE BALL IF YOU GET TOO LOW OF A NEGATIVE VALUE."},
             {name: 'Hit Zones', value: false, conflicts: [], multi: -0.08, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: -8, maxValue: 30, curValue: 0, offAt: 0, addChange: 1, string: '\nMORE SAFE\nFRAMES', explanation: "We're expecting perfection from you today. Choose how strict or lean you have to hit notes at. The higher, the leaner. The lowest negative value is very strict. Subtracts 0.8 to the multiplier with each amount. Can be changed numerically."},
             {name: 'Note Speed', value: false, conflicts: [], multi: 0.0125, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: -90, maxValue: 400, curValue: 0, offAt: 0, addChange: 2, string: '%\nMORE NOTE\nSPEED', explanation: "How speed are you gonna be? Change how fast notes have to go. The higher, the faster, and works on negatives. Adds 0.025 to the multiplier with each amount. Can be changed numerically. WARNING: YOU CAN BLUE BALL IF YOU GET TOO HIGH OF A VALUE."},
@@ -327,6 +341,7 @@ class ModifierVariables
             {name: 'Eel Notes', value: false, conflicts: [1], multi: 0.01, realmulti: 0, equation: 'times', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 100, curValue: 0, offAt: 0, addChange: 10, string: '%\nOF EXTRA\nLENGTH', explanation: "Too many eels. Choose how long you want notes to be. The higher, the longer. Can be changed numerically. WARNING: TOO MUCH MIGHT CAUSE NOTES TO NOT RENDER PROPERLY AT POINTS BECAUSE OF THERE BEING TOO MANY OF THEM. USE AT YOUR RISK. TIP: You can hold to possibly win."},
             {name: 'Stretch Up', value: false, conflicts: [], multi: 0.001, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 400, curValue: 0, offAt: 0, addChange: 5, string: '%\nMORE\nSTRETCHED\n', explanation: "Tall notes are so funny, hahaha... *sarcasm* How tall notes should be? The higher the taller. Add 0.01 to the score multiplier. Can be changed numerically."},
             {name: 'Widen Up', value: false, conflicts: [], multi: 0.001, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 400, curValue: 0, offAt: 0, addChange: 5, string: '%\nMORE\nWIDE', explanation: "Thicc notes are so funny, hahaha... *sarcasm* How wide notes should be? The higher the wider. Add 0.01 to the score multiplier. Can be changed numerically."},
+            {name: 'Jacktastic', value: false, conflicts: [], multi: 1.5, realmulti: 0, equation: 'times', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 500, curValue: 0, offAt: 0, addChange: 1, string: '\nMORE\nJACK(S)', explanation: "Old Whitty Ballistic chart be like. For notes, how many copies of themselves do you want over a short amount of time? The higher, the more bs the chart becomes. Multiplies the multiplier by 1.5 times an amount. Can be changed numerically. WARNING: IT'S ABSOLUTE BS!"},
             {name: 'Seasick', value: false, conflicts: [], multi: 0.005, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 10000, curValue: 0, offAt: 0, addChange: 10, string: '%\nSHIP FEEL', explanation: "Ship feel go swoosh and barf. How much do you want the camera to swing like a ship? The higher, the more they swing. Adds 0.05 to the score rate. Can be changed numerically."},
             {name: 'Upside Down', value: false, conflicts: [], multi: 0.2, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'switch', minValue: 0, maxValue: 0, curValue: 0, offAt: 0, addChange: 0, string: '', explanation: "Flip everything upside down. Not zero-gravity. Adds 0.2 to the score rate. Can be switched on or off."},
             {name: 'Mirror', value: false, conflicts: [], multi: 0.2, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'switch', minValue: 0, maxValue: 0, curValue: 0, offAt: 0, addChange: 0, string: '', explanation: "Mirror your own screen. Fun for everyone. Adds 0.2 to the score rate. Can be switched on or off."},
@@ -334,6 +349,7 @@ class ModifierVariables
             {name: 'Earthquake', value: false, conflicts: [], multi: 0.006, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 500, curValue: 0, offAt: 0, addChange: 5, string: '%\nQUAKING', explanation: "This is some tokyo nonsense. Set how big of an earthquake you want to play with. The higher, the bigger. Adds 0.03 to the score rate. Can be changed numerically."},
             {name: 'Supportive Love', value: false, conflicts: [0,1], multi: -0.006, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 500, curValue: 0, offAt: 0, addChange: 5, string: '%\nMORE LOVE', explanation: "Girlfriend loves you very much. How much health do you want to regenerate gradually? The higher, the more love, support and all of that. Subtracts 0.03 to the score rate. Can be changed numerically."},
             {name: 'Poison Fright', value: false, conflicts: [0,1], multi: 0.006, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 500, curValue: 0, offAt: 0, addChange: 5, string: '%\nPOISON\nDOSE', explanation: "Please don't be scared. How much health do you want to drain gradually? The higher, the more poison, fear and all of that. Adds 0.03 to the score rate. Can be changed numerically. WARNING: CAN BLUE BALL YOU IF YOU SET IT TOO HIGH."},
+            {name: 'Boyfriend Must Die', value: false, conflicts: [0,1], multi: 0.006, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 500, curValue: 0, offAt: 0, addChange: 5, string: "%\nASS\nWHOOPIN'", explanation: "How much ass whoopin do you want? Change how much enemies should damage Boyfriend per note. Adds 0.03 to the score rate. Can be changed numerically. WARNING: CAN BLUE BALL YOU IF YOU SET IT TOO HIGH."},
             {name: 'Stagefright', value: false, conflicts: [1], multi: 0.05, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 30, curValue: 0, offAt: 0, addChange: 1, string: '\nLESS\nMISSES', explanation: "Intimidation makes you afraid. Set how many misses you need to have until you freeze. YOU ARE GIVEN 30 MISSES BY 1 LESS MISS. The higher, the less misses you need. Adds 0.05 to the multiplier with each amount. Can be changed numerically."},
             {name: 'Paparazzi', value: false, conflicts: [], multi: 0.004, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 100, curValue: 0, offAt: 0, addChange: 1, string: '\nCAMERAMA(E)N', explanation: "Oh how popular you are! Change how many cameramen you want on the scene taking pictures. Adds 0.004 to the score rate. Can be changed numerically."},
         ];

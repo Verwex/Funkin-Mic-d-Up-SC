@@ -2,14 +2,20 @@
 <TextureAtlas imagePath="chartTypes.png">
 	<!-- Created with Adobe Animate version 21.0.0.35450 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="chaos idle0000" x="4" y="4" width="1522" height="202"/>
-	<SubTexture name="chaos select0000" x="4" y="208" width="1522" height="202"/>
-	<SubTexture name="flip idle0000" x="4" y="412" width="1522" height="202"/>
-	<SubTexture name="flip select0000" x="4" y="616" width="1522" height="202"/>
-	<SubTexture name="onearrow idle0000" x="4" y="820" width="1522" height="202"/>
-	<SubTexture name="onearrow select0000" x="4" y="1024" width="1522" height="202"/>
-	<SubTexture name="stair idle0000" x="4" y="1228" width="1522" height="202"/>
-	<SubTexture name="stair select0000" x="4" y="1432" width="1522" height="202"/>
-	<SubTexture name="standard idle0000" x="4" y="1636" width="1522" height="202"/>
-	<SubTexture name="standard select0000" x="4" y="1840" width="1522" height="202"/>
+	<SubTexture name="chaos idle0000" x="2" y="2" width="1522" height="202"/>
+	<SubTexture name="chaos select0000" x="1526" y="2" width="1522" height="202"/>
+	<SubTexture name="dualarrow idle0000" x="2" y="206" width="1522" height="202"/>
+	<SubTexture name="dualarrow select0000" x="1526" y="206" width="1522" height="202"/>
+	<SubTexture name="dualchaos idle0000" x="2" y="410" width="1522" height="202"/>
+	<SubTexture name="dualchaos select0000" x="1526" y="410" width="1522" height="202"/>
+	<SubTexture name="flip idle0000" x="2" y="614" width="1522" height="202"/>
+	<SubTexture name="flip select0000" x="1526" y="614" width="1522" height="202"/>
+	<SubTexture name="onearrow idle0000" x="2" y="818" width="1522" height="202"/>
+	<SubTexture name="onearrow select0000" x="1526" y="818" width="1522" height="202"/>
+	<SubTexture name="stair idle0000" x="2" y="1022" width="1522" height="202"/>
+	<SubTexture name="stair select0000" x="1526" y="1022" width="1522" height="202"/>
+	<SubTexture name="standard idle0000" x="2" y="1226" width="1522" height="202"/>
+	<SubTexture name="standard select0000" x="1526" y="1226" width="1522" height="202"/>
+	<SubTexture name="wave idle0000" x="2" y="1430" width="1522" height="202"/>
+	<SubTexture name="wave select0000" x="1526" y="1430" width="1522" height="202"/>
 </TextureAtlas>

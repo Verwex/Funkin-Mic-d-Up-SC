@@ -1,27 +1,17 @@
 package;
 
 import openfl.Lib;
-#if desktop
 import Discord.DiscordClient;
-#end
-
 import flixel.FlxSubState;
-import flixel.util.FlxGradient;
 import flixel.text.FlxText;
 import flixel.FlxObject;
-import flixel.effects.FlxFlicker;
-import flixel.util.FlxTimer;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.addons.display.FlxBackdrop;
-import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.net.curl.CURLCode;
 import MainVariables._variables;
 import flixel.tweens.FlxEase;
 
@@ -31,7 +21,7 @@ class PAGE3settings extends MusicBeatSubstate
 {
 
     var menuItems:FlxTypedGroup<FlxSprite>;
-    var optionShit:Array<String> = ['page', 'iconZoom', 'cameraZoom', 'cameraSpeed', 'rainbow', 'score', 'misses', 'accuracy', 'nps', 'rating', 'timing', 'combo', 'songPos'];
+    var optionShit:Array<String> = ['page', 'chromakeyM', 'iconZoom', 'cameraZoom', 'cameraSpeed', 'noteSplashes', 'noteGlow', 'eNoteGlow', 'hpIcons', 'iconStyle', 'hpAnims', 'hpColors', 'distractions', 'bgAlpha', 'enemyAlpha', 'rainbow', 'missAnims', 'score', 'misses', 'accuracy', 'nps', 'rating', 'timing', 'combo', 'songPos'];
 
     private var grpSongs:FlxTypedGroup<Alphabet>;
     var selectedSomethin:Bool = false;
@@ -44,6 +34,10 @@ class PAGE3settings extends MusicBeatSubstate
     var pause:Int = 0;
 
     var camLerp:Float = 0.32;
+
+    var navi:FlxSprite;
+
+    var style:Int;
 
     public function new()
     {
@@ -75,6 +69,18 @@ class PAGE3settings extends MusicBeatSubstate
             FlxTween.tween(menuItem, { x: 800}, 0.15, { ease: FlxEase.expoInOut });
         }
 
+        var nTex = Paths.getSparrowAtlas('Options_Navigation');
+        navi = new FlxSprite();
+        navi.frames = nTex;
+        navi.animation.addByPrefix('arrow', "navigation_arrows", 24, true);
+        navi.animation.addByPrefix('enter', "navigation_enter", 24, true);
+        navi.animation.addByPrefix('shiftArrow', "navigation_shiftArrow", 24, true);
+		navi.animation.play('arrow');
+        navi.scrollFactor.set();
+        add(navi);
+        navi.y = 700 - navi.height;
+        navi.x = 1260 - navi.width;
+
         camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
         
@@ -82,11 +88,16 @@ class PAGE3settings extends MusicBeatSubstate
 
         createResults();
 
+        updateResults();
+
         FlxG.camera.follow(camFollow, null, camLerp);
 
-        #if desktop
-			DiscordClient.changePresence("Settings page: GFX", null);
-		#end
+        DiscordClient.changePresence("Settings page: GFX", null);
+    }
+
+    function updateResults():Void
+    {
+        style = MainVariables.iconList.indexOf(_variables.iconStyle.toLowerCase());
     }
 
     function createResults():Void
@@ -140,15 +151,47 @@ class PAGE3settings extends MusicBeatSubstate
                     {
                         changePress(1);
                     }
+
+                if (controls.LEFT)
+                    {
+                        changeHold(-1);
+                    }
+            
+                if (controls.RIGHT)
+                    {
+                        changeHold(1);
+                    }
+
+                if (controls.ACCEPT)
+                {
+                    if (optionShit[curSelected] == 'chromakeyM')
+                    {
+                        FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                        selectedSomethin = true;
+            
+                        menuItems.forEach(function(spr:FlxSprite)
+                            {
+                                spr.animation.play('idle');
+                                FlxTween.tween(spr, { x: -1000}, 0.15, { ease: FlxEase.expoIn });
+                            });
+    
+                        FlxTween.tween(ResultText, { alpha: 0}, 0.15, { ease: FlxEase.expoIn });
+                        FlxTween.tween(ExplainText, { alpha: 0}, 0.15, { ease: FlxEase.expoIn });
+        
+                        new FlxTimer().start(0.2, function(tmr:FlxTimer)
+                            {
+                                navi.kill();
+                                openSubState(new ChromaSettings());
+                            });
+                    }
+                }
                 
                     if (controls.BACK)
                         {
                             FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume/100);
                             selectedSomethin = true;
 
-                            #if desktop
-			                    DiscordClient.changePresence("Back to the main menu I go!", null);
-		                    #end
+                            DiscordClient.changePresence("Back to the main menu I go!", null);
     
                             menuItems.forEach(function(spr:FlxSprite)
                                 {
@@ -179,7 +222,7 @@ class PAGE3settings extends MusicBeatSubstate
                     ResultText.text = Std.string(_variables.accuracyDisplay).toUpperCase();
                     ExplainText.text = "ACCURACY DISPLAY:\nSet your accuracy display visible or invisible.";
                 case "page":
-                    ResultText.text = "GFX";
+                    ResultText.text = "";
                     ExplainText.text = "Previous Page: SFX \nNext Page: GAMEPLAY";
                 case "rating":
                     ResultText.text = Std.string(_variables.ratingDisplay).toUpperCase();
@@ -208,17 +251,53 @@ class PAGE3settings extends MusicBeatSubstate
                 case "rainbow":
                     ResultText.text = Std.string(_variables.rainbow).toUpperCase();
                     ExplainText.text = "RAINBOW FPS:\nMake your PFS counter all rainbow.";
+                case "distractions":
+                    ResultText.text = Std.string(_variables.distractions).toUpperCase();
+                    ExplainText.text = "DISTRACTIONS:\nWould you want to get yourself entirely focused or get some spice to the life of stages?";
+                case "chromakeyM":
+                    ResultText.text = "";
+                    ExplainText.text = "\nAdd Chromakey colors to the background!";
+                case "bgAlpha":
+                    ResultText.text = _variables.bgAlpha * 100 +"%";
+                    ExplainText.text = "BACKGROUND ALPHA:\nSet the alpha of the background camera, to get yourself better focused at the game.";
+                case "noteSplashes":
+                    ResultText.text = Std.string(_variables.noteSplashes).toUpperCase();
+                    ExplainText.text = "NOTE SPLASHES:\nTurn on note splashes when you hit notes really good.";
+                case "noteGlow":
+                    ResultText.text = Std.string(_variables.noteGlow).toUpperCase();
+                    ExplainText.text = "NOTE GLOW:\nMake notes glow whenever you hit notes correctly.";
+                case "eNoteGlow":
+                    ResultText.text = Std.string(_variables.eNoteGlow).toUpperCase();
+                    ExplainText.text = "ENEMY NOTE GLOW:\nAPPLIES ONLY FOR UP AND DOWNSCROLL.\nMake enemy's notes glow whenever they hit notes.";
+                case "enemyAlpha":
+                    ResultText.text = _variables.enemyAlpha * 100 +"%";
+                    ExplainText.text = "ENEMY NOTE ALPHA:\nAPPLIES FOR LEFTSCROLL AND RIGHTSCROLL ONLY.\nHow much do you wanna see notes of your enemies?";
+                case "missAnims":
+                    ResultText.text = Std.string(_variables.missAnims).toUpperCase();
+                    ExplainText.text = "MISS ANIMATIONS:\nPlay miss animation for the player if they miss a note?";
+                case "hpColors":
+                    ResultText.text = Std.string(_variables.hpColors).toUpperCase();
+                    ExplainText.text = "HEALTH BAR COLORS:\nDo you want your health bar to reflet characters in a song?";
+                case "hpIcons":
+                    ResultText.text = Std.string(_variables.hpIcons).toUpperCase();
+                    ExplainText.text = "HEALTH ICONS:\nShow the little health icons of people?";
+                case "hpAnims":
+                    ResultText.text = Std.string(_variables.hpAnims).toUpperCase();
+                    ExplainText.text = "HEALTH ICON ANIMATIONS:\nPlay winning and losing animations for icons when HP is low or high?";
+                case "iconStyle":
+				    ResultText.text = Std.string(_variables.iconStyle).toUpperCase();
+				    ExplainText.text = "ICON STYLE:\nHow would you want health icons to look like?";
             }
 
             menuItems.forEach(function(spr:FlxSprite)
                 {
-                    spr.scale.set(FlxMath.lerp(spr.scale.x, 0.8, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 0.8, 0.4/(_variables.fps/60)));
+                    spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4/(_variables.fps/60)));
                     
                     if (spr.ID == curSelected)
                     {
                         camFollow.y = FlxMath.lerp(camFollow.y, spr.getGraphicMidpoint().y, camLerp/(_variables.fps/60));
                         camFollow.x = spr.getGraphicMidpoint().x;
-                        spr.scale.set(FlxMath.lerp(spr.scale.x, 1.1, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 1.1, 0.4/(_variables.fps/60)));
+                        spr.scale.set(FlxMath.lerp(spr.scale.x, 0.9, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 0.9, 0.4/(_variables.fps/60)));
                     }
 
                     spr.updateHitbox();
@@ -245,6 +324,16 @@ class PAGE3settings extends MusicBeatSubstate
             
                     spr.updateHitbox();
                 });
+
+            switch (optionShit[curSelected])
+		    {
+			    case 'cameraSpeed'|'iconZoom'|'cameraZoom'|'bgAlpha':
+			    	navi.animation.play('shiftArrow');
+                case 'chromakeyM':
+                    navi.animation.play('enter');
+			    default:
+			    	navi.animation.play('arrow');
+		    }
         }
 
 	function changePress(Change:Int = 0)
@@ -267,6 +356,8 @@ class PAGE3settings extends MusicBeatSubstate
     
                     new FlxTimer().start(0.2, function(tmr:FlxTimer)
                         {
+                            navi.kill();
+                            menuItems.kill();
                             if (Change == 1)
                                 openSubState(new PAGE4settings());
                             else
@@ -280,8 +371,16 @@ class PAGE3settings extends MusicBeatSubstate
                     _variables.missesDisplay = !_variables.missesDisplay;
             
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "missAnims":
+                    _variables.missAnims = !_variables.missAnims;
+            
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "songPos":
                     _variables.songPosition = !_variables.songPosition;
+                
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "distractions":
+                    _variables.distractions = !_variables.distractions;
                 
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "accuracy":
@@ -311,24 +410,71 @@ class PAGE3settings extends MusicBeatSubstate
                     _variables.nps = !_variables.nps;
                     
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "noteSplashes":
+                    _variables.noteSplashes = !_variables.noteSplashes;
+                    
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "noteGlow":
+                    _variables.noteGlow = !_variables.noteGlow;
+                    
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "eNoteGlow":
+                    _variables.eNoteGlow = !_variables.eNoteGlow;
+                    
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "hpAnims":
+                    _variables.hpAnims = !_variables.hpAnims;
+                    
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "hpIcons":
+                    _variables.hpIcons = !_variables.hpIcons;
+                    
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "iconZoom":
-                    _variables.iconZoom += Change/4;
+                    if (controls.CENTER)
+                        Change *= 2;
+
+                    _variables.iconZoom += FlxMath.roundDecimal(Change/10, 2);
                     if (_variables.iconZoom < 0)
                         _variables.iconZoom = 0;
+
+                    _variables.iconZoom = FlxMath.roundDecimal(_variables.iconZoom, 2);
     
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "cameraZoom":
-                    _variables.cameraZoom += Change/4;
+                    if (controls.CENTER)
+                        Change *= 2;
+
+                    _variables.cameraZoom += FlxMath.roundDecimal(Change/10, 2);
                     if (_variables.cameraZoom < 0)
                         _variables.cameraZoom = 0;
+
+                    _variables.cameraZoom = FlxMath.roundDecimal(_variables.cameraZoom, 2);
         
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
                 case "cameraSpeed":
-                    _variables.cameraSpeed += Change/10;
+                    if (controls.CENTER)
+                        Change *= 2;
+
+                    _variables.cameraSpeed += FlxMath.roundDecimal(Change/10, 2);
                     if (_variables.cameraSpeed < 0.1)
                         _variables.cameraSpeed = 0.1;
+
+                    _variables.cameraSpeed = FlxMath.roundDecimal(_variables.cameraSpeed, 2);
             
                     FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "hpColors":
+                    _variables.hpColors = !_variables.hpColors;
+                    
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
+                case "iconStyle":
+				    style += Change;
+				    if (style > MainVariables.iconList.length - 1)
+				    	style = 0;
+				    if (style < 0)
+				    	style = MainVariables.iconList.length - 1;
+
+				    _variables.iconStyle = MainVariables.iconList[style];
 			}
 
             new FlxTimer().start(0.2, function(tmr:FlxTimer)
@@ -336,6 +482,41 @@ class PAGE3settings extends MusicBeatSubstate
                     MainVariables.Save();
                 });
 		}
+
+    function changeHold(Change:Int = 0)
+    {
+        if (controls.CENTER)
+            Change *= 2;
+        
+        switch (optionShit[curSelected])
+        {
+            case "bgAlpha":
+                _variables.bgAlpha += Change / 100;
+                _variables.bgAlpha = FlxMath.roundDecimal(_variables.bgAlpha, 3);
+
+                if (_variables.bgAlpha < 0)
+                    _variables.bgAlpha = 0;
+                if (_variables.bgAlpha > 1)
+                    _variables.bgAlpha = 1;
+        
+                FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume / 100);
+            case "enemyAlpha":
+                _variables.enemyAlpha += Change / 100;
+                _variables.enemyAlpha = FlxMath.roundDecimal(_variables.enemyAlpha, 3);
+
+                if (_variables.enemyAlpha < 0)
+                    _variables.enemyAlpha = 0;
+                if (_variables.enemyAlpha > 1)
+                    _variables.enemyAlpha = 1;
+        
+                FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume / 100);
+        }
+        
+        new FlxTimer().start(0.2, function(tmr:FlxTimer)
+        {
+            MainVariables.Save();
+        });
+    }
 
     override function openSubState(SubState:FlxSubState)
         {

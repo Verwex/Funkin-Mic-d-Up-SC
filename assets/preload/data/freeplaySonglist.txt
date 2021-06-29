@@ -1,19 +1,19 @@
-Tutorial:gf:1
-Bopeebo:dad:1
-Fresh:dad:1
-Dadbattle:dad:1
-Spookeez:spooky:2
-South:spooky:2
-Monster:monster:2
-Pico:pico:3
-Philly:pico:3
-Blammed:pico:3
-Satin-Panties:mom:4
-High:mom:4
-Milf:mom:4
-Cocoa:parents-christmas:5
-Eggnog:parents-christmas:5
-Winter-Horrorland:monster:5
-Senpai:senpai:6
-Roses:senpai:6
-Thorns:spirit:6
+Tutorial:gf:1:#FF2BE6FF:#FF2BFFC5:#FF2BE6FF
+Bopeebo:dad:1:#FF3D09C3:#FFE753F9:#FF3D09C3
+Fresh:dad:1:#FF3D09C3:#FFE753F9:#FF3D09C3
+Dadbattle:dad:1:#FF3D09C3:#FFE753F9:#FF3D09C3
+Spookeez:spooky:2:#FFFFA649:#FFFFFFFF:#FFFFA649
+South:spooky:2:#FFFFA649:#FFFFFFFF:#FFFFA649
+Monster:monster:2:#FFFFF091:#FFE7BD00:#FFFFF091
+Pico:pico:3:#FF49FF00:#FF2BFFC5:#FF49FF00
+Philly Nice:pico:3:#FF49FF00:#FF2BFFC5:#FF49FF00
+Blammed:pico:3:#FF49FF00:#FF2BFFC5:#FF49FF00
+Satin Panties:mom:4:#FFC00046:#FFB9A3FF:#FFC00046
+High:mom:4:#FFC00046:#FFB9A3FF:#FFC00046
+Milf:mom:4:#FFC00046:#FFB9A3FF:#FFC00046
+Cocoa:parents-christmas:5:#FFC200D5:#FF050091:#FFC200D5
+Eggnog:parents-christmas:5:#FFC200D5:#FF050091:#FFC200D5
+Winter Horrorland:monster:5:#FFFFF091:#FFE7BD00:#FFFFF091
+Senpai:senpai:6:#FFFFB600:#FFFFCFD0:#FFFFB600
+Roses:senpai:6:#FFFFB600:#FFFFCFD0:#FFFFB600
+Thorns:spirit:6:#FFFF0005:#FF000000:#FFFF0005

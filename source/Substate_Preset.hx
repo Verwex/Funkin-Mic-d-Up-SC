@@ -1,27 +1,15 @@
 package;
 
 import sys.FileSystem;
-import flixel.FlxObject;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.system.FlxSound;
-import flixel.util.FlxGradient;
-#if desktop
-import Discord.DiscordClient;
-#end
-import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
-import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import lime.utils.Assets;
-import flixel.addons.display.FlxBackdrop;
 import MainVariables._variables;
-import ModifierVariables._modifiers;
 
 using StringTools;
 

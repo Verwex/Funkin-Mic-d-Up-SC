@@ -1,30 +1,18 @@
 package;
 
 import openfl.Lib;
-import flixel.util.FlxSave;
 import sys.FileSystem;
-import sys.io.File;
-#if desktop
 import Discord.DiscordClient;
-#end
-
 import flixel.FlxSubState;
-import flixel.util.FlxGradient;
 import flixel.text.FlxText;
 import flixel.FlxObject;
-import flixel.effects.FlxFlicker;
-import flixel.util.FlxTimer;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.addons.display.FlxBackdrop;
-import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.net.curl.CURLCode;
 import MainVariables._variables;
 import flixel.tweens.FlxEase;
 
@@ -46,6 +34,8 @@ class PAGE6settings extends MusicBeatSubstate
 
     var camLerp:Float = 0.32;
 
+    var navi:FlxSprite;
+
     public function new()
     {
         super();
@@ -60,7 +50,7 @@ class PAGE6settings extends MusicBeatSubstate
 
 		for (i in 0...optionShit.length)
 		{
-			var menuItem:FlxSprite = new FlxSprite(800, 30 + (i * 160));
+			var menuItem:FlxSprite = new FlxSprite(950, 30 + (i * 160));
 			menuItem.frames = tex;
             menuItem.animation.addByPrefix('idle', optionShit[i] + " idle", 24, true);
             menuItem.animation.addByPrefix('select', optionShit[i] + " select", 24, true);
@@ -76,6 +66,17 @@ class PAGE6settings extends MusicBeatSubstate
             FlxTween.tween(menuItem, { x: 800}, 0.15, { ease: FlxEase.expoInOut });
         }
 
+        var nTex = Paths.getSparrowAtlas('Options_Navigation');
+        navi = new FlxSprite();
+        navi.frames = nTex;
+        navi.animation.addByPrefix('arrow', "navigation_arrows", 24, true);
+        navi.animation.addByPrefix('enter', "navigation_enter", 24, true);
+		navi.animation.play('arrow');
+        navi.scrollFactor.set();
+        add(navi);
+        navi.y = 700 - navi.height;
+        navi.x = 1260 - navi.width;
+
         camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
         
@@ -85,9 +86,7 @@ class PAGE6settings extends MusicBeatSubstate
 
         FlxG.camera.follow(camFollow, null, camLerp);
 
-        #if desktop
-			DiscordClient.changePresence("Settings page: Clear", null);
-		#end
+		DiscordClient.changePresence("Settings page: Clear", null);
     }
 
         function createResults():Void
@@ -152,9 +151,7 @@ class PAGE6settings extends MusicBeatSubstate
                             FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume/100);
                             selectedSomethin = true;
 
-                            #if desktop
-			                    DiscordClient.changePresence("Back to the main menu I go!", null);
-		                    #end
+			                DiscordClient.changePresence("Back to the main menu I go!", null);
     
                             menuItems.forEach(function(spr:FlxSprite)
                                 {
@@ -176,8 +173,8 @@ class PAGE6settings extends MusicBeatSubstate
             switch (optionShit[curSelected])
             {
                 case "page":
-                    ResultText.text = "CLEAR";
-                    ExplainText.text = "Previous Page: DEVELOPER \nNext Page: GENERAL";
+                    ResultText.text = "";
+                    ExplainText.text = "Previous Page: MISCELLANEOUS \nNext Page: GENERAL";
                 case "config":
                     ResultText.text = "";
                     ExplainText.text = "CLEAR CONFIG:\nWill reset your configuration in case anything goes wrong, which it shouldn't.";
@@ -186,15 +183,23 @@ class PAGE6settings extends MusicBeatSubstate
                     ExplainText.text = "CLEAR SAVE:\nWill reset your save file back to zero. All scores, all ranks. Gone.";
             }
 
+            switch (optionShit[curSelected])
+            {
+                case 'save'|'config':
+                    navi.animation.play('enter', true);
+                default:
+                    navi.animation.play('arrow', true);
+            }
+
             menuItems.forEach(function(spr:FlxSprite)
                 {
-                    spr.scale.set(FlxMath.lerp(spr.scale.x, 0.8, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 0.8, 0.4/(_variables.fps/60)));
+                    spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4/(_variables.fps/60)));
                     
                     if (spr.ID == curSelected)
                     {
                         camFollow.y = FlxMath.lerp(camFollow.y, spr.getGraphicMidpoint().y, camLerp/(_variables.fps/60));
                         camFollow.x = spr.getGraphicMidpoint().x;
-                        spr.scale.set(FlxMath.lerp(spr.scale.x, 1.1, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 1.1, 0.4/(_variables.fps/60)));
+                        spr.scale.set(FlxMath.lerp(spr.scale.x, 0.9, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 0.9, 0.4/(_variables.fps/60)));
                     }
 
                     spr.updateHitbox();
@@ -243,6 +248,8 @@ class PAGE6settings extends MusicBeatSubstate
     
                     new FlxTimer().start(0.2, function(tmr:FlxTimer)
                         {
+                            navi.kill();
+                            menuItems.kill();
                             if (Change == 1)
                                 openSubState(new PAGE1settings());
                             else
@@ -269,14 +276,14 @@ class PAGE6settings extends MusicBeatSubstate
                 FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume/100);
                 FileSystem.deleteFile('config.json');
                 FlxG.sound.music.volume = 1;
-
-                if (_variables.music != "Classic")
-                    FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
-
+                FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
+                Conductor.changeBPM(102);
                 MainVariables.Load();
                 _variables.firstTime = false;
                 MainVariables.Save();
                 (cast (Lib.current.getChildAt(0), Main)).changeColor(0xFFFFFFFF);
+                Main.watermark.visible = true;
+                Lib.application.window.maximized = false;
         }
     }
 

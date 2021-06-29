@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="anime0000" x="2" y="2" width="423" height="391"/>
+	<SubTexture name="crying0000" x="427" y="2" width="424" height="391"/>
+	<SubTexture name="damage0000" x="853" y="2" width="423" height="391"/>
+	<SubTexture name="default0000" x="1278" y="2" width="424" height="391"/>
+	<SubTexture name="horny0000" x="2" y="395" width="424" height="391"/>
+	<SubTexture name="kiss0000" x="428" y="395" width="424" height="391"/>
+	<SubTexture name="shaking0000" x="854" y="395" width="423" height="391"/>
+	<SubTexture name="uneasy0000" x="1279" y="395" width="423" height="391"/>
+</TextureAtlas>

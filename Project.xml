@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Mic'd Up" file="Funkin MU" packageName="com.verwex.funkinMU" package="com.verwex.funkMU" main="Main" version="MU 2.0.2" company="Verwex" />
+	<app title="Friday Night Funkin': Mic'd Up Engine" file="Funkin MU" packageName="com.verwex.funkinMU" package="com.verwex.funkMU" main="Main" version="MU 2.0.3" company="Verwex" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -24,7 +24,7 @@
 	<window if="html5" resizable="true" />
 
 	<!--Desktop-specific-->
-	<window if="desktop" orientation="landscape" fullscreen="false" resizable="false" vsync="false"/>
+	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 	<!--Mobile-specific-->
 	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
@@ -92,9 +92,9 @@
 	
 	<assets path='example_mods' rename='mods' embed='false'/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
-	
+
 	<!--Allows the License to be in exports and compiles of the code-->
-	<assets path="LICENSE" rename="License so we don't get canceled"/>
+	<assets path="LICENSE" rename="License"/>
 	
 	<!-- <template path='mods' /> -->
 	
@@ -114,6 +114,7 @@
 	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
 	<haxelib name="hscript" />
+	<haxelib name="hscript-plus" />
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
@@ -121,6 +122,10 @@
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod"/>
 	<haxelib name="discord_rpc" if="desktop"/>
+	<haxelib name="seedyrng"/> <!--haxelib install seedyrng-->
+	<haxelib name="random"/> <!--haxelib install random-->
+	<haxelib name="systools" />
+	<ndll name="systools" haxelib="systools" />
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
 	<!-- <haxelib name="markdown" /> -->
@@ -160,6 +165,9 @@
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+
+	<!--modcharts get set for cpp targets-->
+	<haxedef name="modchart" if="cpp" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 

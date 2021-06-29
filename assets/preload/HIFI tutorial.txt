@@ -1,0 +1,11 @@
+How to make Hi-fi edits of regular music in audacity:
+
+1. Take the normal songs
+2. Speed them up by 20%.
+3. Rise their pitch by exactly 18.921, 3 semitones. Make sure to use high quality stretching if you're on Audacity.
+4. Export.
+
+
+5. Enjoy some hi-fi music! Sure, it might take a long time to do, especially if you are on a low-end PC but it produces the best results. Best to wait rather than rush.
+
+P.S. Doing step 2 and 3 in reverse can work, but it will generally take longer.

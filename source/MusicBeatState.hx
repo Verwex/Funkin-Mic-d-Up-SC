@@ -3,11 +3,7 @@ package;
 import flixel.util.FlxColor;
 import openfl.Lib;
 import Conductor.BPMChangeEvent;
-import flixel.FlxG;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.FlxUIState;
-import flixel.math.FlxRect;
-import flixel.util.FlxTimer;
 import MainVariables._variables;
 
 
@@ -47,6 +43,12 @@ class MusicBeatState extends FlxUIState
 	{
 		//everyStep();
 		var oldStep:Int = curStep;
+
+		if (_variables.watermark)
+		{
+			Main.watermark.x = Lib.application.window.width - 10 - Main.watermark.width;
+			Main.watermark.y = Lib.application.window.height - 10 - Main.watermark.height;
+		}
 
 		updateCurStep();
 		updateBeat();

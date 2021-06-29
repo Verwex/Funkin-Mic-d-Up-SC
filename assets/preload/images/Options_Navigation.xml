@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Options_Navigation.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="navigation_arrows0000" x="2" y="2" width="107" height="111"/>
+	<SubTexture name="navigation_both0000" x="111" y="2" width="107" height="111"/>
+	<SubTexture name="navigation_enter0000" x="220" y="2" width="103" height="111"/>
+	<SubTexture name="navigation_shiftArrow0000" x="325" y="2" width="107" height="111"/>
+	<SubTexture name="navigation_shiftBoth0000" x="2" y="115" width="107" height="111"/>
+</TextureAtlas>

@@ -40,19 +40,26 @@ Go support the original repository for the game [here](https://github.com/ninjam
 
 <table style="span:90%">
 	<tr>
-		<th style=”text-align:left”><h3>⚙️ Mod Creator:</h3></th>
-		<th style="text-align:right" colspan="2"><h3>🖥 Additional Programmers:</h3></th>
+		<th style=”text-align:left”><h4>⚙️ Mod Creator:</h4></th>
+		<th style="text-align:middle"><h4>🖥 Additional Programmers:</h4></th>
+		<th style="text-align:right"><h4>🖼 Additional Artists:</h4></th>
 	</tr>
 	<tr>
 	<td>
 		<a href='https://twitter.com/Vershift'><b>Verwex</b><br>
-		<img src="/art/Verwex.png" alt="Verwex" width="175" height="175"></a>
+		<img src="/art/Verwex.png" alt="Verwex" width="80" height="80"></a>
 	</td>
 	<td>
-		<a href='https://twitter.com/kadedeveloper'><b>KadeDev</b></a> and <a href='https://steamcommunity.com/profiles/76561198353865795'><b>Ash237</b><br>
-		<img src="/art/Kade.png" alt="KadeDeveloper" width="175" height="175"></a>
-		<img src="/art/Ash.png" alt="Ash237 (temporary link until I find his twitter account)" width="175" height="175"></a>
+		<a href='https://twitter.com/kadedeveloper'><b>KadeDev</b></a>, <a href='https://steamcommunity.com/profiles/76561198353865795'><b>Ash237</b></a>, <a href='https://www.youtube.com/channel/UCqBMDBboJaBHLoxO0H3EBgw'><b>Haya</b></a>, <a href='https://twitter.com/TentaRJ'><b>TentaRJ</b></a> and <a href='https://twitter.com/helpme_thebigt'><b>Rozebud</b></a><br>
+		<img src="/art/Kade.png" alt="KadeDeveloper" width="80" height="80"></a>
+		<img src="/art/Ash.png" alt="Ash237" width="80" height="80"></a>
+		<img src="/art/Haya.png" alt="Haya" width="80" height="80"></a>
+		<img src="/art/TentaRJ.png" alt="TentaRJ" width="80" height="80"></a>
+		<img src="/art/Rozebud.png" alt="Rozebud" width="80" height="80"></a>
 	</td>
+	<td>
+		<a href='https://twitter.com/Sector0003'><b>Sector03</b></a><br>
+		<img src="/art/Sector03.png" alt="Sector03" width="80" height="80"></a>
 	</tr>
 </table>
 </table>
@@ -62,6 +69,28 @@ Go support the original repository for the game [here](https://github.com/ninjam
 </p>
 
 **This mod was made with love to Friday Night Funkin' and its community. Extra love to the team behind it. 💖**
+
+# Mods ([skip](#Compiling))
+
+<p align="center">
+	<a href="https://github.com/Verwex/Mic-d-Up-PRIVATE/blob/main/art/polymodNo.png" target="_blank"><img src="/art/polymodNo.png"></a>
+</p>
+
+In order to load in mods, it HAS to be in the mainMods/_append folder. 
+Why? This is to have backup support for when week 7 polymod actually releases.
+So if you wanna put in a mod for the shared/ folder then you put it in:
+
+```mods/mainMods/_append/shared```
+
+A reminder that this doesnt just work like a charm just yet!!!! This is experimental and can lead to some issues.
+Report major mod system bugs to Github Issues.
+
+Theres also modcharts, but unlike kade's they make use of hscript, a haxe script parser.
+This allows for arbitrary code execution while ingame, however they take up some ram.
+
+Guide for this will be soon once it gets completed.
+
+# Compiling
 
 ## What can I do with compiling the mod? Why should I compile the mod instead of downloading it from [the GamaBanana page of the mod](https://gamebanana.com/gamefiles/15309)?
 
@@ -90,6 +119,9 @@ flixel-addons
 flixel-ui
 hscript
 newgrounds
+seedyrng
+random
+systools
 ```
 So, for each of those type `haxelib install [library]` so shit like `haxelib install newgrounds`.
 
@@ -98,7 +130,10 @@ You will also need to install a couple things that involve Gits. To do this, you
 2. Follow instructions to install the application properly.
 3. Run `haxelib git polymod https://github.com/larsiusprime/polymod.git` to install Polymod.
 4. Run `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc` to install Discord RPC.
-5. Optional: - Run `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` to update Flixel-Addons. This fixes the transition bug for zoomed out stage cameras.
+5. Run `haxelib git hscript-plus https://github.com/DleanJeans/hscript-plus/` because its required to compile properly.
+6. Optional: - Run `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` to update Flixel-Addons. This fixes the transition bug for zoomed out stage cameras.
+7. Optional: - Run `haxelib git random https://github.com/jasononeil/hxrandom` to make random more random.
+8. Run `haxelib git systools https://github.com/haya3218/systools` to install systools and run `lime rebuild systools windows`. This is required for system edits, if defender decides to say "fuck u virus" then ignore it. **USE HAYA'S REPO TO MAKE IT WORK OR ITLL THROW A COMPILER ERROR.**
 
 You should have everything ready for compiling the mod! Follow the guide below to continue!
 
@@ -128,7 +163,7 @@ You should be good from there! Now, onto compiling!
 
 ## HTML Building:
 
-HTML Compiling currently does not work as Mic'd Up! currently requires desktop-only libraries to function properly.
+HTML Compiling currently does not work as Mic'd Up currently requires desktop-only libraries to function properly.
 
 ## Desktop Building:
 

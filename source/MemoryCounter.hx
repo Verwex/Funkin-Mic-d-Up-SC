@@ -1,6 +1,5 @@
 package;
-import haxe.Timer;
-import openfl.display.FPS;
+
 import openfl.events.Event;
 import openfl.system.System;
 import openfl.text.TextField;
