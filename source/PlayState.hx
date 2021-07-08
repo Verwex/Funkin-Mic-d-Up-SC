@@ -5076,9 +5076,9 @@ class PlayState extends MusicBeatState
 		// HAS I EVER?
 		if (!ended)
 		{
-			if (SONG.notes[Math.floor(curStep / 16)].sectionSpeed != 0)
+			/*if (SONG.notes[Math.floor(curStep / 16)].sectionSpeed != 0)
 				realSpeed = SONG.notes[Math.floor(curStep / 16)].sectionSpeed;
-			else
+			else*/
 				realSpeed = SONG.speed;
 		}
 
