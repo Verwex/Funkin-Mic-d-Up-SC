@@ -485,10 +485,10 @@ class PAGE4settings extends MusicBeatSubstate
 		{
 			case "offset":
 				_variables.noteOffset += Change;
-				if (_variables.noteOffset < -150)
-					_variables.noteOffset = -150;
-				if (_variables.noteOffset > 150)
-					_variables.noteOffset = 150;
+				if (_variables.noteOffset < -300)
+					_variables.noteOffset = -300;
+				if (_variables.noteOffset > 300)
+					_variables.noteOffset = 300;
 
 				FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume / 100);
 		}
