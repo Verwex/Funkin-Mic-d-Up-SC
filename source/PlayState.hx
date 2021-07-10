@@ -3975,7 +3975,7 @@ class PlayState extends MusicBeatState
 			daRating = 'sick';
 		}
 
-		switch (_variables.accuracyType)
+		switch (_variables.accuracyType.toLowerCase())
 		{
 			case 'simple':
 				totalNotesHit += 1;
