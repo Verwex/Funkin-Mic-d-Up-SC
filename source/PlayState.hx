@@ -4504,7 +4504,7 @@ class PlayState extends MusicBeatState
 
 			if (dontCheck && possibleNotes.length > 0 || _variables.spamPrevention && possibleNotes.length > 0)
 			{
-				if (mashViolations > 4 || _variables.spamPrevention)
+				if (mashViolations > 4 && _variables.spamPrevention)
 				{
 					trace('mash violations ' + mashViolations);
 					scoreTxt.color = FlxColor.RED;
@@ -4614,19 +4614,29 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
-			if (!note.isMine)
+			if (note != null)
+			{
+				if (!note.isMine)
+				{
+					if (_modifiers.HPLossSwitch)
+						health -= 0.04 * _modifiers.HPLoss + (_variables.comboH ? 0.00075 * combo : 0);
+					else
+						health -= 0.04 + (_variables.comboH ? 0.00075 * combo : 0);
+				}
+				else
+				{
+					if (_modifiers.HPLossSwitch)
+						health -= 0.16 * _modifiers.HPLoss + (_variables.comboH ? 0.001 * combo : 0);
+					else
+						health -= 0.16 + (_variables.comboH ? 0.001 * combo : 0);
+				}
+			}
+			else
 			{
 				if (_modifiers.HPLossSwitch)
 					health -= 0.04 * _modifiers.HPLoss + (_variables.comboH ? 0.00075 * combo : 0);
 				else
 					health -= 0.04 + (_variables.comboH ? 0.00075 * combo : 0);
-			}
-			else
-			{
-				if (_modifiers.HPLossSwitch)
-					health -= 0.16 * _modifiers.HPLoss + (_variables.comboH ? 0.001 * combo : 0);
-				else
-					health -= 0.16 + (_variables.comboH ? 0.001 * combo : 0);
 			}
 
 			if (_modifiers.Perfect) // if perfect
