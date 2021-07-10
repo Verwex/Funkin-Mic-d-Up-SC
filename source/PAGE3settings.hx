@@ -209,90 +209,11 @@ class PAGE3settings extends MusicBeatSubstate
                                 });
                         }
                     }
-            
-            switch (optionShit[curSelected])
-            {
-                case "score":
-                    ResultText.text = Std.string(_variables.scoreDisplay).toUpperCase();
-                    ExplainText.text = "SCORE DISPLAY:\nSet your score display visible or invisible.";
-                case "misses":
-                    ResultText.text = Std.string(_variables.missesDisplay).toUpperCase();
-                    ExplainText.text = "MISS COUNTER:\nSet your miss counter visible or invisible.";
-                case "accuracy":
-                    ResultText.text = Std.string(_variables.accuracyDisplay).toUpperCase();
-                    ExplainText.text = "ACCURACY DISPLAY:\nSet your accuracy display visible or invisible.";
-                case "page":
-                    ResultText.text = "";
-                    ExplainText.text = "Previous Page: SFX \nNext Page: GAMEPLAY";
-                case "rating":
-                    ResultText.text = Std.string(_variables.ratingDisplay).toUpperCase();
-                    ExplainText.text = "RATING DISPLAY:\nSet your rating display of your note hits visible or invisible.";
-                case "combo":
-                    ResultText.text = Std.string(_variables.comboDisplay).toUpperCase();
-                    ExplainText.text = "COMBO COUNTER:\nSet your combo counter of hit notes visible or invisible.";
-                case "timing":
-                    ResultText.text = Std.string(_variables.timingDisplay).toUpperCase();
-                    ExplainText.text = "TIMING DISPLAY:\nSet your timing display of your note hits visible or invisible.";
-                case "iconZoom":
-                    ResultText.text = _variables.iconZoom+"x";
-                    ExplainText.text = "ICON ZOOM:\nChange how zoomed in character icons become after a beat. The more, the bigger zoom.";
-                case "cameraZoom":
-                    ResultText.text = _variables.cameraZoom+"x";
-                    ExplainText.text = "CAMERA ZOOM:\nChange how zoomed in the camera becomes after a beat. The more, the bigger zoom.";
-                case "cameraSpeed":
-                    ResultText.text = _variables.cameraSpeed+"x";
-                    ExplainText.text = "CAMERA SPEED:\nChange how fast should the camera go to follow a character. The more, the faster camera goes.";
-                case "songPos":
-                    ResultText.text = Std.string(_variables.songPosition).toUpperCase();
-                    ExplainText.text = "SONG POSITION DISPLAY:\nSet your song position display visible or invisible.";
-                case "nps":
-                    ResultText.text = Std.string(_variables.nps).toUpperCase();
-                    ExplainText.text = "NOTES PER SECOND DISPLAY:\nSet your display of notes pressed per second visible or invisible.";
-                case "rainbow":
-                    ResultText.text = Std.string(_variables.rainbow).toUpperCase();
-                    ExplainText.text = "RAINBOW FPS:\nMake your PFS counter all rainbow.";
-                case "distractions":
-                    ResultText.text = Std.string(_variables.distractions).toUpperCase();
-                    ExplainText.text = "DISTRACTIONS:\nWould you want to get yourself entirely focused or get some spice to the life of stages?";
-                case "chromakeyM":
-                    ResultText.text = "";
-                    ExplainText.text = "\nAdd Chromakey colors to the background!";
-                case "bgAlpha":
-                    ResultText.text = _variables.bgAlpha * 100 +"%";
-                    ExplainText.text = "BACKGROUND ALPHA:\nSet the alpha of the background camera, to get yourself better focused at the game.";
-                case "noteSplashes":
-                    ResultText.text = Std.string(_variables.noteSplashes).toUpperCase();
-                    ExplainText.text = "NOTE SPLASHES:\nTurn on note splashes when you hit notes really good.";
-                case "noteGlow":
-                    ResultText.text = Std.string(_variables.noteGlow).toUpperCase();
-                    ExplainText.text = "NOTE GLOW:\nMake notes glow whenever you hit notes correctly.";
-                case "eNoteGlow":
-                    ResultText.text = Std.string(_variables.eNoteGlow).toUpperCase();
-                    ExplainText.text = "ENEMY NOTE GLOW:\nAPPLIES ONLY FOR UP AND DOWNSCROLL.\nMake enemy's notes glow whenever they hit notes.";
-                case "enemyAlpha":
-                    ResultText.text = _variables.enemyAlpha * 100 +"%";
-                    ExplainText.text = "ENEMY NOTE ALPHA:\nAPPLIES FOR LEFTSCROLL AND RIGHTSCROLL ONLY.\nHow much do you wanna see notes of your enemies?";
-                case "missAnims":
-                    ResultText.text = Std.string(_variables.missAnims).toUpperCase();
-                    ExplainText.text = "MISS ANIMATIONS:\nPlay miss animation for the player if they miss a note?";
-                case "hpColors":
-                    ResultText.text = Std.string(_variables.hpColors).toUpperCase();
-                    ExplainText.text = "HEALTH BAR COLORS:\nDo you want your health bar to reflet characters in a song?";
-                case "hpIcons":
-                    ResultText.text = Std.string(_variables.hpIcons).toUpperCase();
-                    ExplainText.text = "HEALTH ICONS:\nShow the little health icons of people?";
-                case "hpAnims":
-                    ResultText.text = Std.string(_variables.hpAnims).toUpperCase();
-                    ExplainText.text = "HEALTH ICON ANIMATIONS:\nPlay winning and losing animations for icons when HP is low or high?";
-                case "iconStyle":
-				    ResultText.text = Std.string(_variables.iconStyle).toUpperCase();
-				    ExplainText.text = "ICON STYLE:\nHow would you want health icons to look like?";
-            }
 
             menuItems.forEach(function(spr:FlxSprite)
                 {
-                    spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4/(_variables.fps/60)));
-                    
+                    spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp / (_variables.fps / 60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4 / (_variables.fps / 60)));
+
                     if (spr.ID == curSelected)
                     {
                         camFollow.y = FlxMath.lerp(camFollow.y, spr.getGraphicMidpoint().y, camLerp/(_variables.fps/60));
@@ -334,6 +255,8 @@ class PAGE3settings extends MusicBeatSubstate
 			    default:
 			    	navi.animation.play('arrow');
 		    }
+
+            updateText();
         }
 
 	function changePress(Change:Int = 0)
@@ -522,4 +445,86 @@ class PAGE3settings extends MusicBeatSubstate
         {
             super.openSubState(SubState);
         }
+
+	function updateText():Void
+		{
+			switch (optionShit[curSelected])
+            {
+                case "score":
+                    ResultText.text = Std.string(_variables.scoreDisplay).toUpperCase();
+                    ExplainText.text = "SCORE DISPLAY:\nSet your score display visible or invisible.";
+                case "misses":
+                    ResultText.text = Std.string(_variables.missesDisplay).toUpperCase();
+                    ExplainText.text = "MISS COUNTER:\nSet your miss counter visible or invisible.";
+                case "accuracy":
+                    ResultText.text = Std.string(_variables.accuracyDisplay).toUpperCase();
+                    ExplainText.text = "ACCURACY DISPLAY:\nSet your accuracy display visible or invisible.";
+                case "page":
+                    ResultText.text = "";
+                    ExplainText.text = "Previous Page: SFX \nNext Page: GAMEPLAY";
+                case "rating":
+                    ResultText.text = Std.string(_variables.ratingDisplay).toUpperCase();
+                    ExplainText.text = "RATING DISPLAY:\nSet your rating display of your note hits visible or invisible.";
+                case "combo":
+                    ResultText.text = Std.string(_variables.comboDisplay).toUpperCase();
+                    ExplainText.text = "COMBO COUNTER:\nSet your combo counter of hit notes visible or invisible.";
+                case "timing":
+                    ResultText.text = Std.string(_variables.timingDisplay).toUpperCase();
+                    ExplainText.text = "TIMING DISPLAY:\nSet your timing display of your note hits visible or invisible.";
+                case "iconZoom":
+                    ResultText.text = _variables.iconZoom+"x";
+                    ExplainText.text = "ICON ZOOM:\nChange how zoomed in character icons become after a beat. The more, the bigger zoom.";
+                case "cameraZoom":
+                    ResultText.text = _variables.cameraZoom+"x";
+                    ExplainText.text = "CAMERA ZOOM:\nChange how zoomed in the camera becomes after a beat. The more, the bigger zoom.";
+                case "cameraSpeed":
+                    ResultText.text = _variables.cameraSpeed+"x";
+                    ExplainText.text = "CAMERA SPEED:\nChange how fast should the camera go to follow a character. The more, the faster camera goes.";
+                case "songPos":
+                    ResultText.text = Std.string(_variables.songPosition).toUpperCase();
+                    ExplainText.text = "SONG POSITION DISPLAY:\nSet your song position display visible or invisible.";
+                case "nps":
+                    ResultText.text = Std.string(_variables.nps).toUpperCase();
+                    ExplainText.text = "NOTES PER SECOND DISPLAY:\nSet your display of notes pressed per second visible or invisible.";
+                case "rainbow":
+                    ResultText.text = Std.string(_variables.rainbow).toUpperCase();
+                    ExplainText.text = "RAINBOW FPS:\nMake your PFS counter all rainbow.";
+                case "distractions":
+                    ResultText.text = Std.string(_variables.distractions).toUpperCase();
+                    ExplainText.text = "DISTRACTIONS:\nWould you want to get yourself entirely focused or get some spice to the life of stages?";
+                case "chromakeyM":
+                    ResultText.text = "";
+                    ExplainText.text = "\nAdd Chromakey colors to the background!";
+                case "bgAlpha":
+                    ResultText.text = _variables.bgAlpha * 100 +"%";
+                    ExplainText.text = "BACKGROUND ALPHA:\nSet the alpha of the background camera, to get yourself better focused at the game.";
+                case "noteSplashes":
+                    ResultText.text = Std.string(_variables.noteSplashes).toUpperCase();
+                    ExplainText.text = "NOTE SPLASHES:\nTurn on note splashes when you hit notes really good.";
+                case "noteGlow":
+                    ResultText.text = Std.string(_variables.noteGlow).toUpperCase();
+                    ExplainText.text = "NOTE GLOW:\nMake notes glow whenever you hit notes correctly.";
+                case "eNoteGlow":
+                    ResultText.text = Std.string(_variables.eNoteGlow).toUpperCase();
+                    ExplainText.text = "ENEMY NOTE GLOW:\nAPPLIES ONLY FOR UP AND DOWNSCROLL.\nMake enemy's notes glow whenever they hit notes.";
+                case "enemyAlpha":
+                    ResultText.text = _variables.enemyAlpha * 100 +"%";
+                    ExplainText.text = "ENEMY NOTE ALPHA:\nAPPLIES FOR LEFTSCROLL AND RIGHTSCROLL ONLY.\nHow much do you wanna see notes of your enemies?";
+                case "missAnims":
+                    ResultText.text = Std.string(_variables.missAnims).toUpperCase();
+                    ExplainText.text = "MISS ANIMATIONS:\nPlay miss animation for the player if they miss a note?";
+                case "hpColors":
+                    ResultText.text = Std.string(_variables.hpColors).toUpperCase();
+                    ExplainText.text = "HEALTH BAR COLORS:\nDo you want your health bar to reflet characters in a song?";
+                case "hpIcons":
+                    ResultText.text = Std.string(_variables.hpIcons).toUpperCase();
+                    ExplainText.text = "HEALTH ICONS:\nShow the little health icons of people?";
+                case "hpAnims":
+                    ResultText.text = Std.string(_variables.hpAnims).toUpperCase();
+                    ExplainText.text = "HEALTH ICON ANIMATIONS:\nPlay winning and losing animations for icons when HP is low or high?";
+                case "iconStyle":
+				    ResultText.text = Std.string(_variables.iconStyle).toUpperCase();
+				    ExplainText.text = "ICON STYLE:\nHow would you want health icons to look like?";
+            }
+		}
 }

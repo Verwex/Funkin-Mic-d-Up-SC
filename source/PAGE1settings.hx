@@ -205,43 +205,6 @@ class PAGE1settings extends MusicBeatSubstate
 			}
 		}
 
-		switch (optionShit[curSelected])
-		{
-			case "resolution":
-				ResultText.text = FlxG.width * _variables.resolution + "x" + FlxG.height * _variables.resolution;
-				ExplainText.text = "RESOLUTION:\nChange the resolution of your game.";
-			case "fullscreen":
-				ResultText.text = Std.string(_variables.fullscreen).toUpperCase();
-				ExplainText.text = "FULLSCREEN:\nMake your game stretch to your entire screen.";
-			case "fpsCounter":
-				ResultText.text = Std.string(_variables.fpsCounter).toUpperCase();
-				ExplainText.text = "FPS COUNTER:\nToggle your FPS counter on or off.";
-			case "fps":
-				ResultText.text = _variables.fps + " FPS";
-				ExplainText.text = "FPS CAP:\nChange your FPS cap when you want some smoother footage.";
-			case "page":
-				ResultText.text = "";
-				ExplainText.text = "Previous Page: CLEAR \nNext Page: SFX";
-			case "filter":
-				ResultText.text = _variables.filter;
-				ExplainText.text = "FILTER: \nChange how colors of the game work, either for fun or if you're colorblind.";
-			case "brightness":
-				ResultText.text = _variables.brightness / 2 + "%";
-				ExplainText.text = "BRIGHTNESS: \nChange how bright your game looks.";
-			case "gamma":
-				ResultText.text = _variables.gamma / 1 * 100 + "%";
-				ExplainText.text = "GAMMA: \nChange how vibrant your game looks.";
-			case "memory":
-				ResultText.text = Std.string(_variables.memory).toUpperCase();
-				ExplainText.text = "MEMORY: \nSee how your memory's acting in game.";
-			case "watermark":
-				ResultText.text = Std.string(_variables.watermark).toUpperCase();
-				ExplainText.text = "WATERMARK: \nSwitch your watermark on or off.";
-			case "hue":
-				ResultText.text = Std.string(_variables.hue);
-				ExplainText.text = "HUE: \nChange the hues of your game's colors.";
-		}
-
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp / (_variables.fps / 60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4 / (_variables.fps / 60)));
@@ -285,6 +248,8 @@ class PAGE1settings extends MusicBeatSubstate
 			default:
 				navi.animation.play('arrow');
 		}
+
+		updateText();
 	}
 
 	function changeStuff(Change:Int = 0)
@@ -457,5 +422,45 @@ class PAGE1settings extends MusicBeatSubstate
 	override function openSubState(SubState:FlxSubState)
 	{
 		super.openSubState(SubState);
+	}
+
+	function updateText():Void
+	{
+		switch (optionShit[curSelected])
+		{
+			case "resolution":
+				ResultText.text = FlxG.width * _variables.resolution + "x" + FlxG.height * _variables.resolution;
+				ExplainText.text = "RESOLUTION:\nChange the resolution of your game.";
+			case "fullscreen":
+				ResultText.text = Std.string(_variables.fullscreen).toUpperCase();
+				ExplainText.text = "FULLSCREEN:\nMake your game stretch to your entire screen.";
+			case "fpsCounter":
+				ResultText.text = Std.string(_variables.fpsCounter).toUpperCase();
+				ExplainText.text = "FPS COUNTER:\nToggle your FPS counter on or off.";
+			case "fps":
+				ResultText.text = _variables.fps + " FPS";
+				ExplainText.text = "FPS CAP:\nChange your FPS cap when you want some smoother footage.";
+			case "page":
+				ResultText.text = "";
+				ExplainText.text = "Previous Page: CLEAR \nNext Page: SFX";
+			case "filter":
+				ResultText.text = _variables.filter;
+				ExplainText.text = "FILTER: \nChange how colors of the game work, either for fun or if you're colorblind.";
+			case "brightness":
+				ResultText.text = _variables.brightness / 2 + "%";
+				ExplainText.text = "BRIGHTNESS: \nChange how bright your game looks.";
+			case "gamma":
+				ResultText.text = _variables.gamma / 1 * 100 + "%";
+				ExplainText.text = "GAMMA: \nChange how vibrant your game looks.";
+			case "memory":
+				ResultText.text = Std.string(_variables.memory).toUpperCase();
+				ExplainText.text = "MEMORY: \nSee how your memory's acting in game.";
+			case "watermark":
+				ResultText.text = Std.string(_variables.watermark).toUpperCase();
+				ExplainText.text = "WATERMARK: \nSwitch your watermark on or off.";
+			case "hue":
+				ResultText.text = Std.string(_variables.hue);
+				ExplainText.text = "HUE: \nChange the hues of your game's colors.";
+		}
 	}
 }

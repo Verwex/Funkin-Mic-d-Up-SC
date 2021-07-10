@@ -36,6 +36,8 @@ class PAGE6settings extends MusicBeatSubstate
 
     var navi:FlxSprite;
 
+    var configVersion:String = MainVariables.configVersion;
+
     public function new()
     {
         super();
@@ -169,31 +171,10 @@ class PAGE6settings extends MusicBeatSubstate
                                 });
                         }
                     }
-            
-            switch (optionShit[curSelected])
-            {
-                case "page":
-                    ResultText.text = "";
-                    ExplainText.text = "Previous Page: MISCELLANEOUS \nNext Page: GENERAL";
-                case "config":
-                    ResultText.text = "";
-                    ExplainText.text = "CLEAR CONFIG:\nWill reset your configuration in case anything goes wrong, which it shouldn't.";
-                case "save":
-                    ResultText.text = "";
-                    ExplainText.text = "CLEAR SAVE:\nWill reset your save file back to zero. All scores, all ranks. Gone.";
-            }
-
-            switch (optionShit[curSelected])
-            {
-                case 'save'|'config':
-                    navi.animation.play('enter', true);
-                default:
-                    navi.animation.play('arrow', true);
-            }
 
             menuItems.forEach(function(spr:FlxSprite)
                 {
-                    spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp/(_variables.fps/60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4/(_variables.fps/60)));
+                    spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp / (_variables.fps / 60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4 / (_variables.fps / 60)));
                     
                     if (spr.ID == curSelected)
                     {
@@ -226,6 +207,16 @@ class PAGE6settings extends MusicBeatSubstate
             
                     spr.updateHitbox();
                 });
+
+            switch (optionShit[curSelected])
+            {
+                case 'save'|'config':
+                    navi.animation.play('enter', true);
+                default:
+                    navi.animation.play('arrow', true);
+            }
+                
+            updateText();
         }
 
 	function changePress(Change:Int = 0)
@@ -274,7 +265,7 @@ class PAGE6settings extends MusicBeatSubstate
                 FlxG.save.bind('save', "Funkin Mic'd Up");
             case 'config':
                 FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume/100);
-                FileSystem.deleteFile('config.json');
+                FileSystem.deleteFile('config-$configVersion.json');
                 FlxG.sound.music.volume = 1;
                 FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
                 Conductor.changeBPM(102);
@@ -291,4 +282,20 @@ class PAGE6settings extends MusicBeatSubstate
         {
             super.openSubState(SubState);
         }
+
+	function updateText():Void
+		{
+			switch (optionShit[curSelected])
+            {
+                case "page":
+                    ResultText.text = "";
+                    ExplainText.text = "Previous Page: MISCELLANEOUS \nNext Page: GENERAL";
+                case "config":
+                    ResultText.text = "";
+                    ExplainText.text = "CLEAR CONFIG:\nWill reset your configuration in case anything goes wrong, which it shouldn't.";
+                case "save":
+                    ResultText.text = "";
+                    ExplainText.text = "CLEAR SAVE:\nWill reset your save file back to zero. All scores, all ranks. Gone.";
+            }
+		}
 }

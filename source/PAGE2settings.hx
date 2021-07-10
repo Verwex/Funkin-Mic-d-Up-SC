@@ -187,34 +187,6 @@ class PAGE2settings extends MusicBeatSubstate
 			}
 		}
 
-		switch (optionShit[curSelected])
-		{
-			case "mvolume":
-				ResultText.text = _variables.mvolume + "%";
-				ExplainText.text = "MUSIC VOLUME:\nChange the volume of your music.";
-			case "svolume":
-				ResultText.text = _variables.svolume + "%";
-				ExplainText.text = "SOUND VOLUME:\nChange the volume of some ambience and other sounds.";
-			case "vvolume":
-				ResultText.text = _variables.vvolume + "%";
-				ExplainText.text = "VOCAL VOLUME:\nChange the volume of vocals heard in songs.";
-			case "hvolume":
-				ResultText.text = _variables.hvolume + "%";
-				ExplainText.text = "HITSOUND VOLUME:\nChange the volume of note hitsounds.";
-			case "page":
-				ResultText.text = "";
-				ExplainText.text = "Previous Page: GENERAL \nNext Page: GFX";
-			case "muteMiss":
-				ResultText.text = Std.string(_variables.muteMiss).toUpperCase();
-				ExplainText.text = "MUTE ON MISS:\nMute vocals when you miss a note.";
-			case "music":
-				ResultText.text = Std.string(_variables.music).toUpperCase();
-				ExplainText.text = "MENU MUSIC:\nChange your very own menu music.";
-			case "hitsound":
-				ResultText.text = Std.string(_variables.hitsound).toUpperCase();
-				ExplainText.text = "HITSOUND:\nChange what sound you want to play when you hit a note to get you into rhythm.";
-		}
-
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp / (_variables.fps / 60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4 / (_variables.fps / 60)));
@@ -258,6 +230,8 @@ class PAGE2settings extends MusicBeatSubstate
 			default:
 				navi.animation.play('arrow');
 		}
+
+		updateText();
 	}
 
 	function changePress(Change:Int = 0)
@@ -381,4 +355,35 @@ class PAGE2settings extends MusicBeatSubstate
 	{
 		super.openSubState(SubState);
 	}
+
+	function updateText():Void
+		{
+			switch (optionShit[curSelected])
+			{
+				case "mvolume":
+					ResultText.text = _variables.mvolume + "%";
+					ExplainText.text = "MUSIC VOLUME:\nChange the volume of your music.";
+				case "svolume":
+					ResultText.text = _variables.svolume + "%";
+					ExplainText.text = "SOUND VOLUME:\nChange the volume of some ambience and other sounds.";
+				case "vvolume":
+					ResultText.text = _variables.vvolume + "%";
+					ExplainText.text = "VOCAL VOLUME:\nChange the volume of vocals heard in songs.";
+				case "hvolume":
+					ResultText.text = _variables.hvolume + "%";
+					ExplainText.text = "HITSOUND VOLUME:\nChange the volume of note hitsounds.";
+				case "page":
+					ResultText.text = "";
+					ExplainText.text = "Previous Page: GENERAL \nNext Page: GFX";
+				case "muteMiss":
+					ResultText.text = Std.string(_variables.muteMiss).toUpperCase();
+					ExplainText.text = "MUTE ON MISS:\nMute vocals when you miss a note.";
+				case "music":
+					ResultText.text = Std.string(_variables.music).toUpperCase();
+					ExplainText.text = "MENU MUSIC:\nChange your very own menu music.";
+				case "hitsound":
+					ResultText.text = Std.string(_variables.hitsound).toUpperCase();
+					ExplainText.text = "HITSOUND:\nChange what sound you want to play when you hit a note to get you into rhythm.";
+			}
+		}
 }
