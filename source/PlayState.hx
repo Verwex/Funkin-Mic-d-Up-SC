@@ -3470,29 +3470,29 @@ class PlayState extends MusicBeatState
 						{
 							case 0:
 								if (!heldKeys[3])
-									noteMiss(0);
+									noteMiss(0, daNote);
 							case 1:
 								if (!heldKeys[2])
-									noteMiss(1);
+									noteMiss(1, daNote);
 							case 2:
 								if (!heldKeys[0])
 								{
 									if (!_variables.fiveK)
-										noteMiss(2);
+										noteMiss(2, daNote);
 									else
-										noteMiss(3);
+										noteMiss(3, daNote);
 								}
 							case 3:
 								if (!heldKeys[1])
 									{
 										if (!_variables.fiveK)
-											noteMiss(3);
+											noteMiss(3, daNote);
 										else
-											noteMiss(4);
+											noteMiss(4, daNote);
 									}
 							case 4:
 								if (!heldKeys[4] && _variables.fiveK)
-									noteMiss(2);
+									noteMiss(2, daNote);
 						}
 
 						if (!heldKeys.contains(true))
