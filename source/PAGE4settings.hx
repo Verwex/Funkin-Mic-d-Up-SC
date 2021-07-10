@@ -19,7 +19,7 @@ using StringTools;
 class PAGE4settings extends MusicBeatSubstate
 {
 	var menuItems:FlxTypedGroup<FlxSprite>;
-	var optionShit:Array<String> = ['page', 'speed', 'offset', 'scroll', 'guitar', 'spam', 'botplay', 'autoPause', 'pauseCountdown', 'resetButton', 'cheatButton', 'lateD', 'accuType', 'combo+', 'comboH', '5k', 'cutscene', 'skip', 'skipCS'];
+	var optionShit:Array<String> = ['page', 'speed', 'offset', 'scroll', 'guitar', 'spam', 'ghostTapping', 'botplay', 'autoPause', 'pauseCountdown', 'resetButton', 'cheatButton', 'lateD', 'accuType', 'combo+', 'comboH', '5k', 'cutscene', 'skip', 'skipCS'];
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	var selectedSomethin:Bool = false;
@@ -265,6 +265,9 @@ class PAGE4settings extends MusicBeatSubstate
 			case "cheatButton":
 				ResultText.text = Std.string(_variables.cheatButton).toUpperCase();
 				ExplainText.text = "CHEAT BUTTON:\nEnable a button to cheat. We know you want to.";
+			case "ghostTapping":
+				ResultText.text = Std.string(_variables.ghostTapping).toUpperCase();
+				ExplainText.text = "GHOST TAPPING:\nWould you want to tap a wrong direction and not have a miss occur?";
 			case "speed":
 				if (_variables.speed != 0)
 					ResultText.text = Std.string(_variables.speed);
@@ -406,6 +409,10 @@ class PAGE4settings extends MusicBeatSubstate
 				FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume / 100);
 			case "cheatButton":
 				_variables.cheatButton = !_variables.cheatButton;
+			
+				FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume / 100);
+			case "ghostTapping":
+				_variables.ghostTapping = !_variables.ghostTapping;
 			
 				FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume / 100);
 			case "accuType":

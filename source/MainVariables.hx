@@ -77,6 +77,7 @@ typedef Variables =
 	var hpIcons:Bool;
 	var hpAnims:Bool;
 	var iconStyle:String;
+	var ghostTapping:Bool;
 }
 
 class MainVariables
@@ -197,7 +198,8 @@ class MainVariables
 				hpColors: true,
 				hpIcons: true,
 				hpAnims: true,
-				iconStyle: iconList[iconList.length]
+				iconStyle: iconList[iconList.length],
+				ghostTapping: true
 			};
 
 			Save();

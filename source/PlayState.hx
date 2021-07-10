@@ -4488,6 +4488,14 @@ class PlayState extends MusicBeatState
 				goodNoteHit(possibleNotes[0]);
 			else if (possibleNotes.length > 0 && !dontCheck || possibleNotes.length > 0 && !_variables.spamPrevention)
 			{
+				if (!_variables.ghostTapping)
+					{
+						for (shit in 0...pressArray.length)
+							{ // if a direction is hit that shouldn't be
+								if (pressArray[shit] && !directionList.contains(shit))
+									noteMiss(shit, null);
+							}
+					}
 				for (coolNote in possibleNotes)
 				{
 					if (pressArray[coolNote.noteData])
@@ -4501,6 +4509,12 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
+			else if (!_variables.ghostTapping)
+				{
+					for (shit in 0...pressArray.length)
+						if (pressArray[shit])
+							noteMiss(shit, null);
+				}
 
 			if (dontCheck && possibleNotes.length > 0 || _variables.spamPrevention && possibleNotes.length > 0)
 			{
