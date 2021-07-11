@@ -9,7 +9,7 @@ labels: bug
 ### If you are playing a downloaded version of the game, what operating system are you using?
 Windows (`x86`), Windows (`x86_64`), Linux, or macOS? Specify below.
 
-## What version of the engine are you using? Is the version downloaded from the releases tab or from current source code? Specify below.
+## What version of the engine are you using? Is the version from a stable release or compiled from current source code? Specify below.
 
 ## Have you identified any steps to reproduce the bug? If so, please describe them below. Use images if possible.
 
