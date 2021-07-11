@@ -6,7 +6,7 @@ labels: bug
 ---
 #### Please check for duplicates or similar issues, as well performing simple troubleshooting steps (such as clearing cookies, clearing AppData, trying another browser) before submitting an issue.
 
-### If you are playing a downloaded version of the game, what operating system are you using?
+### What operating system are you using the engine on?
 Windows (`x86`), Windows (`x86_64`), Linux, or macOS? Specify below.
 
 ## What version of the engine are you using? Is the version from a stable release or compiled from current source code? Specify below.
