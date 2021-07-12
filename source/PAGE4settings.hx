@@ -212,10 +212,83 @@ class PAGE4settings extends MusicBeatSubstate
 			}
 		}
 
+		switch (optionShit[curSelected])
+		{
+			case "offset":
+				ResultText.text = _variables.noteOffset + " ms";
+				ExplainText.text = "NOTE OFFSET:\nChange the offset of your notes. The higher the time, the later they go.\nPress ENTER to enter offset callibration.";
+			case "page":
+				ResultText.text = "";
+				ExplainText.text = "Previous Page: GFX \nNext Page: MISCELLANEOUS";
+			case "spam":
+				ResultText.text = Std.string(_variables.spamPrevention).toUpperCase();
+				ExplainText.text = "SPAM PREVENTION:\nSet your ability to spam key presses without any worries. False means you can.";
+			case "accuType":
+				ResultText.text = _variables.accuracyType;
+				ExplainText.text = "ACCURACY TYPE:\nSet how should accuracy be taken. 'Complex' will take offsets into account. 'Simple' doesn't.";
+			case "combo+":
+				ResultText.text = Std.string(_variables.comboP).toUpperCase();
+				ExplainText.text = "COMBO+:\nSet if your score should be affected by your combo.";
+			case "comboH":
+				ResultText.text = Std.string(_variables.comboH).toUpperCase();
+				ExplainText.text = "COMBO HEALTH:\nSet if your health should be affected by your combo.";
+			case "cutscene":
+				ResultText.text = Std.string(_variables.cutscene).toUpperCase();
+				ExplainText.text = "CUTSCENES:\nToggle Story Mode cutscenes on or off.";
+			case "lateD":
+				ResultText.text = Std.string(_variables.lateD).toUpperCase();
+				ExplainText.text = "LATE DAMAGE:\nChange if you want to damage your health when hitting too late.";
+			case "scroll":
+				ResultText.text = _variables.scroll.toUpperCase();
+				ExplainText.text = "SCROLL:\nChange the direction of how notes should scroll.";
+			case "guitar":
+				ResultText.text = Std.string(_variables.guitarSustain).toUpperCase();
+				ExplainText.text = "GUITAR SUSTAIN:\nDelete sustain notes when missing the main arrow of them.";
+			case "5k":
+				ResultText.text = Std.string(_variables.fiveK).toUpperCase();
+				ExplainText.text = "5K LAYOUT:\nHow do you wanna play? Cassis 4 arrows or like Osu 5k?";
+			case "skip":
+				ResultText.text = Std.string(_variables.skipGO).toUpperCase();
+				ExplainText.text = "SKIP GAME OVER:\nIt's kinda as simple as that, really.";
+			case "botplay":
+				ResultText.text = Std.string(_variables.botplay).toUpperCase();
+				ExplainText.text = "BOTPLAY:\nWould you want a robot to take control of the game?";
+			case "autoPause":
+				ResultText.text = Std.string(_variables.autoPause).toUpperCase();
+				ExplainText.text = "AUTO PAUSE:\nWould you want your game to pause once you switch to something else, like watching youtube for example?";
+			case "pauseCountdown":
+				ResultText.text = Std.string(_variables.pauseCountdown).toUpperCase();
+				ExplainText.text = "PAUSE COUNTDOWN:\nHow about setting a countdown for resuming so that you can more easily come back to the game?";
+			case "resetButton":
+				ResultText.text = Std.string(_variables.resetButton).toUpperCase();
+				ExplainText.text = "RESET BUTTON:\nEnable a button to instantly reset your song, with a game over.";
+			case "cheatButton":
+				ResultText.text = Std.string(_variables.cheatButton).toUpperCase();
+				ExplainText.text = "CHEAT BUTTON:\nEnable a button to cheat. We know you want to.";
+			case "ghostTapping":
+				ResultText.text = Std.string(_variables.ghostTapping).toUpperCase();
+				ExplainText.text = "GHOST TAPPING:\nWould you want to tap a wrong direction and not have a miss occur?";
+			case "speed":
+				if (_variables.speed != 0)
+					ResultText.text = Std.string(_variables.speed);
+				else
+					ResultText.text = 'CHART DEPENDANT';
+				ExplainText.text = "NOTE SPEED:\nChange how fast you want notes to go. Speed of zero will mean that notes are dependant on a chart.";
+			case "skipCS":
+				if (_variables.skipCS == 0)
+					ResultText.text = 'ALWAYS';
+				else if (_variables.skipCS == -1)
+					ResultText.text = 'NEVER';
+				else
+					ResultText.text = Std.string(_variables.skipCS) + " DEATH(S)";
+
+				ExplainText.text = "SKIP CUTSCENES AFTER DEATH:\nSkip cutscenes after a certain amount of deaths. 0 is always, -1 is never";
+		}
+
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp / (_variables.fps / 60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4 / (_variables.fps / 60)));
-			
+
 			if (spr.ID == curSelected)
 			{
 				camFollow.y = FlxMath.lerp(camFollow.y, spr.getGraphicMidpoint().y, camLerp / (_variables.fps / 60));
@@ -257,8 +330,6 @@ class PAGE4settings extends MusicBeatSubstate
 			default:
 				navi.animation.play('arrow');
 		}
-
-		updateText();
 	}
 
 	function changePress(Change:Int = 0)
@@ -439,80 +510,4 @@ class PAGE4settings extends MusicBeatSubstate
 	{
 		super.openSubState(SubState);
 	}
-
-	function updateText():Void
-		{
-			switch (optionShit[curSelected])
-			{
-				case "offset":
-					ResultText.text = _variables.noteOffset + " ms";
-					ExplainText.text = "NOTE OFFSET:\nChange the offset of your notes. The higher the time, the later they go.\nPress ENTER to enter offset callibration.";
-				case "page":
-					ResultText.text = "";
-					ExplainText.text = "Previous Page: GFX \nNext Page: MISCELLANEOUS";
-				case "spam":
-					ResultText.text = Std.string(_variables.spamPrevention).toUpperCase();
-					ExplainText.text = "SPAM PREVENTION:\nSet your ability to spam key presses without any worries. False means you can.";
-				case "accuType":
-					ResultText.text = _variables.accuracyType;
-					ExplainText.text = "ACCURACY TYPE:\nSet how should accuracy be taken. 'Complex' will take offsets into account. 'Simple' doesn't.";
-				case "combo+":
-					ResultText.text = Std.string(_variables.comboP).toUpperCase();
-					ExplainText.text = "COMBO+:\nSet if your score should be affected by your combo.";
-				case "comboH":
-					ResultText.text = Std.string(_variables.comboH).toUpperCase();
-					ExplainText.text = "COMBO HEALTH:\nSet if your health should be affected by your combo.";
-				case "cutscene":
-					ResultText.text = Std.string(_variables.cutscene).toUpperCase();
-					ExplainText.text = "CUTSCENES:\nToggle Story Mode cutscenes on or off.";
-				case "lateD":
-					ResultText.text = Std.string(_variables.lateD).toUpperCase();
-					ExplainText.text = "LATE DAMAGE:\nChange if you want to damage your health when hitting too late.";
-				case "scroll":
-					ResultText.text = _variables.scroll.toUpperCase();
-					ExplainText.text = "SCROLL:\nChange the direction of how notes should scroll.";
-				case "guitar":
-					ResultText.text = Std.string(_variables.guitarSustain).toUpperCase();
-					ExplainText.text = "GUITAR SUSTAIN:\nDelete sustain notes when missing the main arrow of them.";
-				case "5k":
-					ResultText.text = Std.string(_variables.fiveK).toUpperCase();
-					ExplainText.text = "5K LAYOUT:\nHow do you wanna play? Cassis 4 arrows or like Osu 5k?";
-				case "skip":
-					ResultText.text = Std.string(_variables.skipGO).toUpperCase();
-					ExplainText.text = "SKIP GAME OVER:\nIt's kinda as simple as that, really.";
-				case "botplay":
-					ResultText.text = Std.string(_variables.botplay).toUpperCase();
-					ExplainText.text = "BOTPLAY:\nWould you want a robot to take control of the game?";
-				case "autoPause":
-					ResultText.text = Std.string(_variables.autoPause).toUpperCase();
-					ExplainText.text = "AUTO PAUSE:\nWould you want your game to pause once you switch to something else, like watching youtube for example?";
-				case "pauseCountdown":
-					ResultText.text = Std.string(_variables.pauseCountdown).toUpperCase();
-					ExplainText.text = "PAUSE COUNTDOWN:\nHow about setting a countdown for resuming so that you can more easily come back to the game?";
-				case "resetButton":
-					ResultText.text = Std.string(_variables.resetButton).toUpperCase();
-					ExplainText.text = "RESET BUTTON:\nEnable a button to instantly reset your song, with a game over.";
-				case "cheatButton":
-					ResultText.text = Std.string(_variables.cheatButton).toUpperCase();
-					ExplainText.text = "CHEAT BUTTON:\nEnable a button to cheat. We know you want to.";
-				case "ghostTapping":
-					ResultText.text = Std.string(_variables.ghostTapping).toUpperCase();
-					ExplainText.text = "GHOST TAPPING:\nWould you want to tap a wrong direction and not have a miss occur?";
-				case "speed":
-					if (_variables.speed != 0)
-						ResultText.text = Std.string(_variables.speed);
-					else
-						ResultText.text = 'CHART DEPENDANT';
-					ExplainText.text = "NOTE SPEED:\nChange how fast you want notes to go. Speed of zero will mean that notes are dependant on a chart.";
-				case "skipCS":
-					if (_variables.skipCS == 0)
-						ResultText.text = 'ALWAYS';
-					else if (_variables.skipCS == -1)
-						ResultText.text = 'NEVER';
-					else
-						ResultText.text = Std.string(_variables.skipCS) + " DEATH(S)";
-
-					ExplainText.text = "SKIP CUTSCENES AFTER DEATH:\nSkip cutscenes after a certain amount of deaths. 0 is always, -1 is never";
-			}
-		}
 }
