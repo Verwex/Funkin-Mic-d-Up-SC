@@ -398,6 +398,8 @@ class PAGE3settings extends MusicBeatSubstate
 				    	style = MainVariables.iconList.length - 1;
 
 				    _variables.iconStyle = MainVariables.iconList[style];
+
+                    FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume/100);
 			}
 
             new FlxTimer().start(0.2, function(tmr:FlxTimer)
