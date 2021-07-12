@@ -204,10 +204,37 @@ class PAGE5settings extends MusicBeatSubstate
 			}
 		}
 
+		switch (optionShit[curSelected])
+		{
+			case "page":
+				ResultText.text = "";
+				ExplainText.text = "Previous Page: GAMEPLAY \nNext Page: CLEAR";
+			case "gameplay":
+				ResultText.text = "";
+				ExplainText.text = "Customize your gameplay in a way.";
+			case "animation":
+				ResultText.text = "";
+				ExplainText.text = "Check a character's animation offsets.";
+			case "chart":
+				ResultText.text = "";
+				ExplainText.text = "Chart your own favorite song however you want.";
+			case "keybinds":
+				ResultText.text = "";
+				ExplainText.text = "Change your keybinds, however you want.";
+		}
+
+		switch (optionShit[curSelected])
+		{
+			case 'gameplay' | 'animation' | 'chart' | 'keybinds':
+				navi.animation.play('enter', true);
+			default:
+				navi.animation.play('arrow', true);
+		}
+
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.scale.set(FlxMath.lerp(spr.scale.x, 0.5, camLerp / (_variables.fps / 60)), FlxMath.lerp(spr.scale.y, 0.5, 0.4 / (_variables.fps / 60)));
-			
+
 			if (spr.ID == curSelected)
 			{
 				camFollow.y = FlxMath.lerp(camFollow.y, spr.getGraphicMidpoint().y, camLerp / (_variables.fps / 60));
@@ -239,16 +266,6 @@ class PAGE5settings extends MusicBeatSubstate
 
 			spr.updateHitbox();
 		});
-
-		switch (optionShit[curSelected])
-		{
-			case 'gameplay' | 'animation' | 'chart' | 'keybinds':
-				navi.animation.play('enter', true);
-			default:
-				navi.animation.play('arrow', true);
-		}
-
-		updateText();
 	}
 
 	function changePress(Change:Int = 0)
@@ -290,26 +307,4 @@ class PAGE5settings extends MusicBeatSubstate
 	{
 		super.openSubState(SubState);
 	}
-
-	function updateText():Void
-		{
-			switch (optionShit[curSelected])
-			{
-				case "page":
-					ResultText.text = "";
-					ExplainText.text = "Previous Page: GAMEPLAY \nNext Page: CLEAR";
-				case "gameplay":
-					ResultText.text = "";
-					ExplainText.text = "Customize your gameplay in a way.";
-				case "animation":
-					ResultText.text = "";
-					ExplainText.text = "Check a character's animation offsets.";
-				case "chart":
-					ResultText.text = "";
-					ExplainText.text = "Chart your own favorite song however you want.";
-				case "keybinds":
-					ResultText.text = "";
-					ExplainText.text = "Change your keybinds, however you want.";
-			}
-		}
 }
