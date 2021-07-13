@@ -370,6 +370,7 @@ class ChartingState extends MusicBeatState
 	}
 
 	var stepperSusLength:FlxUINumericStepper;
+	var noteRollCheckmark:FlxUICheckBox;
 
 	var tab_group_note:FlxUI;
 
@@ -385,10 +386,15 @@ class ChartingState extends MusicBeatState
 		stepperSusLength.value = 0;
 		stepperSusLength.name = 'note_susLength';
 
+		noteRollCheckmark = new FlxUICheckBox(10, 40, null, null, "Are sustain notes rolls?", 100);
+		noteRollCheckmark.name = 'note_isSusRoll';
+		noteRollCheckmark.checked = false;
+
 		var applyLength:FlxButton = new FlxButton(100, 10, 'Apply');
 
 		tab_group_note.add(writingNotesText);
 		tab_group_note.add(stepperSusLength);
+		tab_group_note.add(noteRollCheckmark);
 		tab_group_note.add(applyLength);
 
 		UI_box.addGroup(tab_group_note);
@@ -458,6 +464,12 @@ class ChartingState extends MusicBeatState
 					FlxG.log.add('changed bpm shit');
 				case "Alt Animation":
 					_song.notes[curSection].altAnim = check.checked;
+				case "Are sustain notes rolls?":
+					if (curSelectedNote == null)
+						return;
+
+					curSelectedNote[4] = check.checked;
+					updateGrid();
 			}
 		}
 		else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
@@ -561,12 +573,15 @@ class ChartingState extends MusicBeatState
 
 		var upP = controls.UP_P;
 		var rightP = controls.RIGHT_P;
+		var centerP = controls.CENTER_P;
 		var downP = controls.DOWN_P;
 		var leftP = controls.LEFT_P;
 
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
+		if (_variables.fiveK)
+			controlArray = [leftP, downP, centerP, upP, rightP];
 
-		if ((upP || rightP || downP || leftP) && writingNotes)
+		if ((upP || rightP || centerP || downP || leftP) && writingNotes)
 		{
 			for (i in 0...controlArray.length)
 			{
@@ -882,7 +897,9 @@ class ChartingState extends MusicBeatState
 			if (curSelectedNote[2] != null)
 			{
 				if (FlxG.keys.pressed.M)
-					curSelectedNote[3] = true;
+					curSelectedNote[3] = 'mine';
+				else if (FlxG.keys.pressed.N)
+					curSelectedNote[3] = 'death';
 
 				curSelectedNote[2] += value;
 				curSelectedNote[2] = Math.max(curSelectedNote[2], 0);
@@ -991,7 +1008,7 @@ class ChartingState extends MusicBeatState
 		{
 			var strum = note[0] + Conductor.stepCrochet * (_song.notes[daSec].lengthInSteps * sectionNum);
 
-			var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3]];
+			var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3], note[4]];
 			_song.notes[daSec].sectionNotes.push(copiedNote);
 		}
 
@@ -1056,7 +1073,10 @@ class ChartingState extends MusicBeatState
 	function updateNoteUI():Void
 	{
 		if (curSelectedNote != null)
+		{
 			stepperSusLength.value = curSelectedNote[2];
+			noteRollCheckmark.checked = curSelectedNote[4];
+		}
 	}
 
 	function updateGrid():Void
@@ -1118,12 +1138,12 @@ class ChartingState extends MusicBeatState
 			var daNoteInfo = i[1];
 			var daStrumTime = i[0];
 			var daSus = i[2];
-			var daMine = i[3];
+			var noteType = i[3];
 
 			var no = daNoteInfo % 4;
 			if (_variables.fiveK)
 				no = daNoteInfo % 5;
-			var note:Note = new Note(daStrumTime, no, null, false, daMine);
+			var note:Note = new Note(daStrumTime, no, null, false, noteType);
 			note.sustainLength = daSus;
 			note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 			note.updateHitbox();
@@ -1218,15 +1238,18 @@ class ChartingState extends MusicBeatState
 		var noteStrum = getStrumTime(dummyArrow.y) + sectionStartTime();
 		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
 		var noteSus = 0;
-		var noteMine = false;
+		var noteType = '';
+		var noteRoll = false;
 
 		if (FlxG.keys.pressed.M)
-			noteMine = true;
+			noteType = 'mine';
+		else if (FlxG.keys.pressed.N)
+			noteType = 'death';
 
 		if (n != null)
-			_song.notes[curSection].sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, n.isMine]);
+			_song.notes[curSection].sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, n.noteVariant, n.isRoll]);
 		else
-			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteMine]);
+			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteType, noteRoll]);
 
 		var thingy = _song.notes[curSection].sectionNotes[_song.notes[curSection].sectionNotes.length - 1];
 
