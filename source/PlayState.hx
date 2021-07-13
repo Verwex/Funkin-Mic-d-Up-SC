@@ -5044,7 +5044,7 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
-		hscriptBeat();
+		// hscriptBeat();
 		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
 		{
 			resyncVocals();
@@ -5357,13 +5357,6 @@ class PlayState extends MusicBeatState
 	public function loadStartScript()
 	{
 		modState.executeString(File.getContent('assets/data/' + SONG.song.toLowerCase() + '/scripts/start.hx'));
-	}
-
-	public function hscriptBeat()
-	{
-		if (FileSystem.exists('assets/data/' + SONG.song.toLowerCase() + '/scripts/chart.hx'))
-		{
-		}
 	}
 
 	public function addObject(object:flixel.FlxBasic) // fallback
