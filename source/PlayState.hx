@@ -3388,7 +3388,7 @@ class PlayState extends MusicBeatState
 					daNote.clipRect = swagRect;
 				}
 
-				if (!daNote.mustPress && daNote.wasGoodHit && (daNote.noteVariant != "mine" || daNote.noteVariant != 'death'))
+				if (!daNote.mustPress && daNote.wasGoodHit && (daNote.noteVariant != "mine" && daNote.noteVariant != 'death'))
 				{
 					if (SONG.song != 'Tutorial')
 						camZooming = true;
@@ -3513,7 +3513,7 @@ class PlayState extends MusicBeatState
 				if (daNote.y < (arrowStrum - 75) - 25 * (SONG.speed) - 70 * _modifiers.NoteSpeed - 1.5 * _modifiers.DrunkNotes - 11 * _modifiers.AccelNotes
 					- 128 * Math.abs(_modifiers.Offbeat / 100))
 				{
-					if (daNote.noteVariant != "mine" || daNote.noteVariant != 'death')
+					if (daNote.noteVariant != "mine" && daNote.noteVariant != 'death')
 					{
 						if (!daNote.isSustainNote)
 							daNote.tooLate = true;
@@ -4395,7 +4395,7 @@ class PlayState extends MusicBeatState
 				// Force good note hit regardless if it's too late to hit it or not as a fail safe
 				if (daNote.canBeHit && daNote.mustPress || daNote.tooLate && daNote.mustPress)
 				{
-					if (daNote.noteVariant != "mine" || daNote.noteVariant != 'death')
+					if (daNote.noteVariant != "mine" && daNote.noteVariant != 'death')
 					{
 						goodNoteHit(daNote);
 						boyfriend.holdTimer = 0;
