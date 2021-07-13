@@ -1444,13 +1444,13 @@ class PlayState extends MusicBeatState
 
 		if (_modifiers.HitZonesSwitch)
 		{
-			Conductor.safeFrames = Std.int(23 + _modifiers.HitZones);
+			Conductor.safeFrames = Std.int(13 + _modifiers.HitZones);
 			Conductor.safeZoneOffset = (Conductor.safeFrames / 60) * 1000;
 			Conductor.timeScale = Conductor.safeZoneOffset / 166;
 		}
 		else
 		{
-			Conductor.safeFrames = 23; // why tf did i forget this
+			Conductor.safeFrames = 13; // why tf did i forget this
 			Conductor.safeZoneOffset = (Conductor.safeFrames / 60) * 1000;
 			Conductor.timeScale = Conductor.safeZoneOffset / 166;
 		}

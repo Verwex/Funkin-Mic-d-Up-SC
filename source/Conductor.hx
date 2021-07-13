@@ -23,7 +23,7 @@ class Conductor
 	public static var lastSongPos:Float;
 	public static var offset:Float = 0;
 
-	public static var safeFrames:Int = 23; // new input system made me do this :/
+	public static var safeFrames:Int = 13; // new input system made me do this :/
 	public static var safeZoneOffset:Float = (safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
 	public static var timeScale:Float = Conductor.safeZoneOffset / 166;
 
