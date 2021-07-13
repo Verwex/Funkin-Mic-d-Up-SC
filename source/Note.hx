@@ -85,19 +85,38 @@ class Note extends FlxSprite
 
 						if (isSustainNote)
 						{
-							loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
+							if (!isRoll)
+							{
+								loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
 
-							animation.add('purpleholdend', [5]);
-							animation.add('greenholdend', [7]);
-							animation.add('redholdend', [8]);
-							animation.add('blueholdend', [6]);
-							animation.add('yellowholdend', [9]);
+								animation.add('purpleholdend', [5]);
+								animation.add('greenholdend', [7]);
+								animation.add('redholdend', [8]);
+								animation.add('blueholdend', [6]);
+								animation.add('yellowholdend', [9]);
 
-							animation.add('purplehold', [0]);
-							animation.add('greenhold', [2]);
-							animation.add('redhold', [3]);
-							animation.add('bluehold', [1]);
-							animation.add('yellowhold', [4]);
+								animation.add('purplehold', [0]);
+								animation.add('greenhold', [2]);
+								animation.add('redhold', [3]);
+								animation.add('bluehold', [1]);
+								animation.add('yellowhold', [4]);
+							}
+							else
+							{
+								loadGraphic(Paths.image('weeb/pixelUI/rollEnds', 'week6'), true, 16, 6);
+
+								animation.add('purplerollend', [5]);
+								animation.add('greenrollend', [7]);
+								animation.add('redrollend', [8]);
+								animation.add('bluerollend', [6]);
+								animation.add('yellowrollend', [9]);
+
+								animation.add('purpleroll', [0]);
+								animation.add('greenroll', [2]);
+								animation.add('redroll', [3]);
+								animation.add('blueroll', [1]);
+								animation.add('yellowroll', [4]);
+							}
 						}
 
 						setGraphicSize(Std.int(width * PlayState.daPixelZoom));
@@ -150,6 +169,8 @@ class Note extends FlxSprite
 						updateHitbox();
 
 						if (isSustainNote)
+						{
+							if (isRoll)
 							{
 								loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
 
@@ -157,6 +178,15 @@ class Note extends FlxSprite
 
 								animation.add('redhold', [3]);
 							}
+							else
+							{
+								loadGraphic(Paths.image('weeb/pixelUI/rollEnds', 'week6'), true, 16, 6);
+
+								animation.add('redrollend', [8]);
+
+								animation.add('redroll', [3]);
+							}
+						}
 
 					default:
 						// thanks catte
@@ -186,11 +216,20 @@ class Note extends FlxSprite
 
 						if (isSustainNote)
 							{
-								loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
-
-								animation.add('redholdend', [8]);
-
-								animation.add('redhold', [3]);
+								if (isRoll)
+									{
+										loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
+		
+										animation.add('redholdend', [8]);
+		
+										animation.add('redhold', [3]);
+									}
+									else
+									{
+										loadGraphic(Paths.image('weeb/pixelUI/rollEnds', 'week6'), true, 16, 6);
+		
+										animation.add('redrollend', [8]);
+									}		
 							}
 					default:
 						// thanks catte
@@ -286,7 +325,9 @@ class Note extends FlxSprite
 		if (isSustainNote && prevNote != null)
 		{
 			noteScore * 0.2;
-			alpha = 0.6;
+
+			if (!isRoll)
+				alpha = 0.6;
 
 			x += width / 2;
 

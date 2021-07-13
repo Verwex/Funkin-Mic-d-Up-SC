@@ -2012,6 +2012,7 @@ class PlayState extends MusicBeatState
 					songNotes[3] = false;
 
 				var noteType:String = songNotes[3];
+				var isRoll:Bool = songNotes[4];
 
 				var gottaHitNote:Bool = section.mustHitSection;
 
@@ -2127,7 +2128,7 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, noteType);
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, noteType, false);
 				swagNote.sustainLength = songNotes[2];
 				swagNote.scrollFactor.set(0, 0);
 
@@ -2163,7 +2164,7 @@ class PlayState extends MusicBeatState
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
 					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true,
-					noteType);
+					noteType, isRoll);
 					sustainNote.scrollFactor.set();
 					unspawnNotes.push(sustainNote);
 
@@ -2201,7 +2202,7 @@ class PlayState extends MusicBeatState
 				{
 					for (i in 0...Std.int(_modifiers.Jacktastic))
 					{
-						jackNote = new Note(swagNote.strumTime + 70 * (i + 1), swagNote.noteData, oldNote, false, swagNote.noteVariant);
+						jackNote = new Note(swagNote.strumTime + 70 * (i + 1), swagNote.noteData, oldNote, false, swagNote.noteVariant, false);
 						jackNote.scrollFactor.set(0, 0);
 
 						if (_modifiers.WidenSwitch)
@@ -2262,7 +2263,7 @@ class PlayState extends MusicBeatState
 			if (note.strumTime > startingpoint)
 			{
 				noteRef = newNoteArray.length > 0 ? newNoteArray[newNoteArray.length - 1] : null;
-				var deepCopy:Note = new Note(note.strumTime, note.noteData, noteRef, note.isSustainNote, note.noteVariant);
+				var deepCopy:Note = new Note(note.strumTime, note.noteData, noteRef, note.isSustainNote, note.noteVariant, note.isRoll);
 				deepCopy.mustPress = note.mustPress;
 				deepCopy.x = note.x;
 				newNoteArray.push(deepCopy);
@@ -3374,7 +3375,7 @@ class PlayState extends MusicBeatState
 				}
 
 				// i am so fucking sorry for this if condition
-				if (daNote.isSustainNote
+				if (daNote.isSustainNote && !daNote.isRoll
 					&& daNote.y + daNote.offset.y <= arrowStrum + Note.swagWidth / 2
 					&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 				{
@@ -3454,7 +3455,7 @@ class PlayState extends MusicBeatState
 				}
 
 				// Guitar Hero Type Held Notes by Rozebud:tm:
-				if (_variables.guitarSustain && daNote.isSustainNote && daNote.mustPress && !daNote.wasGoodHit)
+				if (_variables.guitarSustain && daNote.isSustainNote && daNote.mustPress && !daNote.wasGoodHit && !daNote.isRoll)
 				{
 					if (daNote.prevNote.tooLate)
 					{
@@ -3522,7 +3523,7 @@ class PlayState extends MusicBeatState
 						}
 						else
 						{
-							if (startedCountdown && daNote.mustPress && !botPlay.visible)
+							if (startedCountdown && daNote.mustPress && !botPlay.visible && !daNote.isRoll)
 							{
 								if (_modifiers.HPLossSwitch)
 									health -= 0.0475 * _modifiers.HPLoss + (_variables.comboH ? 0.00075 * combo : 0);
@@ -4422,7 +4423,7 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && holdArray[daNote.noteData])
+				if (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && holdArray[daNote.noteData] && !daNote.isRoll)
 					goodNoteHit(daNote);
 			});
 		}
@@ -4840,10 +4841,11 @@ class PlayState extends MusicBeatState
 		// ditto
 		if (_variables.guitarSustain && note.isSustainNote && !note.prevNote.wasGoodHit && note.prevNote.isSustainNote)
 		{
-			noteMiss(note.noteData, note);
+			if (!note.isRoll)
+				noteMiss(note.noteData, note);
 			note.prevNote.tooLate = true;
 			note.prevNote.destroy();
-			if (_variables.muteMiss)
+			if (_variables.muteMiss && !note.isRoll)
 				vocals.volume = 0;
 		}
 		else if (!note.wasGoodHit)
@@ -4865,7 +4867,7 @@ class PlayState extends MusicBeatState
 				if (mashViolations < 0)
 					mashViolations = 0;
 
-				if (!note.isSustainNote)
+				if (!note.isSustainNote || (note.isSustainNote && note.isRoll))
 				{
 					if (_variables.hitsound.toLowerCase() != 'none')
 						FlxG.sound.play(Paths.sound('hitsounds/' + _variables.hitsound, 'shared'), _variables.hvolume / 100);
@@ -4937,7 +4939,7 @@ class PlayState extends MusicBeatState
 				note.wasGoodHit = true;
 				vocals.volume = _variables.vvolume / 100;
 
-				if (!note.isSustainNote)
+				if (!note.isSustainNote || (note.isSustainNote && note.isRoll))
 				{
 					note.kill();
 					notes.remove(note, true);
