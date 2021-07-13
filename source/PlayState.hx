@@ -171,6 +171,7 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxText;
 
 	public static var misses:Int = 0;
+	var curMisses:Int;
 
 	var missTxt:FlxText;
 
@@ -394,7 +395,7 @@ class PlayState extends MusicBeatState
 		//	dialogueSuffix = "-dead"; ///yiiiiikes
 		else if (_modifiers.Practice)
 			dialogueSuffix = "-practice";
-		else if (_modifiers.Perfect)
+		else if (_modifiers.Perfect || _modifiers.BadTrip || _modifiers.ShittyEnding || _modifiers.TruePerfect)
 			dialogueSuffix = "-perfect";
 
 		/*
@@ -3191,7 +3192,7 @@ class PlayState extends MusicBeatState
 			updateAccuracy();
 		}
 
-		if ((health <= -0.00001 && canDie && !_modifiers.Practice && !ended) || reset)
+		if ((health <= -0.00001 && canDie && !_modifiers.Practice && !ended) || reset || (curMisses >= 10 && _modifiers.SingleDigits))
 		{
 			lives -= 1;
 
@@ -3222,6 +3223,7 @@ class PlayState extends MusicBeatState
 
 				speed = 0;
 				loops = 0;
+				curMisses = 0;
 
 				camHUD.angle = 0;
 				camNOTES.angle = 0;
@@ -3530,7 +3532,7 @@ class PlayState extends MusicBeatState
 								else
 									health -= 0.0475 + (_variables.comboH ? 0.00075 * combo : 0);
 
-								if (_modifiers.Perfect) // if perfect
+								if (_modifiers.Perfect || _modifiers.BadTrip || _modifiers.ShittyEnding || _modifiers.TruePerfect) // if perfect
 									health = -10;
 
 								if (_variables.missAnims)
@@ -3576,6 +3578,7 @@ class PlayState extends MusicBeatState
 								{
 									updateAccuracy();
 									misses++;
+									curMisses++;
 									combo = 0;
 								}
 
@@ -3946,18 +3949,24 @@ class PlayState extends MusicBeatState
 			daRating = 'shit';
 			score = 50;
 			shits++;
+			if (_modifiers.ShittyEnding || _modifiers.BadTrip || _modifiers.TruePerfect)
+				health = -10;
 		}
 		else if (Math.abs(noteDiff) > Conductor.safeZoneOffset * 0.75)
 		{
 			daRating = 'bad';
 			score = 100;
 			bads++;
+			if (_modifiers.BadTrip || _modifiers.TruePerfect)
+				health = -10;
 		}
 		else if (Math.abs(noteDiff) > Conductor.safeZoneOffset * 0.2)
 		{
 			daRating = 'good';
 			score = 200;
 			goods++;
+			if (_modifiers.TruePerfect)
+				health = -10;
 		}
 
 		if (daRating == "sick")
@@ -4655,7 +4664,7 @@ class PlayState extends MusicBeatState
 					health -= 0.04 + (_variables.comboH ? 0.00075 * combo : 0);
 			}
 
-			if (_modifiers.Perfect) // if perfect
+			if (_modifiers.Perfect || _modifiers.BadTrip || _modifiers.ShittyEnding || _modifiers.TruePerfect) // if perfect
 				health = -10;
 
 			if (combo > 5 && gf.animOffsets.exists('sad'))
@@ -4664,6 +4673,7 @@ class PlayState extends MusicBeatState
 			}
 
 			misses++;
+			curMisses++;
 
 			// e
 			if (!frozen && _modifiers.FreezeSwitch)
