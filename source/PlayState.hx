@@ -2011,7 +2011,7 @@ class PlayState extends MusicBeatState
 				if (songNotes[3] == null)
 					songNotes[3] = false;
 
-				var noteMine:Bool = songNotes[3];
+				var noteType:String = songNotes[3];
 
 				var gottaHitNote:Bool = section.mustHitSection;
 
@@ -2127,7 +2127,7 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, noteMine);
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, noteType);
 				swagNote.sustainLength = songNotes[2];
 				swagNote.scrollFactor.set(0, 0);
 
@@ -2163,7 +2163,7 @@ class PlayState extends MusicBeatState
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
 					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true,
-						noteMine);
+					noteType);
 					sustainNote.scrollFactor.set();
 					unspawnNotes.push(sustainNote);
 
@@ -2201,7 +2201,7 @@ class PlayState extends MusicBeatState
 				{
 					for (i in 0...Std.int(_modifiers.Jacktastic))
 					{
-						jackNote = new Note(swagNote.strumTime + 70 * (i + 1), swagNote.noteData, oldNote, false, swagNote.isMine);
+						jackNote = new Note(swagNote.strumTime + 70 * (i + 1), swagNote.noteData, oldNote, false, swagNote.noteVariant);
 						jackNote.scrollFactor.set(0, 0);
 
 						if (_modifiers.WidenSwitch)
@@ -2262,7 +2262,7 @@ class PlayState extends MusicBeatState
 			if (note.strumTime > startingpoint)
 			{
 				noteRef = newNoteArray.length > 0 ? newNoteArray[newNoteArray.length - 1] : null;
-				var deepCopy:Note = new Note(note.strumTime, note.noteData, noteRef, note.isSustainNote);
+				var deepCopy:Note = new Note(note.strumTime, note.noteData, noteRef, note.isSustainNote, note.noteVariant);
 				deepCopy.mustPress = note.mustPress;
 				deepCopy.x = note.x;
 				newNoteArray.push(deepCopy);
@@ -3385,7 +3385,7 @@ class PlayState extends MusicBeatState
 					daNote.clipRect = swagRect;
 				}
 
-				if (!daNote.mustPress && daNote.wasGoodHit && !daNote.isMine)
+				if (!daNote.mustPress && daNote.wasGoodHit && (daNote.noteVariant != "mine" || daNote.noteVariant != 'death'))
 				{
 					if (SONG.song != 'Tutorial')
 						camZooming = true;
@@ -3510,7 +3510,7 @@ class PlayState extends MusicBeatState
 				if (daNote.y < (arrowStrum - 75) - 25 * (SONG.speed) - 70 * _modifiers.NoteSpeed - 1.5 * _modifiers.DrunkNotes - 11 * _modifiers.AccelNotes
 					- 128 * Math.abs(_modifiers.Offbeat / 100))
 				{
-					if (!daNote.isMine)
+					if (daNote.noteVariant != "mine" || daNote.noteVariant != 'death')
 					{
 						if (!daNote.isSustainNote)
 							daNote.tooLate = true;
@@ -4385,7 +4385,7 @@ class PlayState extends MusicBeatState
 				// Force good note hit regardless if it's too late to hit it or not as a fail safe
 				if (daNote.canBeHit && daNote.mustPress || daNote.tooLate && daNote.mustPress)
 				{
-					if (!daNote.isMine)
+					if (daNote.noteVariant != "mine" || daNote.noteVariant != 'death')
 					{
 						goodNoteHit(daNote);
 						boyfriend.holdTimer = 0;
@@ -4630,19 +4630,20 @@ class PlayState extends MusicBeatState
 		{
 			if (note != null)
 			{
-				if (!note.isMine)
+				switch (note.noteVariant)
 				{
-					if (_modifiers.HPLossSwitch)
-						health -= 0.04 * _modifiers.HPLoss + (_variables.comboH ? 0.00075 * combo : 0);
-					else
-						health -= 0.04 + (_variables.comboH ? 0.00075 * combo : 0);
-				}
-				else
-				{
-					if (_modifiers.HPLossSwitch)
-						health -= 0.16 * _modifiers.HPLoss + (_variables.comboH ? 0.001 * combo : 0);
-					else
-						health -= 0.16 + (_variables.comboH ? 0.001 * combo : 0);
+					default:
+						if (_modifiers.HPLossSwitch)
+							health -= 0.04 * _modifiers.HPLoss + (_variables.comboH ? 0.00075 * combo : 0);
+						else
+							health -= 0.04 + (_variables.comboH ? 0.00075 * combo : 0);
+					case 'mine':
+						if (_modifiers.HPLossSwitch)
+							health -= 0.16 * _modifiers.HPLoss + (_variables.comboH ? 0.001 * combo : 0);
+						else
+							health -= 0.16 + (_variables.comboH ? 0.001 * combo : 0);
+					case 'death':
+						health = -10;
 				}
 			}
 			else
@@ -4723,7 +4724,7 @@ class PlayState extends MusicBeatState
 			
 			if (note != null)
 			{
-				if (note.isMine)
+				if (note.noteVariant != "mine" || note.noteVariant != 'death')
 				{
 					note.kill();
 					notes.remove(note, true);
@@ -4849,7 +4850,7 @@ class PlayState extends MusicBeatState
 		{
 			hittingNote = true;
 
-			if (note.isMine)
+			if (note.noteVariant == "mine" || note.noteVariant == 'death')
 			{
 				noteMiss(note.noteData, note);
 			}
@@ -5156,7 +5157,7 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.isMine)
+				if (daNote.noteVariant == "mine" || daNote.noteVariant == 'death')
 				{
 					FlxTween.color(daNote, 0, FlxColor.WHITE, FlxColor.RED, {
 						ease: FlxEase.quadInOut
@@ -5169,7 +5170,7 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.isMine)
+				if (daNote.noteVariant == "mine" || daNote.noteVariant == 'death')
 				{
 					FlxTween.color(daNote, 0, FlxColor.RED, FlxColor.WHITE, {
 						ease: FlxEase.quadInOut

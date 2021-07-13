@@ -33,7 +33,7 @@ class Note extends FlxSprite
 	public var isSustainNote:Bool = false;
 	// MINES: mines. end of story.
 	// ROLLS: taiko type rolls (jacks but you dont need to hit em)
-	public var isMine:Bool = false;
+	public var noteVariant:String = '';
 	public var isRoll:Bool = false;
 
 	public var noteScore:Float = 1;
@@ -48,7 +48,7 @@ class Note extends FlxSprite
 	public static var canMissUp:Bool = true;
 	public static var canMissDown:Bool = true;
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?mine:Bool = false, ?roll:Bool = false)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?noteType:String = '', ?roll:Bool = false)
 	{
 		super();
 
@@ -57,7 +57,7 @@ class Note extends FlxSprite
 
 		this.prevNote = prevNote;
 		isSustainNote = sustainNote;
-		isMine = mine;
+		noteVariant = noteType;
 		isRoll = roll;
 
 		x += 95;
@@ -69,171 +69,198 @@ class Note extends FlxSprite
 
 		var daStage:String = PlayState.curStage;
 
-		if (!isMine)
+		switch (noteVariant)
 		{
-			switch (daStage)
-			{
-				case 'school' | 'schoolEvil':
-					loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels', 'week6'), true, 17, 17);
+			default:
+				switch (daStage)
+				{
+					case 'school' | 'schoolEvil':
+						loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels', 'week6'), true, 17, 17);
 
-					animation.add('greenScroll', [7]);
-					animation.add('redScroll', [8]);
-					animation.add('blueScroll', [6]);
-					animation.add('purpleScroll', [5]);
-					animation.add('yellowScroll', [9]);
+						animation.add('greenScroll', [7]);
+						animation.add('redScroll', [8]);
+						animation.add('blueScroll', [6]);
+						animation.add('purpleScroll', [5]);
+						animation.add('yellowScroll', [9]);
 
-					if (isSustainNote)
+						if (isSustainNote)
+						{
+							loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
+
+							animation.add('purpleholdend', [5]);
+							animation.add('greenholdend', [7]);
+							animation.add('redholdend', [8]);
+							animation.add('blueholdend', [6]);
+							animation.add('yellowholdend', [9]);
+
+							animation.add('purplehold', [0]);
+							animation.add('greenhold', [2]);
+							animation.add('redhold', [3]);
+							animation.add('bluehold', [1]);
+							animation.add('yellowhold', [4]);
+						}
+
+						setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+						updateHitbox();
+
+					default:
+						frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
+
+						animation.addByPrefix('greenScroll', 'green0');
+						animation.addByPrefix('redScroll', 'red0');
+						animation.addByPrefix('blueScroll', 'blue0');
+						animation.addByPrefix('purpleScroll', 'purple0');
+						animation.addByPrefix('yellowScroll', 'yellow0');
+
+						animation.addByPrefix('purpleholdend', 'pruple end hold');
+						animation.addByPrefix('greenholdend', 'green hold end');
+						animation.addByPrefix('redholdend', 'red hold end');
+						animation.addByPrefix('blueholdend', 'blue hold end');
+						animation.addByPrefix('yellowholdend', 'yellow hold end');
+
+						animation.addByPrefix('purplehold', 'purple hold piece');
+						animation.addByPrefix('greenhold', 'green hold piece');
+						animation.addByPrefix('redhold', 'red hold piece');
+						animation.addByPrefix('bluehold', 'blue hold piece');
+						animation.addByPrefix('yellowhold', 'yellow hold piece');
+
+						animation.addByPrefix('purplerollend', 'purple roll end');
+						animation.addByPrefix('greenrollend', 'green roll end');
+						animation.addByPrefix('redrollend', 'red roll end');
+						animation.addByPrefix('bluerollend', 'blue roll end');
+						animation.addByPrefix('yellowrollend', 'yellow roll end');
+
+						animation.addByPrefix('purpleroll', 'purple roll piece');
+						animation.addByPrefix('greenroll', 'green roll piece');
+						animation.addByPrefix('redroll', 'red roll piece');
+						animation.addByPrefix('blueroll', 'blue roll piece');
+						animation.addByPrefix('yellowroll', 'yellow roll piece');
+
+						setGraphicSize(Std.int(width * 0.7));
+						updateHitbox();
+						antialiasing = true;
+				}
+			case 'mine':
+				switch (daStage)
+				{
+					case 'school' | 'schoolEvil':
+						loadGraphic(Paths.image('weeb/pixelUI/arrowMINE-pixel', 'week6'), true, 17, 17);
+						animation.add('mineScroll', [0]);
+						setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+						updateHitbox();
+
+						if (isSustainNote)
+							{
+								loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
+
+								animation.add('redholdend', [8]);
+
+								animation.add('redhold', [3]);
+							}
+
+					default:
+						// thanks catte
+						loadGraphic(Paths.image('arrowMINE', 'shared'), true, 153, 153);
+						animation.add('mineScroll', [0]);
+						setGraphicSize(Std.int(width * 0.7));
+						updateHitbox();
+						antialiasing = true;
+
+						if (isSustainNote)
+						{
+							frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
+							animation.addByPrefix('redholdend', 'red hold end');
+							animation.addByPrefix('redhold', 'red hold piece');
+							animation.addByPrefix('redrollend', 'red roll end');
+							animation.addByPrefix('redroll', 'red roll piece');
+						}
+				}
+			case 'death':
+				switch (daStage)
+				{
+					case 'school' | 'schoolEvil':
+						loadGraphic(Paths.image('weeb/pixelUI/arrowDEATH-pixel', 'week6'), true, 17, 17);
+						animation.add('deathScroll', [0]);
+						setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+						updateHitbox();
+
+						if (isSustainNote)
+							{
+								loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
+
+								animation.add('redholdend', [8]);
+
+								animation.add('redhold', [3]);
+							}
+					default:
+						// thanks catte
+						loadGraphic(Paths.image('arrowDEATH', 'shared'), true, 153, 153);
+						animation.add('deathScroll', [0]);
+						setGraphicSize(Std.int(width * 0.7));
+						updateHitbox();
+						antialiasing = true;
+
+						if (isSustainNote)
+							{
+								frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
+								animation.addByPrefix('redholdend', 'red hold end');
+								animation.addByPrefix('redhold', 'red hold piece');
+								animation.addByPrefix('redrollend', 'red roll end');
+								animation.addByPrefix('redroll', 'red roll piece');
+							}
+				}
+		}
+
+		switch (noteVariant)
+		{
+			default:
+				if (!_variables.fiveK)
 					{
-						loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
-
-						animation.add('purpleholdend', [5]);
-						animation.add('greenholdend', [7]);
-						animation.add('redholdend', [8]);
-						animation.add('blueholdend', [6]);
-						animation.add('yellowholdend', [9]);
-
-						animation.add('purplehold', [0]);
-						animation.add('greenhold', [2]);
-						animation.add('redhold', [3]);
-						animation.add('bluehold', [1]);
-						animation.add('yellowhold', [4]);
+						switch (noteData)
+						{
+							case 0:
+								x += swagWidth * 0;
+								animation.play('purpleScroll');
+							case 1:
+								x += swagWidth * 1;
+								animation.play('blueScroll');
+							case 2:
+								x += swagWidth * 2;
+								animation.play('greenScroll');
+							case 3:
+								x += swagWidth * 3;
+								animation.play('redScroll');
+						}
 					}
-
-					setGraphicSize(Std.int(width * PlayState.daPixelZoom));
-					updateHitbox();
-
-				default:
-					frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
-
-					animation.addByPrefix('greenScroll', 'green0');
-					animation.addByPrefix('redScroll', 'red0');
-					animation.addByPrefix('blueScroll', 'blue0');
-					animation.addByPrefix('purpleScroll', 'purple0');
-					animation.addByPrefix('yellowScroll', 'yellow0');
-
-					animation.addByPrefix('purpleholdend', 'pruple end hold');
-					animation.addByPrefix('greenholdend', 'green hold end');
-					animation.addByPrefix('redholdend', 'red hold end');
-					animation.addByPrefix('blueholdend', 'blue hold end');
-					animation.addByPrefix('yellowholdend', 'yellow hold end');
-
-					animation.addByPrefix('purplehold', 'purple hold piece');
-					animation.addByPrefix('greenhold', 'green hold piece');
-					animation.addByPrefix('redhold', 'red hold piece');
-					animation.addByPrefix('bluehold', 'blue hold piece');
-					animation.addByPrefix('yellowhold', 'yellow hold piece');
-
-					animation.addByPrefix('purplerollend', 'purple roll end');
-					animation.addByPrefix('greenrollend', 'green roll end');
-					animation.addByPrefix('redrollend', 'red roll end');
-					animation.addByPrefix('bluerollend', 'blue roll end');
-					animation.addByPrefix('yellowrollend', 'yellow roll end');
-
-					animation.addByPrefix('purpleroll', 'purple roll piece');
-					animation.addByPrefix('greenroll', 'green roll piece');
-					animation.addByPrefix('redroll', 'red roll piece');
-					animation.addByPrefix('blueroll', 'blue roll piece');
-					animation.addByPrefix('yellowroll', 'yellow roll piece');
-
-					setGraphicSize(Std.int(width * 0.7));
-					updateHitbox();
-					antialiasing = true;
-			}
-		}
-		else
-		{
-			// FUCK FUCK FUCK THIS CODE IS SO STUPIDDJBDSNJF
-			var random:String = "";
-			if (FlxG.random.bool(50))
-				random = "-alt";
-
-			switch (daStage)
-			{
-				case 'school' | 'schoolEvil':
-					loadGraphic(Paths.image('weeb/pixelUI/arrowMINE' + random + '-pixel', 'week6'), true, 17, 17);
-					animation.add('mineScroll', [0]);
-					setGraphicSize(Std.int(width * PlayState.daPixelZoom));
-					updateHitbox();
-				default:
-					// thanks catte
-					loadGraphic(Paths.image('arrowMINE' + random, 'shared'), true, 153, 153);
-					animation.add('mineScroll', [0]);
-					setGraphicSize(Std.int(width * 0.7));
-					updateHitbox();
-					antialiasing = true;
-			}
-		}
-
-		if (!isMine)
-		{
-			if (!_variables.fiveK)
-			{
-				switch (noteData)
-				{
-					case 0:
-						x += swagWidth * 0;
-						animation.play('purpleScroll');
-					case 1:
-						x += swagWidth * 1;
-						animation.play('blueScroll');
-					case 2:
-						x += swagWidth * 2;
-						animation.play('greenScroll');
-					case 3:
-						x += swagWidth * 3;
-						animation.play('redScroll');
-				}
-			}
-			else
-			{
-				switch (noteData)
-				{
-					case 0:
-						x += swagWidth * 0;
-						animation.play('purpleScroll');
-					case 1:
-						x += swagWidth * 1;
-						animation.play('blueScroll');
-					case 4:
-						x += swagWidth * 2;
-						animation.play('yellowScroll');
-					case 2:
-						x += swagWidth * 3;
-						animation.play('greenScroll');
-					case 3:
-						x += swagWidth * 4;
-						animation.play('redScroll');
-				}
-			}
-		}
-		else
-		{
-			if (!_variables.fiveK)
-			{
+					else
+					{
+						switch (noteData)
+						{
+							case 0:
+								x += swagWidth * 0;
+								animation.play('purpleScroll');
+							case 1:
+								x += swagWidth * 1;
+								animation.play('blueScroll');
+							case 4:
+								x += swagWidth * 2;
+								animation.play('yellowScroll');
+							case 2:
+								x += swagWidth * 3;
+								animation.play('greenScroll');
+							case 3:
+								x += swagWidth * 4;
+								animation.play('redScroll');
+						}
+					}
+			case 'mine':
 				x += swagWidth * noteData;
-				animation.play('mineScroll');
-			}
-			else
-			{
-				switch (noteData)
-				{
-					case 0:
-						x += swagWidth * 0;
-						animation.play('mineScroll');
-					case 1:
-						x += swagWidth * 1;
-						animation.play('mineScroll');
-					case 4:
-						x += swagWidth * 2;
-						animation.play('mineScroll');
-					case 2:
-						x += swagWidth * 3;
-						animation.play('mineScroll');
-					case 3:
-						x += swagWidth * 4;
-						animation.play('mineScroll');
-				}
-			}
+				if (!isSustainNote)
+					animation.play('mineScroll');
+			case 'death':
+				x += swagWidth * noteData;
+				if (!isSustainNote)
+					animation.play('deathScroll');
 		}
 
 		// trace(prevNote);
@@ -263,42 +290,41 @@ class Note extends FlxSprite
 
 			x += width / 2;
 
-			if (!isMine)
+			switch (noteVariant)
 			{
-				if (!_variables.fiveK)
-				{
-					switch (noteData)
-					{
-						case 0:
-							animation.play('purple' + sustainType + 'end');
-						case 1:
-							animation.play('blue' + sustainType + 'end');
-						case 2:
-							animation.play('green' + sustainType + 'end');
-						case 3:
-							animation.play('red' + sustainType + 'end');
-					}
-				}
-				else
-				{
-					switch (noteData)
-					{
-						case 0:
-							animation.play('purple' + sustainType + 'end');
-						case 1:
-							animation.play('blue' + sustainType + 'end');
-						case 4:
-							animation.play('yellow' + sustainType + 'end');
-						case 2:
-							animation.play('green' + sustainType + 'end');
-						case 3:
-							animation.play('red' + sustainType + 'end');
-					}
-				}
-			}
-			else
-			{
-				animation.play('red' + sustainType + 'end');
+				default:
+					if (!_variables.fiveK)
+						{
+							switch (noteData)
+							{
+								case 0:
+									animation.play('purple' + sustainType + 'end');
+								case 1:
+									animation.play('blue' + sustainType + 'end');
+								case 2:
+									animation.play('green' + sustainType + 'end');
+								case 3:
+									animation.play('red' + sustainType + 'end');
+							}
+						}
+						else
+						{
+							switch (noteData)
+							{
+								case 0:
+									animation.play('purple' + sustainType + 'end');
+								case 1:
+									animation.play('blue' + sustainType + 'end');
+								case 4:
+									animation.play('yellow' + sustainType + 'end');
+								case 2:
+									animation.play('green' + sustainType + 'end');
+								case 3:
+									animation.play('red' + sustainType + 'end');
+							}
+						}
+				case 'mine'|'death':
+					animation.play('red' + sustainType + 'end');
 			}
 
 			updateHitbox();
@@ -310,44 +336,42 @@ class Note extends FlxSprite
 
 			if (prevNote.isSustainNote)
 			{
-				if (!isMine)
+				switch (noteVariant)
 				{
-					if (!_variables.fiveK)
-					{
-						switch (prevNote.noteData)
-						{
-							case 0:
-								prevNote.animation.play('purple' + sustainType);
-							case 1:
-								prevNote.animation.play('blue' + sustainType);
-							case 2:
-								prevNote.animation.play('green' + sustainType);
-							case 3:
-								prevNote.animation.play('red' + sustainType);
-						}
-					}
-					else
-					{
-						switch (prevNote.noteData)
-						{
-							case 0:
-								prevNote.animation.play('purple' + sustainType);
-							case 1:
-								prevNote.animation.play('blue' + sustainType);
-							case 4:
-								prevNote.animation.play('yellow' + sustainType);
-							case 2:
-								prevNote.animation.play('green' + sustainType);
-							case 3:
-								prevNote.animation.play('red' + sustainType);
-						}
-					}
+					default:
+						if (!_variables.fiveK)
+							{
+								switch (prevNote.noteData)
+								{
+									case 0:
+										prevNote.animation.play('purple' + sustainType);
+									case 1:
+										prevNote.animation.play('blue' + sustainType);
+									case 2:
+										prevNote.animation.play('green' + sustainType);
+									case 3:
+										prevNote.animation.play('red' + sustainType);
+								}
+							}
+							else
+							{
+								switch (prevNote.noteData)
+								{
+									case 0:
+										prevNote.animation.play('purple' + sustainType);
+									case 1:
+										prevNote.animation.play('blue' + sustainType);
+									case 4:
+										prevNote.animation.play('yellow' + sustainType);
+									case 2:
+										prevNote.animation.play('green' + sustainType);
+									case 3:
+										prevNote.animation.play('red' + sustainType);
+								}
+							}
+					case 'mine'|'death':
+						prevNote.animation.play('red' + sustainType);
 				}
-				else
-				{
-					prevNote.animation.play('red' + sustainType);
-				}
-
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
@@ -359,7 +383,7 @@ class Note extends FlxSprite
 	{
 		super.update(elapsed);
 
-		if (isMine)
+		if ((noteVariant == "mine" || noteVariant == "death") && !isSustainNote)
 			angle += 1;
 
 		if (mustPress)
