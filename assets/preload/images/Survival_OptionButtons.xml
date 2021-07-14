@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Survival_OptionButtons.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="add idle0000" x="2" y="2" width="189" height="119"/>
+	<SubTexture name="add select0000" x="193" y="2" width="192" height="122"/>
+	<SubTexture name="addTime idle0000" x="387" y="2" width="190" height="119"/>
+	<SubTexture name="addTime select0000" x="579" y="2" width="192" height="122"/>
+	<SubTexture name="carry idle0000" x="773" y="2" width="189" height="119"/>
+	<SubTexture name="carry select0000" x="2" y="126" width="192" height="122"/>
+	<SubTexture name="subtract idle0000" x="196" y="126" width="189" height="119"/>
+	<SubTexture name="subtract select0000" x="387" y="126" width="192" height="122"/>
+	<SubTexture name="time idle0000" x="581" y="126" width="189" height="119"/>
+	<SubTexture name="time select0000" x="772" y="126" width="192" height="122"/>
+</TextureAtlas>

@@ -51,6 +51,8 @@ class MenuMarathon extends MusicBeatState
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
 
+	var tracksUsed:FlxText;
+
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	var sprDifficulty:FlxSprite;
 
@@ -144,8 +146,10 @@ class MenuMarathon extends MusicBeatState
 		scoreText.y = sprDifficulty.y - 38;
 		add(scoreText);
 
-		FlxTween.tween(scoreText, {alpha: 1}, 0.5, {ease: FlxEase.quartInOut});
-		FlxTween.tween(sprDifficulty, {alpha: 1}, 0.5, {ease: FlxEase.quartInOut});
+		tracksUsed = new FlxText(FlxG.width * 0.7, 680, 0, "0 TRACKS USED", 20);
+		tracksUsed.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
+		tracksUsed.setBorderStyle(OUTLINE, 0xFF000000, 5, 1);
+		add(tracksUsed);
 
 		changeSelection();
 		changeDiff();
@@ -185,6 +189,9 @@ class MenuMarathon extends MusicBeatState
 		{
 			FlxG.sound.music.volume += 0.5 * _variables.mvolume / 100 * FlxG.elapsed;
 		}
+
+		tracksUsed.text = PlayState.storyPlaylist.length + " TRACKS USED";
+		tracksUsed.x = 1240 - tracksUsed.width;
 
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.5 / (_variables.fps / 60)));
 
@@ -240,6 +247,7 @@ class MenuMarathon extends MusicBeatState
 			sprDifficulty.kill();
 			scoreText.kill();
 			grpSongs.clear();
+			tracksUsed.kill();
 		}
 	}
 

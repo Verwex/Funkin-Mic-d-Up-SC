@@ -24,7 +24,7 @@ class PlaySelection extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = ['week', 'freeplay', 'marathon', 'endless', 'modifier'];
+	var optionShit:Array<String> = ['week', 'freeplay', 'marathon', 'endless', 'survival', 'modifier'];
 	var camFollow:FlxObject;
 
 	var bg:FlxSprite = new FlxSprite(-89).loadGraphic(Paths.image('pBG_Main'));
@@ -221,6 +221,9 @@ class PlaySelection extends MusicBeatState
 								case 'marathon':
 									FlxG.switchState(new MenuMarathon());
 									DiscordClient.changePresence("I wanna make a marathon.",  null);
+								case 'survival':
+									FlxG.switchState(new MenuSurvival());
+									DiscordClient.changePresence("This feels like Total Drama Island already.",  null);
 								case 'endless':
 									FlxG.switchState(new MenuEndless());
 									DiscordClient.changePresence("Endless easy SMM2 moment.",  null);

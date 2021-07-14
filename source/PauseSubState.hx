@@ -57,10 +57,17 @@ class PauseSubState extends MusicBeatSubstate
 
 		var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, "", 32);
 		levelDifficulty.text += CoolUtil.difficultyString();
-		if (PlayState.gameplayArea == "Endless")
-			levelDifficulty.text = 'Loop '+loopNum;
-		else if (PlayState.gameplayArea == "Charting")
-			levelDifficulty.text = 'Charting State';
+
+		switch (PlayState.gameplayArea)
+		{
+			case "Endless":
+				levelDifficulty.text = 'Loop '+loopNum;
+			case "Charting":
+				levelDifficulty.text = 'Charting State';
+			case "Survival":
+				levelDifficulty.text = 'Survival State';
+		}
+
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('vcr.ttf'), 32);
 		levelDifficulty.updateHitbox();
@@ -166,7 +173,9 @@ class PauseSubState extends MusicBeatSubstate
 								case "Endless":
 									FlxG.switchState(new MenuEndless());
 								case "Charting":
-									FlxG.switchState(new SettingsState());
+									FlxG.switchState(new PlaySelection());
+								case "Survival":
+									FlxG.switchState(new MenuSurvival());
 							}
 					}
 
@@ -255,7 +264,7 @@ class PauseSubState extends MusicBeatSubstate
 			case "Normal":
 				switch (PlayState.gameplayArea)
 				{
-					case "Marathon" | "Endless":
+					case "Marathon" | "Endless" | "Survival":
 						menuItems = ['Resume', 'Exit to menu'];
 						loopNum = PlayState.loops+1;
 					case 'Freeplay':

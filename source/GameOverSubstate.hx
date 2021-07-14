@@ -60,7 +60,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		FlxG.camera.flash(0xFF0000, 0.4);
 
-		if (PlayState.gameplayArea == "Marathon" || PlayState.gameplayArea == "Endless")
+		if (PlayState.gameplayArea == "Marathon" || PlayState.gameplayArea == "Endless" || PlayState.gameplayArea == "Survival")
 		{
 			var press:FlxText = new FlxText(20, 15, 1200, "GAME OVER!\nGo back to try again.", 32);
 			press.alignment = CENTER;
@@ -81,7 +81,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
-		if (controls.ACCEPT && PlayState.gameplayArea != "Marathon" && PlayState.gameplayArea != "Endless")
+		if (controls.ACCEPT && PlayState.gameplayArea != "Marathon" && PlayState.gameplayArea != "Endless" && PlayState.gameplayArea != "Survival")
 		{
 			endBullshit();
 		}
@@ -101,6 +101,8 @@ class GameOverSubstate extends MusicBeatSubstate
 					FlxG.switchState(new MenuMarathon());
 				case "Endless":
 					FlxG.switchState(new MenuEndless());
+				case "Survival":
+					FlxG.switchState(new MenuSurvival());
 				case "Charting":
 					FlxG.switchState(new ChartingState());
 			}

@@ -1,5 +1,6 @@
 package;
 
+import cpp.abi.Abi;
 import lime.graphics.Image;
 import lime.app.Application;
 import sys.FileSystem;
@@ -33,6 +34,7 @@ import openfl.filters.ShaderFilter;
 import MainVariables._variables;
 import ModifierVariables._modifiers;
 import Endless_Substate._endless;
+import Survival_GameOptions._survivalVars;
 import seedyrng.Random;
 import hscript.plus.ScriptState;
 
@@ -235,6 +237,14 @@ class PlayState extends MusicBeatState
 
 	var hittingNote:Bool = false;
 
+	var survivalTimer:Float = 0;
+	public static var timeLeftOver:Float = 0;
+
+	var milliseconds:Float;
+	var seconds:Float;
+	var minutes:Float;
+	var survivalCountdown:FlxText;
+
 	override public function create()
 	{
 		instance = this;
@@ -365,6 +375,9 @@ class PlayState extends MusicBeatState
 
 		persistentUpdate = true;
 		persistentDraw = true;
+		
+		if (gameplayArea == "Survival" && _survivalVars.carryTime)
+			survivalTimer += timeLeftOver;
 
 		if (SONG == null)
 			SONG = Song.loadFromJson('tutorial');
@@ -470,6 +483,8 @@ class PlayState extends MusicBeatState
 				detailsText = "Freeplay:";
 			case "Marathon":
 				detailsText = "Marathon:";
+			case "Survival":
+				detailsText = "Survival: ";
 			case "Endless":
 				detailsText = "Endless: Loop " + loops;
 		}
@@ -1242,6 +1257,20 @@ class PlayState extends MusicBeatState
 		add(npsTxt);
 		npsTxt.visible = _variables.nps;
 
+		if (gameplayArea == "Survival")
+		{
+			survivalCountdown = new FlxText(0, 0, "", 20);
+			survivalCountdown.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, CENTER);
+			survivalCountdown.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+			survivalCountdown.scrollFactor.set();
+
+			survivalCountdown.y = 80;
+			if (_variables.scroll == "down")
+				survivalCountdown.y = 640;
+
+			add(survivalCountdown);
+		}
+
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
@@ -1353,6 +1382,10 @@ class PlayState extends MusicBeatState
 		missTxt.cameras = [camHUD];
 		accuracyTxt.cameras = [camHUD];
 		npsTxt.cameras = [camHUD];
+
+		if (gameplayArea == "Survival")
+			survivalCountdown.cameras = [camHUD];
+
 		doof.cameras = [camPAUSE];
 		freezeIndicator.cameras = [camPAUSE];
 		LightsOutBG.cameras = [camPAUSE];
@@ -1807,6 +1840,7 @@ class PlayState extends MusicBeatState
 		lastReportedPlayheadPosition = 0;
 
 		if (!paused)
+		{
 			if (_modifiers.VibeSwitch)
 			{
 				switch (_modifiers.Vibe)
@@ -1821,6 +1855,18 @@ class PlayState extends MusicBeatState
 			}
 			else
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), _variables.mvolume / 100, false);
+
+			if (gameplayArea == "Survival")
+			{
+				if (timeLeftOver == 0 || timeLeftOver > 0 && _survivalVars.addSongTimeToCurrentTime)
+				survivalTimer += FlxG.sound.music.length * (_survivalVars.timePercentage / 100);
+
+				FlxTween.color(survivalCountdown, 0.2, FlxColor.GREEN, FlxColor.WHITE, {
+					ease: FlxEase.quadInOut
+				});
+			}
+		}
+
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 		loopB = FlxG.sound.music.length - 100;
@@ -2849,6 +2895,16 @@ class PlayState extends MusicBeatState
 		accuracyTxt.text = "Accuracy: " + truncateFloat(accuracy, 2) + "%";
 		npsTxt.text = "NPS: " + nps;
 
+		if (gameplayArea == "Survival")
+		{
+			minutes = Std.int(survivalTimer / 1000 / 60);
+			seconds = Std.int((survivalTimer / 1000) % 60);
+			milliseconds = Std.int((survivalTimer / 10) % 100);
+
+			survivalCountdown.text = '$minutes:$seconds:$milliseconds';
+			survivalCountdown.x = FlxG.width / 2 - survivalCountdown.width / 2;
+		}
+
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -2936,6 +2992,11 @@ class PlayState extends MusicBeatState
 		{
 			// Conductor.songPosition = FlxG.sound.music.time;
 			Conductor.songPosition += FlxG.elapsed * 1000;
+			if (gameplayArea == "Survival" && !ended)
+			{
+				survivalTimer -= FlxG.elapsed * 1000;
+				FlxG.watch.addQuick('Survival Timer', survivalTimer);
+			}
 			FlxG.watch.addQuick("songPosition", Conductor.songPosition);
 			if (loopState != NONE && Conductor.songPosition >= loopB)
 			{
@@ -3192,9 +3253,11 @@ class PlayState extends MusicBeatState
 			updateAccuracy();
 		}
 
-		if ((health <= -0.00001 && canDie && !_modifiers.Practice && !ended) || reset || (curMisses >= 10 && _modifiers.SingleDigits))
+		if ((health <= -0.00001 && canDie && !_modifiers.Practice && !ended) || reset || (curMisses >= 10 && _modifiers.SingleDigits)
+			|| (gameplayArea == "Survival" && survivalTimer <= 0 && Conductor.songPosition > 250))
 		{
 			lives -= 1;
+			curMisses = 0;
 
 			if (_modifiers.FreezeSwitch)
 			{
@@ -3207,7 +3270,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			if (lives <= 0 || reset || ended)
+			if ((lives <= 0 && gameplayArea != "Survival") || reset || ended || (gameplayArea == "Survival" && survivalTimer <= 0))
 			{
 				boyfriend.stunned = true;
 
@@ -3223,7 +3286,6 @@ class PlayState extends MusicBeatState
 
 				speed = 0;
 				loops = 0;
-				curMisses = 0;
 
 				camHUD.angle = 0;
 				camNOTES.angle = 0;
@@ -3261,6 +3323,8 @@ class PlayState extends MusicBeatState
 								FlxG.switchState(new MenuMarathon());
 							case "Endless":
 								FlxG.switchState(new MenuEndless());
+							case "Survival":
+								FlxG.switchState(new MenuSurvival());
 							default:
 								LoadingState.loadAndSwitchState(new PlayState());
 						}
@@ -3281,6 +3345,59 @@ class PlayState extends MusicBeatState
 					});
 					FlxG.sound.play(Paths.sound('missnote2', 'shared'), _variables.svolume / 100);
 					health = 1 / _modifiers.Lives * lives;
+				}
+
+				if (lives > 0 && gameplayArea == "Survival")
+				{
+					survivalTimer -= 2000 * MenuModifiers.fakeMP * _survivalVars.subtractTimeMultiplier;
+
+					FlxTween.color(survivalCountdown, 0.2, FlxColor.RED, FlxColor.WHITE, {
+						ease: FlxEase.quadInOut
+					});
+				}
+				else if (lives <= 0 && gameplayArea == "Survival")
+				{
+					survivalTimer -= 10000 * MenuModifiers.fakeMP * _survivalVars.subtractTimeMultiplier;
+
+					FlxTween.color(survivalCountdown, 0.2, FlxColor.GREEN, FlxColor.RED, {
+						ease: FlxEase.quadInOut
+					});
+
+					FlxG.camera.flash(0xFFFF0000, 0.3 * SONG.bpm / 100);
+					FlxG.sound.play(Paths.sound('missnote2', 'shared'), _variables.svolume / 100);
+					health = 1;
+
+					if (_modifiers.LivesSwitch)
+					{
+						lives = _modifiers.Lives;
+
+						hearts.clear();
+
+						var heartTex = Paths.getSparrowAtlas('heartUI', 'shared');
+						switch (curStage)
+						{
+							case 'school' | 'schoolEvil':
+								heartTex = Paths.getSparrowAtlas('weeb/pixelUI/heartUI-pixel', 'week6');
+						}
+
+						for (i in 0...Std.int(_modifiers.Lives))
+							{
+								heartSprite = new FlxSprite(healthBarBG.x + 5 + (i * 40), 20);
+								heartSprite.frames = heartTex;
+								heartSprite.antialiasing = false;
+								heartSprite.updateHitbox();
+								heartSprite.y = healthBarBG.y + healthBarBG.height + 10;
+								heartSprite.scrollFactor.set();
+								heartSprite.animation.addByPrefix('Idle', "Hearts", 24, false);
+								heartSprite.ID = i;
+								if (_variables.scroll == "down")
+									heartSprite.y = healthBarBG.y - heartSprite.height - 10;
+								if (!_modifiers.LivesSwitch)
+									heartSprite.visible = false;
+					
+								hearts.add(heartSprite);
+							}
+					}
 				}
 			}
 		}
@@ -3579,6 +3696,16 @@ class PlayState extends MusicBeatState
 									updateAccuracy();
 									misses++;
 									curMisses++;
+
+									if (gameplayArea == "Survival")
+									{
+										survivalTimer -= 500 * MenuModifiers.fakeMP * _survivalVars.subtractTimeMultiplier;
+
+										FlxTween.color(survivalCountdown, 0.2, FlxColor.RED, FlxColor.WHITE, {
+											ease: FlxEase.quadInOut
+										});
+									}
+
 									combo = 0;
 								}
 
@@ -3729,7 +3856,7 @@ class PlayState extends MusicBeatState
 			camSus.angle = 0;
 			camNOTEHUD.angle = 0;
 
-			if (SONG.validScore && !cheated && _variables.botplay)
+			if (SONG.validScore && !cheated && !_variables.botplay)
 			{
 				#if !switch
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty);
@@ -3756,7 +3883,7 @@ class PlayState extends MusicBeatState
 					// if ()
 					MenuWeek.weekUnlocked[Std.int(Math.min(storyWeek + 1, MenuWeek.weekUnlocked.length - 1))] = true;
 
-					if (SONG.validScore && !cheated && _variables.botplay)
+					if (SONG.validScore && !cheated && !_variables.botplay)
 					{
 						NGio.unlockMedal(60961);
 						Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
@@ -3825,8 +3952,10 @@ class PlayState extends MusicBeatState
 					transIn = FlxTransitionableState.defaultTransIn;
 					transOut = FlxTransitionableState.defaultTransOut;
 
-					if (!cheated && _variables.botplay)
+					if (!cheated && !_variables.botplay)
 						Highscore.saveMarathonScore(campaignScore);
+
+					FlxG.sound.music.stop();
 
 					FlxG.switchState(new MenuMarathon());
 				}
@@ -3913,6 +4042,62 @@ class PlayState extends MusicBeatState
 				startCountdown();
 			case "Charting":
 				FlxG.switchState(new ChartingState());
+			case "Survival":
+				campaignScore += songScore;
+				timeLeftOver = FlxMath.roundDecimal(survivalTimer, 2);
+
+				storyPlaylist.remove(storyPlaylist[0]);
+				difficultyPlaylist.remove(difficultyPlaylist[0]);
+
+				FlxG.sound.music.stop();
+
+				if (storyPlaylist.length <= 0)
+				{
+					transIn = FlxTransitionableState.defaultTransIn;
+					transOut = FlxTransitionableState.defaultTransOut;
+
+					if (!cheated && !_variables.botplay)
+						Highscore.saveSurvivalScore(campaignScore, survivalTimer);
+
+					FlxG.sound.music.stop();
+					FlxG.sound.music.stop();
+					FlxG.sound.music.stop(); //just to make sure
+
+					FlxG.switchState(new MenuSurvival());
+				}
+				else
+				{
+					FlxTransitionableState.skipNextTransIn = true;
+					FlxTransitionableState.skipNextTransOut = true;
+					prevCamFollow = camFollow;
+
+					var difficulty:String = "";
+
+					if (difficultyPlaylist[0].contains('0'))
+						difficulty = '-noob';
+
+					if (difficultyPlaylist[0].contains('1'))
+						difficulty = '-easy';
+
+					if (difficultyPlaylist[0].contains('3'))
+						difficulty = '-hard';
+
+					if (difficultyPlaylist[0].contains('4'))
+						difficulty = '-expert';
+
+					if (difficultyPlaylist[0].contains('5'))
+						difficulty = '-insane';
+
+					storyDifficulty = Std.parseInt(difficultyPlaylist[0]);
+
+					trace('LOADING NEXT SONG');
+					trace(PlayState.storyPlaylist[0].toLowerCase() + difficulty);
+
+					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
+					FlxG.sound.music.stop();
+
+					LoadingState.loadAndSwitchState(new PlayState());
+				}
 		}
 	}
 
@@ -3951,6 +4136,15 @@ class PlayState extends MusicBeatState
 			shits++;
 			if (_modifiers.ShittyEnding || _modifiers.BadTrip || _modifiers.TruePerfect)
 				health = -10;
+
+			if (gameplayArea == "Survival")
+			{
+				survivalTimer -= 500 * MenuModifiers.fakeMP * _survivalVars.subtractTimeMultiplier;
+
+				FlxTween.color(survivalCountdown, 0.2, FlxColor.RED, FlxColor.WHITE, {
+					ease: FlxEase.quadInOut
+				});
+			}
 		}
 		else if (Math.abs(noteDiff) > Conductor.safeZoneOffset * 0.75)
 		{
@@ -3959,6 +4153,15 @@ class PlayState extends MusicBeatState
 			bads++;
 			if (_modifiers.BadTrip || _modifiers.TruePerfect)
 				health = -10;
+
+			if (gameplayArea == "Survival")
+			{
+				survivalTimer -= 250 * MenuModifiers.fakeMP * _survivalVars.subtractTimeMultiplier;
+
+				FlxTween.color(survivalCountdown, 0.2, FlxColor.RED, FlxColor.WHITE, {
+					ease: FlxEase.quadInOut
+				});
+			}
 		}
 		else if (Math.abs(noteDiff) > Conductor.safeZoneOffset * 0.2)
 		{
@@ -3970,7 +4173,18 @@ class PlayState extends MusicBeatState
 		}
 
 		if (daRating == "sick")
+		{
 			sicks++;
+
+			if (gameplayArea == "Survival")
+			{
+				survivalTimer += 1000 * MenuModifiers.fakeMP * _survivalVars.addTimeMultiplier;
+
+				FlxTween.color(survivalCountdown, 0.2, FlxColor.GREEN, FlxColor.WHITE, {
+					ease: FlxEase.quadInOut
+				});
+			}
+		}
 
 		if (!botPlay.visible)
 		{
@@ -4674,6 +4888,15 @@ class PlayState extends MusicBeatState
 
 			misses++;
 			curMisses++;
+
+			if (gameplayArea == "Survival")
+			{
+				survivalTimer -= 500 * MenuModifiers.fakeMP * _survivalVars.subtractTimeMultiplier;
+
+				FlxTween.color(survivalCountdown, 0.2, FlxColor.RED, FlxColor.WHITE, {
+					ease: FlxEase.quadInOut
+				});
+			}
 
 			// e
 			if (!frozen && _modifiers.FreezeSwitch)

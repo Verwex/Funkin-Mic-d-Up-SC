@@ -2,14 +2,16 @@
 <TextureAtlas imagePath="PlaySelect_Buttons.png">
 	<!-- Created with Adobe Animate version 21.0.0.35450 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="endless idle0000" x="4" y="4" width="253" height="290"/>
-	<SubTexture name="endless select0000" x="259" y="4" width="253" height="290"/>
-	<SubTexture name="freeplay idle0000" x="514" y="4" width="253" height="290"/>
-	<SubTexture name="freeplay select0000" x="769" y="4" width="253" height="290"/>
-	<SubTexture name="marathon idle0000" x="1024" y="4" width="255" height="290"/>
-	<SubTexture name="marathon select0000" x="1281" y="4" width="255" height="290"/>
-	<SubTexture name="modifier idle0000" x="1538" y="4" width="263" height="290"/>
-	<SubTexture name="modifier select0000" x="4" y="296" width="263" height="290"/>
-	<SubTexture name="week idle0000" x="269" y="296" width="259" height="290"/>
-	<SubTexture name="week select0000" x="530" y="296" width="259" height="290"/>
+	<SubTexture name="endless idle0000" x="2" y="2" width="253" height="290"/>
+	<SubTexture name="endless select0000" x="257" y="2" width="253" height="290"/>
+	<SubTexture name="freeplay idle0000" x="512" y="2" width="253" height="290"/>
+	<SubTexture name="freeplay select0000" x="767" y="2" width="253" height="290"/>
+	<SubTexture name="marathon idle0000" x="1022" y="2" width="255" height="290"/>
+	<SubTexture name="marathon select0000" x="1279" y="2" width="255" height="290"/>
+	<SubTexture name="modifier idle0000" x="1536" y="2" width="263" height="290"/>
+	<SubTexture name="modifier select0000" x="2" y="294" width="263" height="290"/>
+	<SubTexture name="survival idle0000" x="267" y="294" width="258" height="290"/>
+	<SubTexture name="survival select0000" x="527" y="294" width="258" height="290"/>
+	<SubTexture name="week idle0000" x="787" y="294" width="259" height="290"/>
+	<SubTexture name="week select0000" x="1048" y="294" width="259" height="290"/>
 </TextureAtlas>

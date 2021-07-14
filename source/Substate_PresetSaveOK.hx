@@ -153,10 +153,15 @@ class Substate_PresetSaveOK extends MusicBeatSubstate
 
 			if (controls.ACCEPT && canOK)
 			{
-				if (Substate_PresetSave.coming == "Modifiers")
-					ModifierVariables.savePreset(eggText);
-				else if (Substate_PresetSave.coming == "Marathon")
-					MenuMarathon.savePreset(eggText);
+				switch (Substate_PresetSave.coming)
+				{
+					case "Modifiers":
+						ModifierVariables.savePreset(eggText);
+					case "Marathon":
+						MenuMarathon.savePreset(eggText);
+					case "Survival":
+						MenuSurvival.savePreset(eggText);
+				}
 
 				goingBack = true;
 
@@ -170,10 +175,15 @@ class Substate_PresetSaveOK extends MusicBeatSubstate
 				new FlxTimer().start(0.5, function(tmr:FlxTimer)
 				{
 					FlxG.state.closeSubState();
-					if (Substate_PresetSave.coming == "Modifiers")
-						FlxG.state.openSubState(new Substate_Preset());
-					else if (Substate_PresetSave.coming == "Marathon")
-						FlxG.state.openSubState(new Marathon_Substate());
+					switch (Substate_PresetSave.coming)
+					{
+						case "Modifiers":
+							FlxG.state.openSubState(new Substate_Preset());
+						case "Marathon":
+							FlxG.state.openSubState(new Marathon_Substate());
+						case "Survival":
+							FlxG.state.openSubState(new Survival_Substate());
+					}
 				});
 			}
 		}

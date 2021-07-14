@@ -72,6 +72,16 @@ class Highscore
 		}
 	}
 
+	public static function saveSurvivalScore(score:Int = 0, timeLeft:Float = 0):Void
+		{
+			if (score > FlxG.save.data.survivalScore || FlxG.save.data.survivalScore == null)
+			{
+				FlxG.save.data.survivalScore = score;
+				FlxG.save.data.survivalTime = timeLeft;
+				FlxG.save.flush();
+			}
+		}
+
 	public static function saveEndlessScore(song:String, score:Int = 0):Void
 	{
 		var daSong:String = song;
