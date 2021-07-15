@@ -3719,14 +3719,14 @@ class PlayState extends MusicBeatState
 									freezeBF();
 							}
 						}
-
-						daNote.active = false;
-						daNote.visible = false;
-
-						daNote.kill();
-						notes.remove(daNote, true);
-						daNote.destroy();
 					}
+
+					daNote.active = false;
+					daNote.visible = false;
+
+					daNote.kill();
+					notes.remove(daNote, true);
+					daNote.destroy();
 				}
 			});
 		}
@@ -4958,12 +4958,9 @@ class PlayState extends MusicBeatState
 			
 			if (note != null)
 			{
-				if (note.noteVariant != "mine" || note.noteVariant != 'death')
-				{
-					note.kill();
-					notes.remove(note, true);
-					note.destroy();
-				}
+				note.kill();
+				notes.remove(note, true);
+				note.destroy();
 			}
 
 			if (_modifiers.FreezeSwitch && missCounter >= 31 - _modifiers.Freeze)
