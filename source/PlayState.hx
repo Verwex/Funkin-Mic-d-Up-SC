@@ -240,9 +240,7 @@ class PlayState extends MusicBeatState
 	var survivalTimer:Float = 0;
 	public static var timeLeftOver:Float = 0;
 
-	var milliseconds:Float;
 	var seconds:Float;
-	var minutes:Float;
 	var survivalCountdown:FlxText;
 
 	override public function create()
@@ -292,42 +290,12 @@ class PlayState extends MusicBeatState
 		camNOTEHUD.flashSprite.height = camSus.flashSprite.height;
 		camPAUSE = new FlxCamera();
 		camPAUSE.bgColor.alpha = 0;
-		// note0 = new FlxCamera();
-		// note0.bgColor.alpha = 0;
-		// // note0.alpha = 0;
-		// note0.flashSprite.width = camSus.flashSprite.width;
-		// note0.flashSprite.height = camSus.flashSprite.height;
-		// note1 = new FlxCamera();
-		// note1.bgColor.alpha = 0;
-		// // note1.alpha = 0;
-		// note1.flashSprite.width = camSus.flashSprite.width;
-		// note1.flashSprite.height = camSus.flashSprite.height;
-		// note2 = new FlxCamera();
-		// note2.bgColor.alpha = 0;
-		// // note2.alpha = 0;
-		// note2.flashSprite.width = camSus.flashSprite.width;
-		// note2.flashSprite.height = camSus.flashSprite.height;
-		// note3 = new FlxCamera();
-		// note3.bgColor.alpha = 0;
-		// // note3.alpha = 0;
-		// note3.flashSprite.width = camSus.flashSprite.width;
-		// note3.flashSprite.height = camSus.flashSprite.height;
-		// note4 = new FlxCamera();
-		// note4.bgColor.alpha = 0;
-		// // note4.alpha = 0;
-		// note4.flashSprite.width = camSus.flashSprite.width;
-		// note4.flashSprite.height = camSus.flashSprite.height;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camNOTEHUD);
 		FlxG.cameras.add(camSus);
 		FlxG.cameras.add(camNOTES);
 		FlxG.cameras.add(camHUD);
-		// FlxG.cameras.add(note0);
-		// FlxG.cameras.add(note1);
-		// FlxG.cameras.add(note2);
-		// FlxG.cameras.add(note3);
-		// FlxG.cameras.add(note4);
 		FlxG.cameras.add(camPAUSE);
 
 		modifierValues();
@@ -410,29 +378,6 @@ class PlayState extends MusicBeatState
 			dialogueSuffix = "-practice";
 		else if (_modifiers.Perfect || _modifiers.BadTrip || _modifiers.ShittyEnding || _modifiers.TruePerfect)
 			dialogueSuffix = "-perfect";
-
-		/*
-			switch (SONG.song.toLowerCase())
-			{
-				case 'tutorial':
-					dialogue = ["Hey you're pretty cute.", 'Use the arrow keys to keep up \nwith me singing.'];
-				case 'bopeebo':
-					dialogue = [
-						'HEY!',
-						"You think you can just sing\nwith my daughter like that?",
-						"If you want to date her...",
-						"You're going to have to go \nthrough ME first!"
-					];
-				case 'fresh':
-					dialogue = ["Not too shabby boy.", ""];
-				case 'dadbattle':
-					dialogue = [
-						"gah you think you're hot stuff?",
-						"If you can beat me here...",
-						"Only then I will even CONSIDER letting you\ndate my daughter!"
-					];
-			}
-		 */
 
 		if (FileSystem.exists(Paths.txt(SONG.song.toLowerCase() + '/dialogue$dialogueSuffix')))
 		{
@@ -947,9 +892,6 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-pixel';
 		}
 
-		if (curStage == 'limo')
-			gfVersion = 'gf-car';
-
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 
@@ -1257,6 +1199,10 @@ class PlayState extends MusicBeatState
 		add(npsTxt);
 		npsTxt.visible = _variables.nps;
 
+		scoreTxt.text = "Score: " + songScore;
+		missTxt.text = "Misses: " + misses;
+		accuracyTxt.text = "Accuracy: " + truncateFloat(accuracy, 2) + "%";
+
 		if (gameplayArea == "Survival")
 		{
 			survivalCountdown = new FlxText(0, 0, "", 20);
@@ -1269,6 +1215,8 @@ class PlayState extends MusicBeatState
 				survivalCountdown.y = 640;
 
 			add(survivalCountdown);
+
+			survivalCountdown.x = FlxG.width / 2 - survivalCountdown.width / 2;
 		}
 
 		iconP1 = new HealthIcon(SONG.player1, true);
@@ -1529,6 +1477,8 @@ class PlayState extends MusicBeatState
 			accuracy = 0;
 			misses = 999;
 		}
+
+		accuracyTxt.text = "Accuracy: " + truncateFloat(accuracy, 2) + "%";
 	}
 
 	function schoolIntro(?dialogueBox:DialogueBox):Void
@@ -1861,6 +1811,8 @@ class PlayState extends MusicBeatState
 				if (timeLeftOver == 0 || timeLeftOver > 0 && _survivalVars.addSongTimeToCurrentTime)
 				survivalTimer += FlxG.sound.music.length * (_survivalVars.timePercentage / 100);
 
+				survivalCountdown.x = FlxG.width / 2 - survivalCountdown.width / 2;
+
 				FlxTween.color(survivalCountdown, 0.2, FlxColor.GREEN, FlxColor.WHITE, {
 					ease: FlxEase.quadInOut
 				});
@@ -1879,37 +1831,8 @@ class PlayState extends MusicBeatState
 
 		if (_variables.songPosition) // I dont wanna talk about this code :(
 		{
-			remove(songPosBG);
-			remove(songPosBar);
-			remove(songName);
-
-			songPosBG = new FlxSprite(0, 10).loadGraphic(Paths.image('healthBar', 'shared'));
-			if (_variables.scroll == "down")
-				songPosBG.y = FlxG.height * 0.9 + 45;
-			songPosBG.screenCenter(X);
-			songPosBG.scrollFactor.set();
-			add(songPosBG);
-			songPosBG.cameras = [camHUD];
-
-			songPosBar = new FlxBar(songPosBG.x
-				+ 4, songPosBG.y
-				+ 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 8), Std.int(songPosBG.height - 8), this,
-				'songPositionBar', 0, songLength
-				- 1000);
+			songPosBar.setRange(0, songLength - 100);
 			songPosBar.numDivisions = 1000;
-			songPosBar.scrollFactor.set();
-			songPosBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
-			add(songPosBar);
-			songPosBar.cameras = [camHUD];
-
-			var songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - 20, songPosBG.y, 0, SONG.song, 16);
-			if (_variables.scroll == "down")
-				songName.y -= 3;
-			songName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			songName.scrollFactor.set();
-			songName.screenCenter(X);
-			add(songName);
-			songName.cameras = [camHUD];
 		}
 
 		// Song check real quick
@@ -1923,18 +1846,6 @@ class PlayState extends MusicBeatState
 
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength);
-
-		if (curSong == 'Tutorial')
-		{
-			// note0.x -= FlxG.width / 2;
-			// note0.angle = 90;
-			// note1.x -= FlxG.width / 2;
-			// note1.angle = 180;
-			// note2.x -= FlxG.width / 2;
-			// note2.angle = -90;
-			// note3.x -= FlxG.width / 2;
-			// note3.angle = -180;
-		}
 	}
 
 	var debugNum:Int = 0;
@@ -1942,8 +1853,6 @@ class PlayState extends MusicBeatState
 
 	private function generateSong(dataPath:String):Void
 	{
-		// FlxG.log.add(ChartParser.parse());
-
 		var songData = SONG;
 
 		Conductor.changeBPM(songData.bpm);
@@ -2890,19 +2799,13 @@ class PlayState extends MusicBeatState
 
 		wiggleShit.update(elapsed);
 
-		scoreTxt.text = "Score: " + songScore;
-		missTxt.text = "Misses: " + misses;
-		accuracyTxt.text = "Accuracy: " + truncateFloat(accuracy, 2) + "%";
 		npsTxt.text = "NPS: " + nps;
 
 		if (gameplayArea == "Survival")
 		{
-			minutes = Std.int(survivalTimer / 1000 / 60);
-			seconds = Std.int((survivalTimer / 1000) % 60);
-			milliseconds = Std.int((survivalTimer / 10) % 100);
+			seconds = Std.int(survivalTimer / 1000);
 
-			survivalCountdown.text = '$minutes:$seconds:$milliseconds';
-			survivalCountdown.x = FlxG.width / 2 - survivalCountdown.width / 2;
+			survivalCountdown.text = '$seconds';
 		}
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
@@ -3006,6 +2909,8 @@ class PlayState extends MusicBeatState
 				unspawnNotes = deepCopyNotes(allNotes, loopA);
 				songScore = 0;
 				combo = 0;
+
+				updateScoreText();
 			}
 
 			songPositionBar = Conductor.songPosition;
@@ -3717,6 +3622,8 @@ class PlayState extends MusicBeatState
 
 								if (_modifiers.FreezeSwitch && missCounter >= 31 - _modifiers.Freeze)
 									freezeBF();
+
+								updateScoreText();
 							}
 						}
 					}
@@ -4526,6 +4433,8 @@ class PlayState extends MusicBeatState
 		});
 
 		curSection += 1;
+
+		updateScoreText();
 	}
 
 	var upHold:Bool = false;
@@ -4965,7 +4874,15 @@ class PlayState extends MusicBeatState
 
 			if (_modifiers.FreezeSwitch && missCounter >= 31 - _modifiers.Freeze)
 				freezeBF();
+
+			updateScoreText();
 		}
+	}
+
+	function updateScoreText()
+	{
+		scoreTxt.text = "Score: " + songScore;
+		missTxt.text = "Misses: " + misses;
 	}
 
 	function freezeBF():Void
