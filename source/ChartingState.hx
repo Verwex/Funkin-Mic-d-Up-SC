@@ -1149,6 +1149,8 @@ class ChartingState extends MusicBeatState
 			note.updateHitbox();
 			note.x = Math.floor(daNoteInfo * GRID_SIZE);
 			note.y = Math.floor(getYfromStrum((daStrumTime - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps)));
+			note.flipY = false;
+			note.flipX = false;
 
 			if (curSelectedNote != null)
 				if (curSelectedNote[0] == note.strumTime)
