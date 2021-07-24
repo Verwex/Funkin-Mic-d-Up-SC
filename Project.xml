@@ -95,6 +95,7 @@
 
 	<!--Allows the License to be in exports and compiles of the code-->
 	<assets path="LICENSE" rename="License"/>
+	<assets path="ndll/" rename=''/>
 	
 	<!-- <template path='mods' /> -->
 	
@@ -106,6 +107,7 @@
 		NOT USING A DIRECT THING TO THE ASSET!!!
 	-->
 	<assets path="assets/fonts" embed='true'/>
+	<assets path="assets/videos"/>
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
@@ -126,6 +128,9 @@
 	<haxelib name="random"/> <!--haxelib install random-->
 	<haxelib name="systools" />
 	<ndll name="systools" haxelib="systools" />
+	
+	<haxelib name="actuate"/>
+	<haxelib name="extension-webm" if="desktop"/>
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
 	<!-- <haxelib name="markdown" /> -->

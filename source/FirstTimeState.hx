@@ -56,21 +56,6 @@ class FirstTimeState extends MusicBeatState
 			FlxG.switchState(new TitleState());
 		}
 
-		// if (FlxG.keys.justPressed.ENTER && nextMsg)
-		// {
-		// 	_variables.firstTime = false;
-		// 	MainVariables.Save();
-		// 	AutoOffsetState.ass = true;
-		// 	FlxG.switchState(new AutoOffsetState());
-		// }
-
-		// if (FlxG.keys.justPressed.ESCAPE && nextMsg)
-		// {
-		// 	_variables.firstTime = false;
-		// 	MainVariables.Save();
-		// 	FlxG.switchState(new TitleState());
-		// }
-
 		super.update(elapsed);
 	}
 }
