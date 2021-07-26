@@ -123,6 +123,7 @@ seedyrng
 random
 systools
 actuate
+linc_luajit
 ```
 So, for each of those type `haxelib install [library]` so shit like `haxelib install newgrounds`.
 

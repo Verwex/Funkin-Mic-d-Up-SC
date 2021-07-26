@@ -156,6 +156,12 @@ class PauseSubState extends MusicBeatSubstate
 							pageTitle = "Difficulty";
 							changeItems();
 						case "Exit to menu":
+							if (PlayState.luaModchart != null)
+								{
+									PlayState.luaModchart.die();
+									PlayState.luaModchart = null;
+								}
+								
 							PlayState.curDeaths = 0;
 							PlayState.ended = false;
 							PlayState.loops = 0;

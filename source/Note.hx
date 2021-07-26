@@ -48,6 +48,12 @@ class Note extends FlxSprite
 	public static var canMissUp:Bool = true;
 	public static var canMissDown:Bool = true;
 
+	public var modifiedByLua:Bool = false;
+
+	public var modAngle:Float = 0;
+
+	public var sustainActive:Bool = true;
+
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?noteType:String = '', ?roll:Bool = false)
 	{
 		super();
@@ -424,8 +430,18 @@ class Note extends FlxSprite
 	{
 		super.update(elapsed);
 
+		angle = modAngle;
+
 		if ((noteVariant == "mine" || noteVariant == "death") && !isSustainNote)
 			angle += 1;
+
+		if (!modifiedByLua)
+		{
+			if (!sustainActive)
+			{
+				alpha = 0.3;
+			}
+		}
 
 		if (mustPress)
 		{
