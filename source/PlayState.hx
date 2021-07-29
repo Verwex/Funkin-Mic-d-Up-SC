@@ -2808,6 +2808,9 @@ class PlayState extends MusicBeatState
 				accuracyTxt.visible = false;
 				missTxt.visible = false;
 				npsTxt.visible = false;
+				songName.visible = false;
+				songPosBG.visible = false;
+				songPosBar.visible = false;
 				hearts.visible = false;
 				if (gameplayArea == "Survival")
 					survivalCountdown.visible = false;
@@ -2823,6 +2826,9 @@ class PlayState extends MusicBeatState
 				missTxt.visible = true;
 				npsTxt.visible = true;
 				hearts.visible = true;
+				songName.visible = true;
+				songPosBG.visible = true;
+				songPosBar.visible = true;
 				if (gameplayArea == "Survival")
 					survivalCountdown.visible = true;
 			}
