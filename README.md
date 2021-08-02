@@ -166,7 +166,8 @@ You should be good from there! Now, onto compiling!
 
 ## HTML Building:
 
-HTML Compiling currently does not work as Mic'd Up currently requires desktop-only libraries to function properly.
+1. Open your machine's command prompt/terminal and navigate to your root folder of the mod. [An easy guide can be found here!](https://ninjamuffin99.newgrounds.com/news/post/1090480)
+2. Type `lime test html5 -debug` to build the web version of the mod and run it afterwards.
 
 ## Desktop Building:
 
