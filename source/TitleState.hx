@@ -2,10 +2,12 @@ package;
 
 import lime.system.System;
 import seedyrng.Seedy;
+#if sys
 import sys.FileSystem;
+import Discord.DiscordClient;
+#end
 import lime.app.Application;
 import openfl.Lib;
-import Discord.DiscordClient;
 import flixel.util.FlxGradient;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -91,12 +93,16 @@ class TitleState extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
+		#if sys
 		if (FileSystem.exists(Paths.music('menu/classic')))
 		{
 			FlxG.sound.playMusic(Paths.music('menu/classic'), 0);
 		}
 		else
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+		#else
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+		#end
 
 		FlxG.sound.music.fadeIn(4, 0, 0.7 * _variables.mvolume / 100);
 
@@ -204,7 +210,9 @@ class TitleState extends MusicBeatState
 
 		// credGroup.add(credTextShit);
 
+		#if sys
 		DiscordClient.changePresence("In the Title Screen", null);
+		#end
 	}
 
 	function getIntroTextShit():Array<Array<String>>
@@ -311,7 +319,9 @@ class TitleState extends MusicBeatState
 			FlxG.camera.flash(FlxColor.WHITE, 1, null, true);
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7 * _variables.svolume / 100);
 
+			#if sys
 			DiscordClient.changePresence("Proceeding to the Main Menu", null);
+			#end
 
 			transitioning = true;
 			// FlxG.sound.music.stop();

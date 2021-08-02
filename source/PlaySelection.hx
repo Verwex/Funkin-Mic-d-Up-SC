@@ -1,8 +1,10 @@
 package;
 
+#if sys
 import sys.io.File;
 import sys.FileSystem;
 import Discord.DiscordClient;
+#end
 import flixel.util.FlxTimer;
 import flixel.util.FlxGradient;
 import flixel.FlxG;
@@ -41,6 +43,7 @@ class PlaySelection extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 			{
+				#if sys
 				if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
 				{
 					FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
@@ -51,6 +54,10 @@ class PlaySelection extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
 					Conductor.changeBPM(102);
 				}
+				#else
+				FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+				Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+				#end
 			}
 
 		persistentUpdate = persistentDraw = true;
@@ -170,7 +177,9 @@ class PlaySelection extends MusicBeatState
 			{
 				FlxG.switchState(new MainMenuState());
 
+				#if sys
 				DiscordClient.changePresence("Back to the Main Menu.",  null);
+				#end
 
 				FlxTween.tween(FlxG.camera, { zoom: 2}, 0.4, { ease: FlxEase.expoIn});
 				FlxTween.tween(bg, { y: 0-bg.height}, 0.4, { ease: FlxEase.expoIn });
@@ -185,7 +194,9 @@ class PlaySelection extends MusicBeatState
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume/100);
 
+				#if sys
 				DiscordClient.changePresence("Selected: "+optionShit[curSelected].toUpperCase(),  null);
+				#end
 
 				menuItems.forEach(function(spr:FlxSprite)
 				{
@@ -211,22 +222,34 @@ class PlaySelection extends MusicBeatState
 							{
 								case 'week':
 									FlxG.switchState(new MenuWeek());
+									#if sys
 									DiscordClient.changePresence("Going to select a week.",  null);
+									#end
 								case 'freeplay':
 									FlxG.switchState(new MenuFreeplay());
+									#if sys
 									DiscordClient.changePresence("Am bored, so I freeplay.",  null);
+									#end
 								case 'modifier':
 									FlxG.switchState(new MenuModifiers());
+									#if sys
 									DiscordClient.changePresence("Time to spice the game.",  null);
+									#end
 								case 'marathon':
 									FlxG.switchState(new MenuMarathon());
+									#if sys
 									DiscordClient.changePresence("I wanna make a marathon.",  null);
+									#end
 								case 'survival':
 									FlxG.switchState(new MenuSurvival());
+									#if sys
 									DiscordClient.changePresence("This feels like Total Drama Island already.",  null);
+									#end
 								case 'endless':
 									FlxG.switchState(new MenuEndless());
+									#if sys
 									DiscordClient.changePresence("Endless easy SMM2 moment.",  null);
+									#end
 							}
 						});
 				});
@@ -266,6 +289,8 @@ class PlaySelection extends MusicBeatState
 			spr.updateHitbox();
 		});
 
+		#if sys
 		DiscordClient.changePresence("Play Selection: "+optionShit[curSelected].toUpperCase(),  null);
+		#end
 	}
 }

@@ -1,6 +1,8 @@
 package;
 
+#if sys
 import Discord.DiscordClient;
+#end
 import flixel.util.FlxGradient;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -136,7 +138,9 @@ class MenuControls extends MusicBeatState
 				FlxTween.tween(gradientBar, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
 				FlxTween.tween(side, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
 
+				#if sys
 				DiscordClient.changePresence("Going back!", null);
+				#end
 
 				for (item in grpControls.members)
 					{

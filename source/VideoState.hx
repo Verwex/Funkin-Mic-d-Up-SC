@@ -2,8 +2,10 @@ package;
 
 import flixel.tweens.FlxTween;
 import openfl.media.Sound;
+#if sys
 import sys.FileSystem;
 import sys.io.File;
+#end
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxState;
 import flixel.FlxG;
@@ -27,7 +29,9 @@ using StringTools;
 
 class VideoState extends MusicBeatState
 {
+	#if cpp
 	static private var nativeFramecount:String->Int = cpp.Lib.load("webmHelper", "GetFramecount", 1);
+	#end
 
 	public var filePath:String;
 	public var _load:FileReference;
@@ -53,6 +57,7 @@ class VideoState extends MusicBeatState
 	public var loadWEBM:Bool = false;
 	public var skip:Bool = true;
 
+	#if desktop
 	public function new(fileName:String, toTrans:FlxState, frameSkipLimit:Int = -1, autopause:Bool = false, ?looped:Bool = false, ?loadWebm:Bool = false, ?skippable:Bool = true)
 	{
 		super();
@@ -395,4 +400,5 @@ class VideoState extends MusicBeatState
 			FlxG.switchState(new VideoState(file, transClass, -1, true, looping, loadWEBM));
 		}
 	}
+	#end
 }

@@ -1,6 +1,8 @@
 package;
 
+#if sys
 import Discord.DiscordClient;
+#end
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.FlxObject;
@@ -93,7 +95,9 @@ class PAGE4settings extends MusicBeatSubstate
 
 		FlxG.camera.follow(camFollow, null, camLerp);
 
+		#if sys
 		DiscordClient.changePresence("Settings page: Gameplay", null);
+		#end
 	}
 
 	function updateResults():Void
@@ -193,7 +197,9 @@ class PAGE4settings extends MusicBeatSubstate
 				FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume / 100);
 				selectedSomethin = true;
 
+				#if sys
 				DiscordClient.changePresence("Back to the main menu I go!", null);
+				#end
 
 				menuItems.forEach(function(spr:FlxSprite)
 				{

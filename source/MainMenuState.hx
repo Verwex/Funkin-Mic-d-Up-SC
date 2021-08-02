@@ -1,8 +1,10 @@
 package;
 
+#if sys
 import sys.io.File;
 import sys.FileSystem;
 import Discord.DiscordClient;
+#end
 import flixel.util.FlxTimer;
 import flixel.util.FlxGradient;
 import flixel.FlxG;
@@ -49,6 +51,7 @@ class MainMenuState extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
+			#if sys
 			if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
 			{
 				FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
@@ -59,6 +62,10 @@ class MainMenuState extends MusicBeatState
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
 				Conductor.changeBPM(102);
 			}
+			#else
+			FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+			Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+			#end
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -179,7 +186,9 @@ class MainMenuState extends MusicBeatState
 			if (controls.BACK)
 			{
 				selectedSomethin = true;
+				#if sys
 				DiscordClient.changePresence("Back to the Title Screen.", null);
+				#end
 
 				FlxG.switchState(new TitleStateReturn());
 			}
@@ -198,13 +207,17 @@ class MainMenuState extends MusicBeatState
 					#else
 					FlxG.openURL('https://ninja-muffin24.itch.io/funkin');
 					#end
+					#if sys
 					DiscordClient.changePresence("Pogger people donate, like me.", null);
+					#end
 				}
 				else
 				{
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume / 100);
+					#if sys
 					DiscordClient.changePresence("Chosen: " + optionShit[curSelected].toUpperCase(), null);
+					#end
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
@@ -225,10 +238,14 @@ class MainMenuState extends MusicBeatState
 							{
 								case 'play':
 									FlxG.switchState(new PlaySelection());
+									#if sys
 									DiscordClient.changePresence("Going to the play selection.", null);
+									#end
 								case 'options':
 									FlxG.switchState(new SettingsState());
+									#if sys
 									DiscordClient.changePresence("Gonna set some options brb.", null);
+									#end
 							}
 						});
 					});
@@ -269,6 +286,8 @@ class MainMenuState extends MusicBeatState
 			spr.updateHitbox();
 		});
 
+		#if sys
 		DiscordClient.changePresence("Main Menu: " + optionShit[curSelected].toUpperCase(), null);
+		#end
 	}
 }

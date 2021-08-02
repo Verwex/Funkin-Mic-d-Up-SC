@@ -1,6 +1,8 @@
 package;
 
+#if sys
 import sys.FileSystem;
+#end
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -36,6 +38,7 @@ class Substate_Preset extends MusicBeatSubstate
         blackBarThingie.scale.y = 0;
         FlxTween.tween(blackBarThingie, { 'scale.y': 230}, 0.5, { ease: FlxEase.expoOut});
 
+        #if sys
         presets = FileSystem.readDirectory('presets/modifiers');
         presets.remove('current');
 
@@ -45,6 +48,9 @@ class Substate_Preset extends MusicBeatSubstate
             optionShit = ['clear', 'save', 'load'];
         else
             optionShit = ['clear', 'save', 'no']; //get some presets first and then we can talk
+        #else
+        optionShit = ['clear', 'no', 'no'];
+        #end
 
         menuItems = new FlxTypedGroup<FlxSprite>();
         add(menuItems);

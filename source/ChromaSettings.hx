@@ -2,9 +2,7 @@ package;
 
 import openfl.Lib;
 import flixel.util.FlxSave;
-import sys.FileSystem;
-import sys.io.File;
-#if desktop
+#if sys
 import Discord.DiscordClient;
 #end
 
@@ -100,7 +98,7 @@ class ChromaSettings extends MusicBeatSubstate
 
         FlxG.camera.follow(camFollow, null, camLerp);
 
-        #if desktop
+        #if sys
 			DiscordClient.changePresence("Settings page: Chromakey", null);
 		#end
     }

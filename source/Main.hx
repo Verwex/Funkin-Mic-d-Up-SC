@@ -27,7 +27,9 @@ class Main extends Sprite
 	// You can pretty much ignore everything from here on - your code should go in your states.
 	public static var watermark:Sprite;
 
+	#if sys
 	public var webmHandle:WebmHandler;
+	#end
 
 	public static function main():Void
 	{
@@ -80,6 +82,7 @@ class Main extends Sprite
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
+		#if sys
 		var ourSource:String = "assets/videos/dontDelete.webm";
 
 		var str1:String = "WEBM SHIT";
@@ -90,6 +93,14 @@ class Main extends Sprite
 		addChild(webmHandle.webm);
 		GlobalVideo.setWebm(webmHandle);
 
+		DiscordClient.initialize();
+
+		Application.current.onExit.add(function(exitCode)
+		{
+			DiscordClient.shutdown();
+		});
+		#end
+
 		#if !mobile
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
@@ -97,13 +108,6 @@ class Main extends Sprite
 		memoryCounter = new MemoryCounter(10, 3, 0xffffff);
 		addChild(memoryCounter);
 		#end
-
-		DiscordClient.initialize();
-
-		Application.current.onExit.add(function(exitCode)
-		{
-			DiscordClient.shutdown();
-		});
 
 		var bitmapData = Assets.getBitmapData("assets/images/watermark.png");
 

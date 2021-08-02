@@ -1,5 +1,6 @@
 package;
 
+#if sys
 import sys.io.File;
 import sys.FileSystem;
 import flixel.util.FlxTimer;
@@ -10,11 +11,13 @@ import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import MainVariables._variables;
+#end
 
 using StringTools;
 
 class Substate_PresetSaveOK extends MusicBeatSubstate
 {
+	#if sys
 	public static var curSelected:Int = 0;
 
 	var goingBack:Bool = false;
@@ -188,4 +191,5 @@ class Substate_PresetSaveOK extends MusicBeatSubstate
 			}
 		}
 	}
+	#end
 }

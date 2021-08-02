@@ -1,6 +1,8 @@
 package;
 
+#if sys
 import Discord.DiscordClient;
+#end
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.FlxObject;
@@ -36,6 +38,11 @@ class PAGE5settings extends MusicBeatSubstate
 	public function new()
 	{
 		super();
+
+		#if !sys
+		optionShit.remove('animation');
+		optionShit.remove('keybinds');
+		#end
 
 		persistentDraw = persistentUpdate = true;
 		destroySubStates = false;
@@ -83,7 +90,9 @@ class PAGE5settings extends MusicBeatSubstate
 
 		FlxG.camera.follow(camFollow, null, camLerp);
 
+		#if sys
 		DiscordClient.changePresence("Settings page: Miscellaneous", null);
+		#end
 	}
 
 	function createResults():Void
@@ -145,7 +154,9 @@ class PAGE5settings extends MusicBeatSubstate
 					FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume / 100);
 					selectedSomethin = true;
 
+					#if sys
 					DiscordClient.changePresence("Time to go in!", null);
+					#end
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
@@ -164,17 +175,23 @@ class PAGE5settings extends MusicBeatSubstate
 							case 'animation':
 								FlxG.switchState(new AnimationDebug());
 
+								#if sys
 								DiscordClient.changePresence("Viewing character's offsets.", null);
+								#end
 							case 'chart':
 								FlxG.switchState(new ChartingState());
 
+								#if sys
 								DiscordClient.changePresence("Charting a song.", null);
+								#end
 							case 'gameplay':
 								FlxG.switchState(new GameplayCustomizeState());
 							case 'keybinds':
 								FlxG.switchState(new MenuControls());
 
+								#if sys
 								DiscordClient.changePresence("Setting up keybinds.", null);
+								#end
 						}
 					});
 				}
@@ -185,7 +202,9 @@ class PAGE5settings extends MusicBeatSubstate
 				FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume / 100);
 				selectedSomethin = true;
 
+				#if sys
 				DiscordClient.changePresence("Back to the main menu I go!", null);
+				#end
 
 				menuItems.forEach(function(spr:FlxSprite)
 				{

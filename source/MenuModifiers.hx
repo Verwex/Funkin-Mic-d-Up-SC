@@ -1,6 +1,6 @@
 package;
 
-#if desktop
+#if sys
 import Discord.DiscordClient;
 #end
 
@@ -175,7 +175,9 @@ class MenuModifiers extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, camLerp);
 
+		#if sys
 		DiscordClient.changePresence("Settings up modifiers", null);
+		#end
     }
 
 	var selectable:Bool = false;
@@ -301,7 +303,9 @@ class MenuModifiers extends MusicBeatState
 					FlxTween.tween(gradientBar, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
 					FlxTween.tween(side, { alpha:0}, 0.3, { ease: FlxEase.quartInOut});
 
+					#if sys
 					DiscordClient.changePresence("Going Back!", null);
+					#end
 
 					FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume/100);
 

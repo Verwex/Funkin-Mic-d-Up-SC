@@ -1,7 +1,9 @@
 package;
 
+#if sys
 import sys.io.File;
 import sys.FileSystem;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -232,6 +234,7 @@ class AutoOffsetState extends MusicBeatState
 		_variables.noteOffset = offsetCalc;
 		MainVariables.Save();
 
+		#if sys
 		if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
 		{
 			FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
@@ -242,6 +245,10 @@ class AutoOffsetState extends MusicBeatState
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
 			Conductor.changeBPM(102);
 		}
+		#else
+		FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+		Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+		#end
 
 		if (!ass)
 			FlxG.switchState(new SettingsState());

@@ -1,12 +1,14 @@
 package;
 
+#if sys
+import Discord.DiscordClient;
+import sys.io.File;
+import sys.FileSystem;
+#end
 import haxe.Json;
 import flixel.util.FlxColor;
 import flixel.text.FlxText;
-import Discord.DiscordClient;
-import sys.io.File;
 import flixel.util.FlxTimer;
-import sys.FileSystem;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxGradient;
@@ -145,6 +147,7 @@ class MenuSurvival extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
+			#if sys
 			if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
 			{
 				FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
@@ -155,11 +158,17 @@ class MenuSurvival extends MusicBeatState
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
 				Conductor.changeBPM(102);
 			}
+			#else
+			FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+			Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+			#end
 		}
 
 		super.create();
 
+		#if sys
 		DiscordClient.changePresence("Choosing my survival adventure.", null);
+		#end
     }
 
 	var score = Std.int(FlxG.save.data.survivalScore);
@@ -295,6 +304,7 @@ class MenuSurvival extends MusicBeatState
 
 	function loadCurrent()
 		{
+			#if sys
 			if (!FileSystem.isDirectory('presets/survival'))
 				FileSystem.createDirectory('presets/survival');
 	
@@ -314,6 +324,24 @@ class MenuSurvival extends MusicBeatState
 				PlayState.difficultyPlaylist = _survival.songDifficulties;
 				PlayState.storyPlaylist = _survival.songNames;
 			}
+			#else
+			if (FlxG.save.data.SurvivalVariables == null)
+				{
+					_survival = {
+						songDifficulties: [],
+						songNames: []
+					}
+					
+					FlxG.save.data.SurvivalVariables = Json.stringify(_survival, null, '    ');
+					FlxG.save.flush();
+				}
+				else
+				{
+					_survival = Json.parse(FlxG.save.data.SurvivalVariables);
+					PlayState.difficultyPlaylist = _survival.songDifficulties;
+					PlayState.storyPlaylist = _survival.songNames;
+				}
+			#end
 		}
 	
 	public static function saveCurrent()
@@ -322,11 +350,18 @@ class MenuSurvival extends MusicBeatState
 				songDifficulties: PlayState.difficultyPlaylist,
 				songNames: PlayState.storyPlaylist
 			}
+
+			#if sys
 			File.saveContent(('presets/survival/current'), Json.stringify(_survival, null, '    '));
+			#else
+			FlxG.save.data.SurvivalVariables = Json.stringify(_survival, null, '    ');
+			FlxG.save.flush();
+			#end
 		}
 	
 	public static function loadPreset(input:String):Void
 		{
+			#if sys
 			var data:String = File.getContent('presets/survival/' + input);
 			_survival = Json.parse(data);
 	
@@ -334,15 +369,18 @@ class MenuSurvival extends MusicBeatState
 			PlayState.storyPlaylist = _survival.songNames;
 	
 			saveCurrent();
+			#end
 		}
 	
 	public static function savePreset(input:String):Void
 		{
+			#if sys
 			_survival = {
 				songDifficulties: PlayState.difficultyPlaylist,
 				songNames: PlayState.storyPlaylist
 			}
 			File.saveContent(('presets/survival/' + input), Json.stringify(_survival, null, '    ')); // just an example for now
+			#end
 		}
 }
 

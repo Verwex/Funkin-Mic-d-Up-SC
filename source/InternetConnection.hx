@@ -66,7 +66,9 @@ class InternetConnection
 		catch (e:Error)
 		{
 			trace('OFFLINE BITCH');
+			#if !js
 			return false;
+			#end
 		}
 	}
 }

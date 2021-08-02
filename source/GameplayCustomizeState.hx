@@ -34,7 +34,9 @@ class GameplayCustomizeState extends MusicBeatState
     
     public override function create() {
 		// Updating Discord Rich Presence
+        #if sys
 		DiscordClient.changePresence("Customizing Gameplay", null);
+        #end
 
 		persistentUpdate = true;
 

@@ -1,7 +1,6 @@
 package;
 
 import flixel.FlxG;
-import sys.io.File;
 import openfl.utils.ByteArray;
 import openfl.display.BitmapData;
 import flixel.tweens.FlxEase;

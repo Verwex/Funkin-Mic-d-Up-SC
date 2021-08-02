@@ -35,6 +35,7 @@ class FirstCheckState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		#if sys
 		if (InternetConnection.isAvailable() && !isDebug)
 		{
 			var http = new haxe.Http("https://raw.githubusercontent.com/Verwex/Funkin-Mic-d-Up-SC/main/versionShit.txt");
@@ -93,5 +94,15 @@ class FirstCheckState extends MusicBeatState
 					FlxG.switchState(new TitleState()); // First time language setting
 			}
 		}
+		#else
+		trace('ew html5');
+		switch (_variables.firstTime)
+			{
+				case true:
+					FlxG.switchState(new FirstTimeState()); // First time language setting
+				case false:
+					FlxG.switchState(new TitleState()); // First time language setting
+			}
+		#end
 	}
 }

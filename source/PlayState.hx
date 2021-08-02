@@ -1,12 +1,16 @@
 package;
 
 import flixel.FlxBasic;
+#if cpp
 import cpp.abi.Abi;
-import lime.graphics.Image;
-import lime.app.Application;
+#end
+#if sys
 import sys.FileSystem;
 import Discord.DiscordClient;
 import sys.io.File;
+#end
+import lime.graphics.Image;
+import lime.app.Application;
 import LoopState;
 import Section.SwagSection;
 import Song.SwagSong;
@@ -404,6 +408,7 @@ class PlayState extends MusicBeatState
 		else if (_modifiers.Perfect || _modifiers.BadTrip || _modifiers.ShittyEnding || _modifiers.TruePerfect)
 			dialogueSuffix = "-perfect";
 
+		#if sys
 		if (FileSystem.exists(Paths.txt(SONG.song.toLowerCase() + '/dialogue$dialogueSuffix')))
 		{
 			dialogue = File.getContent(Paths.txt(SONG.song.toLowerCase() + '/dialogue$dialogueSuffix')).trim().split('\n');
@@ -413,7 +418,15 @@ class PlayState extends MusicBeatState
 				dialogue[i] = dialogue[i].trim();
 			}
 		}
+		#else
+		switch (SONG.song.toLowerCase())
+		{
+			case 'senpai'|'thorns'|'roses':
+				CoolUtil.coolTextFile(Paths.txt(SONG.song.toLowerCase() + '/dialogue$dialogueSuffix'));
+		}
+		#end
 
+		#if sys
 		// Making difficulty text for Discord Rich Presence.
 		switch (storyDifficulty)
 		{
@@ -470,6 +483,7 @@ class PlayState extends MusicBeatState
 
 		if (gameplayArea == "Endless")
 			DiscordClient.changePresence(detailsText, SONG.song, iconRPC, true);
+		#end
 
 		// Stage assigner if _variables.chromakey is true
 		switch (SONG.song.toLowerCase())
@@ -1619,6 +1633,7 @@ class PlayState extends MusicBeatState
 				{
 					item.x -= 50;
 				}
+				#if sys
 				if (FileSystem.exists('assets/data/' + SONG.song.toLowerCase() + '/scripts/chart.hx'))
 				{
 					modState.set("strum0", strumLineNotes.members[0]);
@@ -1636,12 +1651,14 @@ class PlayState extends MusicBeatState
 						loadStartScript();
 					trace('SOME MODIFIERS ARE DISABLED! THEY WONT WORK PROPERLY WITH MODCHARTS');
 				}
+				#end
 			}
 			else
 			{
 				if (_variables.scroll != 'left' && _variables.scroll != 'right')
 					generateStaticArrows(0);
 				generateStaticArrows(1);
+				#if sys
 				if (FileSystem.exists('assets/data/' + SONG.song.toLowerCase() + '/scripts/chart.hx'))
 				{
 					modState.set("strum0", strumLineNotes.members[0]);
@@ -1657,6 +1674,7 @@ class PlayState extends MusicBeatState
 						loadStartScript();
 					trace('SOME MODIFIERS ARE DISABLED! THEY WONT WORK PROPERLY WITH MODCHARTS');
 				}
+				#end
 			}
 		}
 
@@ -1888,7 +1906,9 @@ class PlayState extends MusicBeatState
 		}
 
 		// Updating Discord Rich Presence (with Time Left)
+		#if sys
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength);
+		#end
 	}
 
 	var debugNum:Int = 0;
@@ -1990,9 +2010,11 @@ class PlayState extends MusicBeatState
 
 				if ((data != null) && (data.length > 0))
 				{
+					#if sys
 					File.saveContent('assets/data/' + SONG.song.toLowerCase() + "/" + SONG.song.toLowerCase() + "-"
 						+ CoolUtil.difficultyString().toLowerCase() + ".json",
 						data);
+					#end
 					PlayState.SONG = Song.loadFromJson(SONG.song + "-" + CoolUtil.difficultyString().toLowerCase(), SONG.song);
 					FlxG.log.add('RELOADING JSON: ' + SONG.song + "-" + CoolUtil.difficultyString().toLowerCase());
 					generateSong(SONG.song);
@@ -2627,6 +2649,7 @@ class PlayState extends MusicBeatState
 				startTimer.active = true;
 			paused = false;
 
+			#if sys
 			if (startTimer.finished)
 			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength - Conductor.songPosition);
@@ -2635,6 +2658,7 @@ class PlayState extends MusicBeatState
 			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 			}
+			#end
 		}
 
 		super.closeSubState();
@@ -2644,6 +2668,7 @@ class PlayState extends MusicBeatState
 	{
 		if (health > -0.1 && !paused)
 		{
+			#if sys
 			if (Conductor.songPosition > 0.0)
 			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength - Conductor.songPosition);
@@ -2652,6 +2677,7 @@ class PlayState extends MusicBeatState
 			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 			}
+			#end
 		}
 
 		super.onFocus();
@@ -2661,7 +2687,9 @@ class PlayState extends MusicBeatState
 	{
 		if (health > -0.00001 && !paused)
 		{
+			#if sys
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+			#end
 
 			if (!ended && !died && startedCountdown && canPause && _variables.autoPause)
 			{
@@ -2886,10 +2914,12 @@ class PlayState extends MusicBeatState
 		/**
 		 * it lags a lil so its only if you dont have a choice
 		**/
+		#if sys
 		if (FileSystem.exists('assets/data/' + SONG.song.toLowerCase() + '/scripts/chart.hx') && startedCountdown)
 		{
 			loadScript();
 		}
+		#end
 
 		switch (curStage)
 		{
@@ -2944,7 +2974,9 @@ class PlayState extends MusicBeatState
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, loopHandler.bind(_), loopState));
 			}
 
+			#if sys
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+			#end
 		}
 
 		if (FlxG.keys.justPressed.SEVEN)
@@ -2956,7 +2988,9 @@ class PlayState extends MusicBeatState
 			lime.app.Application.current.window.setIcon(image);
 			Application.current.window.title = Application.current.meta.get('name');
 
+			#if sys
 			DiscordClient.changePresence("Charting a song", null, null, true);
+			#end
 
 			#if windows
 			if (luaModchart != null)
@@ -3420,7 +3454,9 @@ class PlayState extends MusicBeatState
 				}
 
 				// Game Over doesn't get his own variable because it's only used here
+				#if sys
 				DiscordClient.changePresence("Aw man, I died at " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+				#end
 			}
 			else
 			{
@@ -4126,7 +4162,9 @@ class PlayState extends MusicBeatState
 				vocals.stop();
 
 				detailsText = "Endless: Loop " + loops;
+				#if sys
 				DiscordClient.changePresence(detailsText, SONG.song, iconRPC, true);
+				#end
 
 				FlxG.sound.music.volume = _variables.mvolume / 100;
 				vocals.volume = _variables.vvolume / 100;
@@ -5805,6 +5843,7 @@ class PlayState extends MusicBeatState
 	 * NOTICE: If lua aint enough to do ur wacky shit, use hscript :troll:
 	 * Its haxe but you dont need to compile it
 	**/
+	#if sys
 	public function hscript()
 	{
 		if (FileSystem.exists('assets/data/' + SONG.song.toLowerCase() + '/scripts/chart.hx'))
@@ -5858,6 +5897,7 @@ class PlayState extends MusicBeatState
 	{
 		modState.executeString(File.getContent('assets/data/' + SONG.song.toLowerCase() + '/scripts/start.hx'));
 	}
+	#end
 
 	var curLight:Int = 0;
 

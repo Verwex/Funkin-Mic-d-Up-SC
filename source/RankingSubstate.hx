@@ -1,7 +1,9 @@
 package;
 
+#if sys
 import sys.FileSystem;
 import sys.io.File;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.system.FlxSound;
@@ -132,6 +134,7 @@ class RankingSubstate extends MusicBeatSubstate
 				case "Story":
 					if (PlayState.storyPlaylist.length <= 0)
 					{
+						#if sys
 						if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
 						{
 							FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
@@ -142,6 +145,10 @@ class RankingSubstate extends MusicBeatSubstate
 							FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
 							Conductor.changeBPM(102);
 						}
+						#else
+						FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+						Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+						#end
 
 						FlxG.switchState(new MenuWeek());
 					}

@@ -1,10 +1,12 @@
 package;
 
+#if sys
 import sys.FileSystem;
+import Discord.DiscordClient;
+#end
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -41,10 +43,12 @@ class Marathon_Substate extends MusicBeatSubstate
         blackBarThingie.scale.x = 0;
         FlxTween.tween(blackBarThingie, { 'scale.x': 300}, 0.5, { ease: FlxEase.expoOut});
 
+        #if sys
         presets = FileSystem.readDirectory('presets/marathon');
         presets.remove('current');
 
         trace(presets);
+        #end
 
         if (PlayState.storyPlaylist.length > 0)
             {
@@ -57,12 +61,16 @@ class Marathon_Substate extends MusicBeatSubstate
                 canEdit = 'no';
             }
 
+        #if sys
         if (presets.length > 0)
             canLoad = 'load';
         else
             canLoad = 'no';
 
         optionShit = [canPlay, canEdit, 'clear', 'save', canLoad, 'exit'];
+        #else
+        optionShit = [canPlay, canEdit, 'clear', 'no', 'no', 'exit'];
+        #end
 
         menuItems = new FlxTypedGroup<FlxSprite>();
         add(menuItems);
@@ -134,7 +142,9 @@ class Marathon_Substate extends MusicBeatSubstate
                     case 'play':
                         goingBack = true;
 
+                        #if sys
 						DiscordClient.changePresence("Selecting chart types.", null);
+                        #end
 
                         var diffic:String = "";
 
@@ -183,7 +193,11 @@ class Marathon_Substate extends MusicBeatSubstate
                         canPlay = 'no';
                         canEdit = 'no';
 
+                        #if sys
                         optionShit = [canPlay, canEdit, 'clear', 'save', canLoad, 'exit'];
+                        #else
+                        optionShit = [canPlay, canEdit, 'clear', 'no', 'no', 'exit'];
+                        #end
 
                         menuItems.clear();
 

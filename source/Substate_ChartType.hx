@@ -5,7 +5,9 @@ import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxGradient;
+#if sys
 import Discord.DiscordClient;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -168,7 +170,9 @@ class Substate_ChartType extends MusicBeatSubstate
 
                 FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume/100);
 
+                #if sys
 				DiscordClient.changePresence("Time to play!", null);
+                #end
 
                 FlxG.sound.music.fadeOut(2.1, 0);
 

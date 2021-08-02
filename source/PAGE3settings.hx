@@ -1,7 +1,9 @@
 package;
 
 import openfl.Lib;
+#if sys
 import Discord.DiscordClient;
+#end
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.FlxObject;
@@ -92,12 +94,14 @@ class PAGE3settings extends MusicBeatSubstate
 
         FlxG.camera.follow(camFollow, null, camLerp);
 
+        #if sys
         DiscordClient.changePresence("Settings page: GFX", null);
+        #end
     }
 
     function updateResults():Void
     {
-        style = MainVariables.iconList.indexOf(_variables.iconStyle.toLowerCase());
+        style = MainVariables.iconList.indexOf(_variables.iconStyle);
     }
 
     function createResults():Void
@@ -191,7 +195,9 @@ class PAGE3settings extends MusicBeatSubstate
                             FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume/100);
                             selectedSomethin = true;
 
+                            #if sys
                             DiscordClient.changePresence("Back to the main menu I go!", null);
+                            #end
     
                             menuItems.forEach(function(spr:FlxSprite)
                                 {
@@ -255,7 +261,7 @@ class PAGE3settings extends MusicBeatSubstate
                     ResultText.text = Std.string(_variables.distractions).toUpperCase();
                     ExplainText.text = "DISTRACTIONS:\nWould you want to get yourself entirely focused or get some spice to the life of stages?";
                 case "chromakeyM":
-                    ResultText.text = "";
+                    ResultText.text = " ";
                     ExplainText.text = "\nAdd Chromakey colors to the background!";
                 case "bgAlpha":
                     ResultText.text = _variables.bgAlpha * 100 +"%";

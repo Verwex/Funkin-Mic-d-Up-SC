@@ -1,8 +1,11 @@
 package;
 
+import flixel.FlxG;
 import haxe.Json;
+#if sys
 import sys.io.File;
 import sys.FileSystem;
+#end
 
 typedef ModiVariables =
 {
@@ -187,33 +190,51 @@ class ModifierVariables
 
     public static function saveCurrent():Void
     {
-
+        #if sys
         if (!FileSystem.isDirectory('presets/modifiers'))
             FileSystem.createDirectory('presets/modifiers');
 
         File.saveContent(('presets/modifiers/current'), Json.stringify(_modifiers, null, '    '));
+        #else
+        FlxG.save.data.Modifiers = Json.stringify(_modifiers, null, '    ');
+        FlxG.save.flush();
+        #end
     }
 
     public static function savePreset(input:String):Void
         {
+            #if sys
             File.saveContent(('presets/modifiers/'+input), Json.stringify(_modifiers, null, '    ')); //just an example for now
+            #end
         }
 
     public static function loadPreset(input:String):Void
     {
+        #if sys
         var data:String = File.getContent('presets/modifiers/'+input);
         _modifiers = Json.parse(data);
         
         replaceValues();
+        #end
     }
 
     public static function loadCurrent():Void
     {
+        #if sys
         if (FileSystem.exists('presets/modifiers/current'))
         {
             var data:String = File.getContent('presets/modifiers/current');
             _modifiers = Json.parse(data);
         }
+        #else
+        if (FlxG.save.data.Modifiers == null)
+        {
+            updateModifiers();
+            saveCurrent();
+        }
+        else
+            _modifiers = Json.parse(FlxG.save.data.Modifiers);
+        #end
 
         replaceValues();
     }

@@ -4,8 +4,10 @@ import lime.app.Application;
 import openfl.display.BlendMode;
 import haxe.Json;
 import flixel.FlxG;
+#if sys
 import sys.io.File;
 import sys.FileSystem;
+#end
 import openfl.filters.ColorMatrixFilter;
 import openfl.filters.BitmapFilter;
 
@@ -97,19 +99,35 @@ class MainVariables
 
 	public static function Save():Void
 	{
+		#if sys
 		File.saveContent(('config-$configVersion.json'), Json.stringify(_variables, null, '    '));
+		#else
+		FlxG.save.data.OptionsVariables = Json.stringify(_variables, null, '    ');
+		FlxG.save.flush();
+		#end
 	}
 
 	public static function Load():Void
 	{
+		#if sys
 		musicList = FileSystem.readDirectory('assets/music/menu');
+		musicList.remove('MenuMusicList.txt');
 
 		hitList = FileSystem.readDirectory('assets/shared/sounds/hitsounds');
 		hitList.unshift('none.ogg');
 
 		iconList = FileSystem.readDirectory('assets/shared/images/icons');
-		iconList.unshift('template.png');
+		iconList.remove('template.png');
+		#else
+		musicList = CoolUtil.coolTextFile('assets/music/menu/MenuMusicList.txt');
 
+		hitList = CoolUtil.coolTextFile(Paths.txt('HitsoundList'));
+		hitList.insert(0, 'none');
+
+		iconList = CoolUtil.coolTextFile(Paths.txt('IconStyles'));
+		#end
+
+		#if sys
 		for (i in 0...musicList.length)
 		{
 			if (musicList[i].contains('_BPM.txt'))
@@ -133,77 +151,7 @@ class MainVariables
 		}
 
 		if (!FileSystem.exists('config-$configVersion.json'))
-		{
-			_variables = {
-				resolution: 1,
-				fullscreen: false,
-				fps: 60,
-				mvolume: 100,
-				svolume: 100,
-				vvolume: 100,
-				scoreDisplay: true,
-				missesDisplay: true,
-				accuracyDisplay: true,
-				noteOffset: 0,
-				spamPrevention: false,
-				firstTime: true,
-				accuracyType: 'complex',
-				ratingDisplay: true,
-				timingDisplay: true,
-				comboDisplay: true,
-				iconZoom: 1,
-				cameraZoom: 1,
-				cameraSpeed: 1,
-				filter: 'none',
-				brightness: 0,
-				gamma: 1,
-				muteMiss: true,
-				fpsCounter: true,
-				songPosition: true,
-				nps: true,
-				comboP: true,
-				memory: true,
-				cutscene: true,
-				music: "classic",
-				watermark: true,
-				rainbow: false,
-				lateD: false,
-				sickX: 650,
-				sickY: 320,
-				guitarSustain: false,
-				fiveK: false,
-				scroll: 'up',
-				speed: 0,
-				skipGO: false,
-				skipCS: -1,
-				comboH: false,
-				hue: 0,
-				distractions: true,
-				hitsound: "none",
-				botplay: false,
-				hvolume: 100,
-                chromakey: false,
-                healthbarvis: false,
-                charactervis: false,
-				bgAlpha: 1,
-				enemyAlpha: 0.3,
-				autoPause: true,
-				pauseCountdown: true,
-				noteSplashes: true,
-				resetButton: true,
-				cheatButton: false,
-				noteGlow: true,
-				eNoteGlow: true,
-				missAnims: true,
-				hpColors: true,
-				hpIcons: true,
-				hpAnims: true,
-				iconStyle: iconList[iconList.length],
-				ghostTapping: true
-			};
-
-			Save();
-		}
+			setFirstTime();
 		else
 		{
 			try
@@ -231,6 +179,14 @@ class MainVariables
 				Application.current.window.alert(randomShit + '\nDETAILS: ' + error, 'Error');
 			}
 		}
+		#else
+		if (FlxG.save.data.OptionsVariables == null)
+			setFirstTime();
+		else
+		{
+			_variables = Json.parse(FlxG.save.data.OptionsVariables);
+		}
+		#end
 
 		FlxG.resizeWindow(Math.round(FlxG.width * _variables.resolution), Math.round(FlxG.height * _variables.resolution));
 		FlxG.fullscreen = _variables.fullscreen;
@@ -345,5 +301,78 @@ class MainVariables
 		];
 
 		filters.push(new ColorMatrixFilter(colorM));
+	}
+
+	public static function setFirstTime()
+	{
+		_variables = {
+			resolution: 1,
+			fullscreen: false,
+			fps: 60,
+			mvolume: 100,
+			svolume: 100,
+			vvolume: 100,
+			scoreDisplay: true,
+			missesDisplay: true,
+			accuracyDisplay: true,
+			noteOffset: 0,
+			spamPrevention: false,
+			firstTime: true,
+			accuracyType: 'complex',
+			ratingDisplay: true,
+			timingDisplay: true,
+			comboDisplay: true,
+			iconZoom: 1,
+			cameraZoom: 1,
+			cameraSpeed: 1,
+			filter: 'none',
+			brightness: 0,
+			gamma: 1,
+			muteMiss: true,
+			fpsCounter: true,
+			songPosition: true,
+			nps: true,
+			comboP: true,
+			memory: true,
+			cutscene: true,
+			music: "classic",
+			watermark: true,
+			rainbow: false,
+			lateD: false,
+			sickX: 650,
+			sickY: 320,
+			guitarSustain: false,
+			fiveK: false,
+			scroll: 'up',
+			speed: 0,
+			skipGO: false,
+			skipCS: -1,
+			comboH: false,
+			hue: 0,
+			distractions: true,
+			hitsound: "none",
+			botplay: false,
+			hvolume: 100,
+			chromakey: false,
+			healthbarvis: false,
+			charactervis: false,
+			bgAlpha: 1,
+			enemyAlpha: 0.3,
+			autoPause: true,
+			pauseCountdown: true,
+			noteSplashes: true,
+			resetButton: true,
+			cheatButton: false,
+			noteGlow: true,
+			eNoteGlow: true,
+			missAnims: true,
+			hpColors: true,
+			hpIcons: true,
+			hpAnims: true,
+			iconStyle: "mic'd up",
+			ghostTapping: true
+		};
+
+		Save();
 	}
 }

@@ -1,7 +1,10 @@
 package;
 
+#if sys
 import sys.io.File;
 import sys.FileSystem;
+import Discord.DiscordClient;
+#end
 import flixel.tweens.FlxEase;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -15,7 +18,6 @@ import flixel.util.FlxTimer;
 import flixel.addons.display.FlxBackdrop;
 import MainVariables._variables;
 import flixel.util.FlxGradient;
-import Discord.DiscordClient;
 
 using StringTools;
 
@@ -85,21 +87,23 @@ class MenuWeek extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
-		if (FlxG.sound.music != null)
+		if (FlxG.sound.music.playing)
 		{
-			if (!FlxG.sound.music.playing)
+			#if sys
+			if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
 			{
-				if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
-				{
-					FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
-					Conductor.changeBPM(Std.parseFloat(File.getContent('assets/music/menu/' + _variables.music + '_BPM.txt')));
-				}
-				else
-				{
-					FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
-					Conductor.changeBPM(102);
-				}
+				FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+				Conductor.changeBPM(Std.parseFloat(File.getContent('assets/music/menu/' + _variables.music + '_BPM.txt')));
 			}
+			else
+			{
+				FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
+				Conductor.changeBPM(102);
+			}
+			#else
+			FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+			Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+			#end
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -280,7 +284,9 @@ class MenuWeek extends MusicBeatState
 			selectedSomethin = true;
 			FlxG.switchState(new PlaySelection());
 
+			#if sys
 			DiscordClient.changePresence("Going Back!", null);
+			#end
 
 			FlxTween.tween(FlxG.camera, {zoom: 0.6, alpha: -0.6}, 0.8, {ease: FlxEase.quartInOut});
 			FlxTween.tween(bg, {alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
@@ -347,7 +353,9 @@ class MenuWeek extends MusicBeatState
 				FlxTween.tween(item, {x: 2600}, 0.6, {ease: FlxEase.quartInOut});
 			}
 
+			#if sys
 			DiscordClient.changePresence("Selecting chart types.", null);
+			#end
 
 			for (item in grpWeekText.members)
 			{
@@ -400,7 +408,9 @@ class MenuWeek extends MusicBeatState
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 		#end
 
+		#if sys
 		DiscordClient.changePresence("Deciding to play week " + curWeek + " on " + sprDifficulty.animation.name + "!", null);
+		#end
 
 		FlxTween.tween(sprDifficulty, {y: txtWeekTitle.y + 62, alpha: 1}, 0.07);
 	}
@@ -434,7 +444,9 @@ class MenuWeek extends MusicBeatState
 			bullShit++;
 		}
 
+		#if sys
 		DiscordClient.changePresence("Deciding to play week " + curWeek + " on " + sprDifficulty.animation.name + "!", null);
+		#end
 
 		FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume / 100);
 

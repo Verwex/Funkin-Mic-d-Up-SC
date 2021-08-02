@@ -1,6 +1,8 @@
 package;
 
+#if sys
 import sys.io.File;
+#end
 import flixel.FlxG;
 import flixel.input.FlxInput;
 import flixel.input.actions.FlxAction;
@@ -652,7 +654,9 @@ class Controls extends FlxActionSet
 		{
 			name4 = StringTools.replace(name4, key + "\n" + value, key + "," + value);
 		}
+		#if sys
 		File.saveContent('assets/data/defaultControls.txt', name4);
+		#end
 		FlxG.save.flush();
 	}
 

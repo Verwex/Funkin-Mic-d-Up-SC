@@ -27,7 +27,9 @@ class FirstTimeState extends MusicBeatState
 		var lol = (cast(Lib.current.getChildAt(0), Main)).lastY;
 		FlxTween.tween(Application.current.window, {y: lol}, 0.5, {ease: FlxEase.circOut});
 		
+		#if sys
 		DiscordClient.changePresence("Started for the first time.", null);
+		#end
 
 		txt = new FlxText(0, 360, FlxG.width,
 			"WARNING:\nFNF: Mic'd Up may potentially trigger seizures for people with photosensitive epilepsy. Viewer discretion is advised.\n\n"

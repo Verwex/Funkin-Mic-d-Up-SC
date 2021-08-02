@@ -1,6 +1,8 @@
 package;
 
+#if sys
 import sys.io.File;
+#end
 import openfl.text.TextFieldAutoSize;
 import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.ui.FlxUIDropDownMenu;
@@ -234,7 +236,9 @@ class AnimationDebug extends MusicBeatState
 			thingy = StringTools.replace(thingy, ": ", " ");
 			thingy = StringTools.replace(thingy, ",", " ");
 			FlxG.log.add(thingy);
+			#if sys
 			File.saveContent('mods/mainMods/_append/shared/images/characters/' + char.curCharacter + "Offsets.txt", thingy);
+			#end
 		}
 
 		var upP = FlxG.keys.anyJustPressed([UP]);

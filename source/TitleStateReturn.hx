@@ -1,7 +1,9 @@
 package;
 
 import openfl.Lib;
+#if sys
 import Discord.DiscordClient;
+#end
 import flixel.util.FlxGradient;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -42,7 +44,9 @@ class TitleStateReturn extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
+		#if sys
 		DiscordClient.changePresence("In the Title Screen", null);
+		#end
 
 		persistentUpdate = true;
 
@@ -199,7 +203,9 @@ class TitleStateReturn extends MusicBeatState
 			FlxG.camera.flash(FlxColor.WHITE, 1, null, true);
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7 * _variables.svolume / 100);
 
+			#if sys
 			DiscordClient.changePresence("Proceeding to the Main Menu", null);
+			#end
 
 			transitioning = true;
 			// FlxG.sound.music.stop();

@@ -1,6 +1,8 @@
 package;
 
+#if sys
 import sys.FileSystem;
+#end
 import flixel.FlxSprite;
 import MainVariables._variables;
 
@@ -25,6 +27,7 @@ class HealthIcon extends FlxSprite
 	{
 		super();
 
+		#if sys
 		if (FileSystem.exists('assets/shared/images/icons/$style/icon-' + char + '.png') || FileSystem.exists('mods/mainMods/_append/shared/images/icons/$style/icon-' + char + '.png'))
 		{
 			loadGraphic(Paths.image('icons/$style/icon-' + char, 'shared'), true, 150, 150);
@@ -68,6 +71,15 @@ class HealthIcon extends FlxSprite
 
 			animation.play(char);
 		}
+		#else
+		loadGraphic(Paths.image('icons/$style/icon-' + char, 'shared'), true, 150, 150);
+
+		usingFallback = false;
+
+		animation.add(char, [0, 1, 2], 0, false, isPlayer);
+
+		animation.play(char);
+		#end
 
 		switch (char)
 		{

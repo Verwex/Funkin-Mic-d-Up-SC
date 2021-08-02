@@ -1,8 +1,10 @@
 package;
 
+#if sys
 import sys.io.File;
 import sys.FileSystem;
 import Discord.DiscordClient;
+#end
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.FlxObject;
@@ -92,7 +94,9 @@ class PAGE2settings extends MusicBeatSubstate
 
 		FlxG.camera.follow(camFollow, null, camLerp);
 
+		#if sys
 		DiscordClient.changePresence("Settings page: SFX", null);
+		#end
 	}
 
 	function createResults():Void
@@ -121,8 +125,8 @@ class PAGE2settings extends MusicBeatSubstate
 
 	function updateResults():Void
 	{
-		mus = MainVariables.musicList.indexOf(_variables.music.toLowerCase());
-		hit = MainVariables.hitList.indexOf(_variables.hitsound.toLowerCase());
+		mus = MainVariables.musicList.indexOf(_variables.music);
+		hit = MainVariables.hitList.indexOf(_variables.hitsound);
 	}
 
 	override function update(elapsed:Float)
@@ -168,7 +172,9 @@ class PAGE2settings extends MusicBeatSubstate
 				FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume / 100);
 				selectedSomethin = true;
 
+				#if sys
 				DiscordClient.changePresence("Back to the main menu I go!", null);
+				#end
 
 				menuItems.forEach(function(spr:FlxSprite)
 				{
@@ -300,6 +306,7 @@ class PAGE2settings extends MusicBeatSubstate
 
 				_variables.music = MainVariables.musicList[mus];
 
+				#if sys
 				if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
 				{
 					FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
@@ -310,6 +317,11 @@ class PAGE2settings extends MusicBeatSubstate
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
 					Conductor.changeBPM(102);
 				}
+				#else
+				FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+				Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+				#end
+				
 			case "hitsound":
 				hit += Change;
 				if (hit > MainVariables.hitList.length - 1)

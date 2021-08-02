@@ -1,13 +1,17 @@
 package;
 
+#if cpp
 import cpp.abi.Abi;
+#end
 import haxe.Json;
+#if sys
 import sys.io.File;
 import sys.FileSystem;
+import Discord.DiscordClient;
+#end
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -321,6 +325,7 @@ class Survival_GameOptions extends MusicBeatSubstate
 
     public static function load()
     {
+        #if sys
         if (!FileSystem.isDirectory('presets'))
             FileSystem.createDirectory('presets');
 
@@ -341,10 +346,32 @@ class Survival_GameOptions extends MusicBeatSubstate
                 var data:String = File.getContent('presets/survival_options');
                 _survivalVars = Json.parse(data);
             }
+        #else
+        if (FlxG.save.data.SurvivalOptions == null)
+        {
+            _survivalVars = {
+                timePercentage: 60,
+                carryTime: true,
+                addTimeMultiplier: 1,
+                subtractTimeMultiplier: 1,
+                addSongTimeToCurrentTime: true
+            };
+
+            FlxG.save.data.SurvivalOptions = Json.stringify(_survivalVars, null, '    ');
+		    FlxG.save.flush();
+        }
+        else
+            _survivalVars = Json.parse(FlxG.save.data.SurvivalOptions);
+        #end
     }
 
     public static function save()
         {
+            #if sys
             File.saveContent(('presets/survival_options'), Json.stringify(_survivalVars, null, '    '));
+            #else
+            FlxG.save.data.SurvivalOptions = Json.stringify(_survivalVars, null, '    ');
+		    FlxG.save.flush();
+            #end
         }
 }

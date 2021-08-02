@@ -1,0 +1,22 @@
+absorb
+audience
+beep
+beep 2
+bells
+bells 2
+bongo
+clank
+clank 2
+clap
+clap 2
+clap 3
+cymbal
+drum
+echoclap
+golf hit
+hi-hat
+key jingling
+shot
+snare
+switch
+wood

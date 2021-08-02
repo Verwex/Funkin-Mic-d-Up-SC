@@ -1,8 +1,11 @@
 package;
 
+import haxe.Json;
 import openfl.Lib;
+#if sys
 import sys.FileSystem;
 import Discord.DiscordClient;
+#end
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.FlxObject;
@@ -86,7 +89,9 @@ class PAGE6settings extends MusicBeatSubstate
 
         FlxG.camera.follow(camFollow, null, camLerp);
 
+        #if sys
 		DiscordClient.changePresence("Settings page: Clear", null);
+        #end
     }
 
         function createResults():Void
@@ -151,7 +156,9 @@ class PAGE6settings extends MusicBeatSubstate
                             FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume/100);
                             selectedSomethin = true;
 
+                            #if sys
 			                DiscordClient.changePresence("Back to the main menu I go!", null);
+                            #end
     
                             menuItems.forEach(function(spr:FlxSprite)
                                 {
@@ -271,10 +278,17 @@ class PAGE6settings extends MusicBeatSubstate
                 FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume/100);
                 FlxG.save.erase();
                 FlxG.save.flush();
+                #if !sys
+                FlxG.save.data.OptionsVariables = Json.stringify(_variables, null, '    ');
+		        FlxG.save.flush();
+                #end
                 FlxG.save.bind('save', "Funkin Mic'd Up");
             case 'config':
                 FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume/100);
-                FileSystem.deleteFile('config.json');
+                #if sys
+                var version:String = MainVariables.configVersion;
+                FileSystem.deleteFile('config-$version.json');
+                #end
                 FlxG.sound.music.volume = 1;
                 FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume/100);
                 Conductor.changeBPM(102);

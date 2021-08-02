@@ -1,7 +1,9 @@
 package;
 
 import openfl.Lib;
+#if sys
 import Discord.DiscordClient;
+#end
 import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.FlxObject;
@@ -41,6 +43,11 @@ class PAGE1settings extends MusicBeatSubstate
 	public function new()
 	{
 		super();
+
+		#if !sys
+		optionShit.remove('resolution');
+		optionShit.remove('fps');
+		#end
 
 		persistentDraw = persistentUpdate = true;
 		destroySubStates = false;
@@ -91,7 +98,9 @@ class PAGE1settings extends MusicBeatSubstate
 
 		FlxG.camera.follow(camFollow, null, camLerp);
 
+		#if sys
 		DiscordClient.changePresence("Settings page: General", null);
+		#end
 	}
 
 	function createResults():Void
@@ -186,7 +195,9 @@ class PAGE1settings extends MusicBeatSubstate
 				FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume / 100);
 				selectedSomethin = true;
 
+				#if sys
 				DiscordClient.changePresence("Back to the main menu I go!", null);
+				#end
 
 				menuItems.forEach(function(spr:FlxSprite)
 				{
@@ -298,6 +309,8 @@ class PAGE1settings extends MusicBeatSubstate
 				_variables.resolution += FlxMath.roundDecimal(Change / 5, 4);
 				if (_variables.resolution < 0.2)
 					_variables.resolution = 0.2;
+
+				_variables.resolution = FlxMath.roundDecimal(_variables.resolution, 4);
 
 				Lib.application.window.maximized = false;
 				FlxG.sound.play(Paths.sound('scrollMenu'), _variables.svolume / 100);

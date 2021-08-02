@@ -5,8 +5,8 @@ import openfl.display.Sprite;
 import haxe.io.Bytes;
 import haxe.io.BytesData;
 import openfl.utils.ByteArray;
+#if sys
 import sys.io.File;
-#if desktop
 import webm.*;
 #end
 
@@ -179,6 +179,7 @@ class WebmHandler
 	#end
 }
 
+#if sys
 class WebmByteArray extends webm.WebmIo
 {
 	var data:ByteArray;
@@ -224,3 +225,4 @@ class WebmByteArray extends webm.WebmIo
 		return data.position;
 	}
 }
+#end

@@ -1,13 +1,15 @@
 package;
 
+#if sys
 import sys.io.File;
 import sys.FileSystem;
+import Discord.DiscordClient;
+#end
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxGradient;
-import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -130,6 +132,7 @@ class MenuEndless extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
+			#if sys
 			if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
 			{
 				FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
@@ -140,6 +143,10 @@ class MenuEndless extends MusicBeatState
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), _variables.mvolume / 100);
 				Conductor.changeBPM(102);
 			}
+			#else
+			FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
+			Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+			#end
 		}
 
 		super.create();
@@ -187,7 +194,9 @@ class MenuEndless extends MusicBeatState
 				FlxTween.tween(side, {x: -500 - side.width}, 0.3, {ease: FlxEase.quartInOut});
 				FlxTween.tween(scoreText, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
 
+				#if sys
 				DiscordClient.changePresence("Going back!", null);
+				#end
 
 				FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume / 100);
 			}
@@ -232,7 +241,9 @@ class MenuEndless extends MusicBeatState
 		intendedScore = Highscore.getEndless(songs[curSelected].songName.toLowerCase());
 		#end
 
+		#if sys
 		DiscordClient.changePresence("Do I choose " + songs[curSelected].songName + " on Endless?", null);
+		#end
 
 		var bullShit:Int = 0;
 

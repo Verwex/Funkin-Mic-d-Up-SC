@@ -5,7 +5,9 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.system.FlxSound;
 import flixel.util.FlxGradient;
+#if sys
 import Discord.DiscordClient;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -337,7 +339,9 @@ class MenuFreeplay extends MusicBeatState
 				FlxTween.tween(rank, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
 				FlxTween.tween(disc, {alpha: 0, 'scale.x': 0}, 0.3, {ease: FlxEase.quartInOut});
 
+				#if sys
 				DiscordClient.changePresence("Going back!", null);
+				#end
 
 				FlxG.sound.play(Paths.sound('cancelMenu'), _variables.svolume / 100);
 			}
@@ -346,7 +350,9 @@ class MenuFreeplay extends MusicBeatState
 			{
 				selectedSomethin = true;
 
+				#if sys
 				DiscordClient.changePresence("Selecting chart types.", null);
+				#end
 
 				FlxG.sound.play(Paths.sound('confirmMenu'), _variables.svolume / 100);
 
@@ -548,6 +554,7 @@ class MenuFreeplay extends MusicBeatState
 		}
 
 		// Updating Discord Rich Presence
+		#if sys
 		switch (FlxG.random.int(0, 5))
 		{
 			case 0:
@@ -563,6 +570,7 @@ class MenuFreeplay extends MusicBeatState
 			case 5:
 				DiscordClient.changePresence("Admiring " + songs[curSelected].songName + " for:", null, null, true);
 		}
+		#end
 
 		disc.animation.addByPrefix(songs[curSelected].songCharacter, songs[curSelected].songCharacter, 24);
 		disc.animation.play(songs[curSelected].songCharacter);
