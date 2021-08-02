@@ -128,6 +128,10 @@
 	<haxelib name="discord_rpc" if="desktop"/>
 	<haxelib name="seedyrng"/> <!--haxelib install seedyrng-->
 	<haxelib name="random"/> <!--haxelib install random-->
+        <section if=SYSTOOLS">
+		<haxelib name="systools" />
+	        <ndll name="systools" haxelib="systools" />
+	</section>
 	<haxelib name="systools" />
 	<ndll name="systools" haxelib="systools" />
 	
