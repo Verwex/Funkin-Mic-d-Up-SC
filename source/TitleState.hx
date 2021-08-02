@@ -476,6 +476,7 @@ class TitleState extends MusicBeatState
 
 	public static function restart()
 	{
+                #if SYSTOOLS
 		var os = Sys.systemName();
 		var args = "Test.hx";
 		var app = "";
@@ -500,5 +501,8 @@ class TitleState extends MusicBeatState
 		}
 		else
 			throw "Failed to restart bich";
+                #else
+                trace('absolutely nothing');
+                #end
 	}
 }
