@@ -46,8 +46,7 @@
 	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
-
-        <define name="SYSTOOLS" if="windows" />
+    <define name="SYSTOOLS" if="windows" />
 	
 	<section if="PRELOAD_ALL">
 		<library name="songs"    preload="true" />
@@ -128,7 +127,8 @@
 	<haxelib name="discord_rpc" if="desktop"/>
 	<haxelib name="seedyrng"/> <!--haxelib install seedyrng-->
 	<haxelib name="random"/> <!--haxelib install random-->
-        <section if=SYSTOOLS">
+
+    <section if="SYSTOOLS">
 		<haxelib name="systools" />
 	        <ndll name="systools" haxelib="systools" />
 	</section>
