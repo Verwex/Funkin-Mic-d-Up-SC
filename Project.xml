@@ -132,8 +132,6 @@
 		<haxelib name="systools" />
 	        <ndll name="systools" haxelib="systools" />
 	</section>
-	<haxelib name="systools" />
-	<ndll name="systools" haxelib="systools" />
 	
 	<haxelib name="actuate"/>
 	<haxelib name="extension-webm" if="desktop"/>
