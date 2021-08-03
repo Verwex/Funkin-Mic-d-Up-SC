@@ -30,11 +30,15 @@ class MenuFreeplay extends MusicBeatState
 	public static var curDifficulty:Int = 2;
 
 	var scoreText:FlxText;
+	#if sys
 	var deathText:FlxText;
+	#end
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
+	#if sys
 	var lerpDeath:Int = 0;
 	var intendedDeath:Int = 0;
+	#end
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -172,6 +176,7 @@ class MenuFreeplay extends MusicBeatState
 		scoreText.y = sprDifficulty.y - 38;
 		add(scoreText);
 
+		#if sys
 		deathText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
 		deathText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
 		deathText.alignment = CENTER;
@@ -179,6 +184,7 @@ class MenuFreeplay extends MusicBeatState
 		deathText.screenCenter(X);
 		deathText.y = scoreText.y - 38;
 		add(deathText);
+		#end
 
 		var nTex = Paths.getSparrowAtlas('Options_Navigation');
 		navi = new FlxSprite();
@@ -226,10 +232,16 @@ class MenuFreeplay extends MusicBeatState
 		FlxTween.tween(side, {y: FlxG.height - side.height / 3 * 2}, 0.5, {ease: FlxEase.quartInOut});
 		disc.scale.x = 0;
 		FlxTween.tween(disc, {'scale.x': 1, y: 480, x: -25}, 0.5, {ease: FlxEase.quartInOut});
+		#if sys
 		scoreText.alpha = deathText.alpha = sprDifficulty.alpha = 0;
+		#else
+		scoreText.alpha = sprDifficulty.alpha = 0;
+		#end
 		FlxTween.tween(scoreText, {alpha: 1}, 0.5, {ease: FlxEase.quartInOut});
 		FlxTween.tween(sprDifficulty, {alpha: 1}, 0.5, {ease: FlxEase.quartInOut});
+		#if sys
 		FlxTween.tween(deathText, {alpha: 1}, 0.5, {ease: FlxEase.quartInOut});
+		#end
 		FlxTween.tween(rank, {alpha: 1}, 0.5, {ease: FlxEase.quartInOut});
 
 		FlxG.camera.zoom = 0.6;
@@ -293,13 +305,17 @@ class MenuFreeplay extends MusicBeatState
 		if (Math.abs(lerpScore - intendedScore) <= 10)
 			lerpScore = intendedScore;
 
+		#if sys
 		lerpDeath = Math.floor(FlxMath.lerp(lerpDeath, intendedDeath, 0.5 / (_variables.fps / 60)));
 
 		if (Math.abs(lerpDeath - intendedDeath) <= 1)
 			lerpDeath = intendedDeath;
+		#end
 
 		scoreText.text = "PERSONAL BEST:" + lerpScore;
+		#if sys
 		deathText.text = "DEATH COUNT:" + lerpDeath;
+		#end
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
@@ -335,7 +351,9 @@ class MenuFreeplay extends MusicBeatState
 				FlxTween.tween(side, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
 				FlxTween.tween(sprDifficulty, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
 				FlxTween.tween(scoreText, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
+				#if sys
 				FlxTween.tween(deathText, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
+				#end
 				FlxTween.tween(rank, {alpha: 0}, 0.3, {ease: FlxEase.quartInOut});
 				FlxTween.tween(disc, {alpha: 0, 'scale.x': 0}, 0.3, {ease: FlxEase.quartInOut});
 
@@ -371,7 +389,9 @@ class MenuFreeplay extends MusicBeatState
 				FlxTween.tween(rank, {alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
 				FlxTween.tween(disc, {alpha: 0, 'scale.x': 0}, 0.8, {ease: FlxEase.quartInOut});
 				FlxTween.tween(scoreText, {y: 750, alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
+				#if sys
 				FlxTween.tween(deathText, {y: 750, alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
+				#end
 				FlxTween.tween(navi, {alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
 				FlxTween.tween(sprDifficulty, {y: 750, alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
 				for (item in grpSongs.members)
@@ -400,7 +420,9 @@ class MenuFreeplay extends MusicBeatState
 		discIcon.angle = disc.angle += 0.6 / (_variables.fps / 60);
 		discIcon.scale.set(disc.scale.x, disc.scale.y);
 		scoreText.x = FlxG.width / 2 - scoreText.width / 2;
+		#if sys
 		deathText.x = FlxG.width / 2 - deathText.width / 2;
+		#end
 	}
 
 	function changeDiff(change:Int = 0)
@@ -414,7 +436,9 @@ class MenuFreeplay extends MusicBeatState
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+		#if sys
 		intendedDeath = Highscore.getDeaths(songs[curSelected].songName, curDifficulty);
+		#end
 		rank.loadGraphic(Paths.image('rankings/' + rankTable[Highscore.getRank(songs[curSelected].songName, curDifficulty)]));
 		rank.scale.x = rank.scale.y = 80 / rank.height;
 		rank.updateHitbox();
@@ -467,7 +491,9 @@ class MenuFreeplay extends MusicBeatState
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+		#if sys
 		intendedDeath = Highscore.getDeaths(songs[curSelected].songName, curDifficulty);
+		#end
 
 		rank.loadGraphic(Paths.image('rankings/' + rankTable[Highscore.getRank(songs[curSelected].songName, curDifficulty)]));
 		rank.scale.x = rank.scale.y = 80 / rank.height;

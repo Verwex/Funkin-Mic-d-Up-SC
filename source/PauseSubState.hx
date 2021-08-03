@@ -73,25 +73,27 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.updateHitbox();
 		add(levelDifficulty);
 
+		#if sys
 		var deathCounter:FlxText = new FlxText(20, 15 + 64, 0, "", 32);
 		deathCounter.text += "blue balled: "+Highscore.getDeaths(PlayState.SONG.song, PlayState.storyDifficulty);
 		deathCounter.scrollFactor.set();
 		deathCounter.setFormat(Paths.font("vcr.ttf"), 32);
 		deathCounter.updateHitbox();
 		add(deathCounter);
+		deathCounter.alpha = 0;
+		deathCounter.x = FlxG.width - (deathCounter.width + 20);
+		FlxTween.tween(deathCounter, {alpha: 1, y: deathCounter.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
+		#end
 
 		levelDifficulty.alpha = 0;
 		levelInfo.alpha = 0;
-		deathCounter.alpha = 0;
 
 		levelInfo.x = FlxG.width - (levelInfo.width + 20);
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
-		deathCounter.x = FlxG.width - (deathCounter.width + 20);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
-		FlxTween.tween(deathCounter, {alpha: 1, y: deathCounter.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
