@@ -30,8 +30,10 @@ class RankingSubstate extends MusicBeatSubstate
 
 		generateRanking();
 
+		#if sys
 		var image = lime.graphics.Image.fromFile('assets/images/iconOG.png');
 		lime.app.Application.current.window.setIcon(image);
+		#end
 
 		if (!PlayState.cheated && !_variables.botplay)
 			Highscore.saveRank(PlayState.SONG.song, rankingNum, PlayState.storyDifficulty);
@@ -147,7 +149,10 @@ class RankingSubstate extends MusicBeatSubstate
 						}
 						#else
 						FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
-						Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+						
+						var newBPMArray = CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt');
+						var newBPM = Std.parseFloat(newBPMArray[0]);
+						Conductor.changeBPM(newBPM);
 						#end
 
 						FlxG.switchState(new MenuWeek());

@@ -21,7 +21,7 @@ using StringTools;
 class PAGE4settings extends MusicBeatSubstate
 {
 	var menuItems:FlxTypedGroup<FlxSprite>;
-	var optionShit:Array<String> = ['page', 'speed', 'offset', 'scroll', 'guitar', 'spam', 'ghostTapping', 'botplay', 'autoPause', 'pauseCountdown', 'resetButton', 'cheatButton', 'lateD', 'accuType', 'combo+', 'comboH', '5k', 'cutscene', 'skip', 'skipCS'];
+	var optionShit:Array<String> = ['page', 'speed', 'offset', 'scroll', 'guitar', 'ghostTapping', 'botplay', 'autoPause', 'pauseCountdown', 'resetButton', 'cheatButton', 'lateD', 'accuType', 'combo+', 'comboH', '5k', 'cutscene', 'skip', 'skipCS'];
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	var selectedSomethin:Bool = false;

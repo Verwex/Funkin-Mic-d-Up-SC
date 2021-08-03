@@ -938,11 +938,13 @@ class PlayState extends MusicBeatState
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
+		#if sys
 		if (curStage == "schoolEvil" && !_variables.chromakey)
 		{
 			var image = Image.fromFile('assets/images/hell.png');
 			Application.current.window.setIcon(image);
 		}
+		#end
 
 		switch (SONG.player2)
 		{
@@ -1995,6 +1997,7 @@ class PlayState extends MusicBeatState
 		{
 			var coolSection:Int = Std.int(section.lengthInSteps / 4);
 
+			#if sys
 			// I don't know why, I don't want to wonder why,
 			// but i have no idea what better way I can do this cos I fucking hate it.
 			if (section.sectionSpeed < 1 || Math.isNaN(section.sectionSpeed))
@@ -2010,17 +2013,16 @@ class PlayState extends MusicBeatState
 
 				if ((data != null) && (data.length > 0))
 				{
-					#if sys
 					File.saveContent('assets/data/' + SONG.song.toLowerCase() + "/" + SONG.song.toLowerCase() + "-"
 						+ CoolUtil.difficultyString().toLowerCase() + ".json",
 						data);
-					#end
 					PlayState.SONG = Song.loadFromJson(SONG.song + "-" + CoolUtil.difficultyString().toLowerCase(), SONG.song);
 					FlxG.log.add('RELOADING JSON: ' + SONG.song + "-" + CoolUtil.difficultyString().toLowerCase());
 					generateSong(SONG.song);
 					break;
 				}
 			}
+			#end
 
 			for (songNotes in section.sectionNotes)
 			{
@@ -2616,7 +2618,8 @@ class PlayState extends MusicBeatState
 
 	function tweenCamIn():Void
 	{
-		FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom + 0.3}, (Conductor.stepCrochet / 1000 * 4), {ease: FlxEase.quadInOut});
+		if (!ended)
+			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom + 0.3}, (Conductor.stepCrochet / 1000 * 4), {ease: FlxEase.quadInOut});
 	}
 
 	override function openSubState(SubState:FlxSubState)
@@ -2984,8 +2987,10 @@ class PlayState extends MusicBeatState
 			canDie = false;
 			FlxG.switchState(new ChartingState());
 			curDeaths = 0;
+			#if sys
 			var image = lime.graphics.Image.fromFile('assets/images/iconOG.png');
 			lime.app.Application.current.window.setIcon(image);
+			#end
 			Application.current.window.title = Application.current.meta.get('name');
 
 			#if sys
@@ -3297,7 +3302,7 @@ class PlayState extends MusicBeatState
 						camFollow.y = FlxMath.lerp(camFollow.y, boyfriend.getMidpoint().y - 300, (camLerp * _variables.cameraSpeed) / (_variables.fps / 60));
 				}
 
-				if (SONG.song.toLowerCase() == 'tutorial')
+				if (SONG.song.toLowerCase() == 'tutorial' && !ended)
 				{
 					FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.stepCrochet / 1000 * 4), {ease: FlxEase.quadInOut});
 				}

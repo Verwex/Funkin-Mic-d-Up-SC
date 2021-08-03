@@ -160,7 +160,10 @@ class MenuSurvival extends MusicBeatState
 			}
 			#else
 			FlxG.sound.playMusic(Paths.music('menu/' + _variables.music), _variables.mvolume / 100);
-			Conductor.changeBPM(Std.parseFloat(Std.string(CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt'))));
+			
+			var newBPMArray = CoolUtil.coolTextFile('assets/music/menu/' + _variables.music + '_BPM.txt');
+			var newBPM = Std.parseFloat(newBPMArray[0]);
+			Conductor.changeBPM(newBPM);
 			#end
 		}
 

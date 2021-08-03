@@ -49,6 +49,9 @@ class LoadingState extends MusicBeatState
 
 		add(logo);
 
+		#if !sys
+		FlxG.switchState(target);
+		#else
 		initSongsManifest().onComplete(function(lib)
 		{
 			callbacks = new MultiCallback(onLoad);
@@ -66,6 +69,7 @@ class LoadingState extends MusicBeatState
 			FlxG.camera.fade(FlxG.camera.bgColor, fadeTime, true);
 			new FlxTimer().start(fadeTime + MIN_TIME, function(_) introComplete());
 		});
+		#end
 	}
 
 	function checkLoadSong(path:String)

@@ -1,5 +1,6 @@
 package;
 
+import lime.utils.Assets;
 import flixel.system.FlxAssets.FlxSoundAsset;
 import lime.tools.AssetType;
 import flixel.input.FlxInput;
@@ -104,12 +105,12 @@ class Paths
 	{
 		return if (library == "preload" || library == "default") getImagePath(file); else getImagePathForce(file, library);
 	}
-	#end
 
 	static public function getSoundLibraryPath(file:String, library = "preload"):FlxSoundAsset
 	{
 		return if (library == "preload" || library == "default") getSoundPath(file); else getSoundPathForce(file, library);
 	}
+	#end
 
 	inline static function getLibraryPathForce(file:String, library:String)
 	{
@@ -207,21 +208,37 @@ class Paths
 
 	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
 	{
+		#if !sys
+		library = null;
+		#end
+
 		return getPath(file, type, library);
 	}
 
 	inline static public function txt(key:String, ?library:String)
 	{
+		#if !sys
+		library = null;
+		#end
+
 		return getPath('data/$key.txt', TEXT, library);
 	}
 
 	inline static public function lua(key:String,?library:String)
 	{
+		#if !sys
+		library = null;
+		#end
+
 		return getPath('data/$key.lua', TEXT, library);
 	}
 	
 	inline static public function luaImage(key:String, ?library:String)
 	{
+		#if !sys
+		library = null;
+		#end
+
 		return getPath('data/$key.png', IMAGE, library);
 	}
 
@@ -238,7 +255,7 @@ class Paths
 		else
 			daList = File.getContent('mods/mainMods/_append/shared/images/characters/$path.txt').trim().split('\n');
 		#else
-		daList = CoolUtil.coolTextFile('assets/shared/images/characters/$path.txt');
+		daList = lime.utils.Assets.getText('assets/images/characters/$path.txt').trim().split('\n');
 		#end
 
 		for (i in 0...daList.length)
@@ -251,13 +268,13 @@ class Paths
 
 	inline static public function xml(key:String, ?library:String)
 	{
-		return getPath('data/$key.xml', TEXT, library);
+		return getPath('data/$key.xml', TEXT, null);
 	}
 
 	inline static public function json(key:String, ?library:String)
 	{
 		#if !sys
-		return getPath('data/$key.json', TEXT, library);
+		return getPath('data/$key.json', TEXT, null);
 		#else
 		if (FileSystem.exists(('mods/mainMods/_append/data/$key.json')))
 		{
@@ -284,12 +301,16 @@ class Paths
 		else
 			return getPath('sounds/$key.$SOUND_EXT', SOUND, library);
 		#else
-		return getPath('sounds/$key.$SOUND_EXT', SOUND, library);
+		return getPath('sounds/$key.$SOUND_EXT', SOUND, null);
 		#end
 	}
 
 	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
 	{
+		#if !sys
+		library = null;
+		#end
+
 		return sound(key + FlxG.random.int(min, max), library);
 	}
 
@@ -309,17 +330,19 @@ class Paths
 		else
 			return getPath('music/$key.$SOUND_EXT', MUSIC, library);
 		#else
-		return getPath('music/$key.$SOUND_EXT', MUSIC, library);
+		return getPath('music/$key.$SOUND_EXT', MUSIC, null);
 		#end
 	}
 
 	inline static public function voices(song:String)
 	{
+		#if sys
 		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'songs:assets/songs/${song.toLowerCase()}/Voices.$SOUND_EXT';
 
-		#if sys
 		if (FileSystem.exists('mods/mainMods/_append/songs/${song.toLowerCase()}/Voices.$SOUND_EXT'))
 			rawSound = Sound.fromFile('mods/mainMods/_append/songs/${song.toLowerCase()}/Voices.$SOUND_EXT');
+		#else
+		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'assets/music/${song.toLowerCase()}/Voices.$SOUND_EXT';
 		#end
 
 		return rawSound;
@@ -327,11 +350,13 @@ class Paths
 
 	inline static public function voicesHIFI(song:String)
 	{
+		#if sys
 		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'songs:assets/songs/${song.toLowerCase()}/Voices_HIFI.$SOUND_EXT';
 
-		#if sys
 		if (FileSystem.exists('mods/mainMods/_append/songs/${song.toLowerCase()}/Voices_HIFI.$SOUND_EXT'))
 			rawSound = Sound.fromFile('mods/mainMods/_append/songs/${song.toLowerCase()}/Voices_HIFI.$SOUND_EXT');
+		#else
+		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'assets/music/${song.toLowerCase()}/Voices_HIFI.$SOUND_EXT';
 		#end
 
 		return rawSound;
@@ -339,11 +364,13 @@ class Paths
 
 	inline static public function voicesLOFI(song:String)
 	{
+		#if sys
 		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'songs:assets/songs/${song.toLowerCase()}/Voices_LOFI.$SOUND_EXT';
 
-		#if sys
 		if (FileSystem.exists('mods/mainMods/_append/songs/${song.toLowerCase()}/Voices_LOFI.$SOUND_EXT'))
 			rawSound = Sound.fromFile('mods/mainMods/_append/songs/${song.toLowerCase()}/Voices_LOFI.$SOUND_EXT');
+		#else
+		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'assets/music/${song.toLowerCase()}/Voices_LOFI.$SOUND_EXT';
 		#end
 
 		return rawSound;
@@ -351,11 +378,13 @@ class Paths
 
 	inline static public function inst(song:String)
 	{
+		#if sys
 		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'songs:assets/songs/${song.toLowerCase()}/Inst.$SOUND_EXT';
 
-		#if sys
 		if (FileSystem.exists('mods/mainMods/_append/songs/${song.toLowerCase()}/Inst.$SOUND_EXT'))
 			rawSound = Sound.fromFile('mods/mainMods/_append/songs/${song.toLowerCase()}/Inst.$SOUND_EXT');
+		#else
+		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'assets/music/${song.toLowerCase()}/Inst.$SOUND_EXT';
 		#end
 
 		return rawSound;
@@ -363,11 +392,13 @@ class Paths
 
 	inline static public function instHIFI(song:String)
 	{
+		#if sys
 		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'songs:assets/songs/${song.toLowerCase()}/Inst_HIFI.$SOUND_EXT';
 
-		#if sys
 		if (FileSystem.exists('mods/mainMods/_append/songs/${song.toLowerCase()}/Inst_HIFI.$SOUND_EXT'))
 			rawSound = Sound.fromFile('mods/mainMods/_append/songs/${song.toLowerCase()}/Inst_HIFI.$SOUND_EXT');
+		#else
+		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'assets/music/${song.toLowerCase()}/Inst_HIFI.$SOUND_EXT';
 		#end
 
 		return rawSound;
@@ -375,11 +406,13 @@ class Paths
 
 	inline static public function instLOFI(song:String)
 	{
+		#if sys
 		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'songs:assets/songs/${song.toLowerCase()}/Inst_LOFI.$SOUND_EXT';
 
-		#if sys
 		if (FileSystem.exists('mods/mainMods/_append/songs/${song.toLowerCase()}/Inst_LOFI.$SOUND_EXT'))
 			rawSound = Sound.fromFile('mods/mainMods/_append/songs/${song.toLowerCase()}/Inst_LOFI.$SOUND_EXT');
+		#else
+		var rawSound:flixel.system.FlxAssets.FlxSoundAsset = 'assets/music/${song.toLowerCase()}/Inst_LOFI.$SOUND_EXT';
 		#end
 
 		return rawSound;
@@ -402,7 +435,7 @@ class Paths
 		else
 			return getPath('images/$key.png', IMAGE, library);
 		#else
-		return getPath('images/$key.png', IMAGE, library);
+		return getPath('images/$key.png', IMAGE, null);
 		#end
 	}
 
@@ -413,11 +446,11 @@ class Paths
 
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 	{
-		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
+		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', null));
 	}
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
 	{
-		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
+		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', null));
 	}
 }

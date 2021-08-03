@@ -87,7 +87,7 @@ class MenuWeek extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
-		if (FlxG.sound.music.playing)
+		if (!FlxG.sound.music.playing)
 		{
 			#if sys
 			if (FileSystem.exists(Paths.music('menu/' + _variables.music)))
