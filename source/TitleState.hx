@@ -109,11 +109,13 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
+		#if sys
 		if (!OutOfDate.leftState || !FirstTimeState.leftState)
 		{
 			var lol = (cast(Lib.current.getChildAt(0), Main)).lastY;
 			FlxTween.tween(Application.current.window, {y: lol}, 0.5, {ease: FlxEase.circOut});
 		}
+		#end
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		// bg.antialiasing = true;

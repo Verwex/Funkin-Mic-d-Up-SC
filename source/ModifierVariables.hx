@@ -80,6 +80,12 @@ class ModifierVariables
 {
     public static var _modifiers:ModiVariables;
 
+    #if sys
+    public static var subtractValue:Int = 0;
+    #else
+    public static var subtractValue:Int = 1;
+    #end
+
     public static function updateModifiers():Void
     {
         _modifiers = {
@@ -112,79 +118,84 @@ class ModifierVariables
 
             Enigma: MenuModifiers.modifierList[11].value,
 
+            #if sys
             Vibe: MenuModifiers.modifierList[12].curValue,
             VibeSwitch: MenuModifiers.modifierList[12].value,
+            #else
+            Vibe: 1,
+            VibeSwitch: false,
+            #end
 
-            Offbeat: MenuModifiers.modifierList[13].curValue,
-            OffbeatSwitch: MenuModifiers.modifierList[13].value,
+            Offbeat: MenuModifiers.modifierList[13 - subtractValue].curValue,
+            OffbeatSwitch: MenuModifiers.modifierList[13 - subtractValue].value,
 
-            HitZones: MenuModifiers.modifierList[14].curValue,
-            HitZonesSwitch: MenuModifiers.modifierList[14].value,
+            HitZones: MenuModifiers.modifierList[14 - subtractValue].curValue,
+            HitZonesSwitch: MenuModifiers.modifierList[14 - subtractValue].value,
 
-            NoteSpeed: MenuModifiers.modifierList[15].curValue,
-            NoteSpeedSwitch: MenuModifiers.modifierList[15].value,
+            NoteSpeed: MenuModifiers.modifierList[15 - subtractValue].curValue,
+            NoteSpeedSwitch: MenuModifiers.modifierList[15 - subtractValue].value,
 
-            InvisibleNotes: MenuModifiers.modifierList[16].value,
+            InvisibleNotes: MenuModifiers.modifierList[16 - subtractValue].value,
 
-            SnakeNotes: MenuModifiers.modifierList[17].curValue,
-            SnakeNotesSwitch: MenuModifiers.modifierList[17].value,
+            SnakeNotes: MenuModifiers.modifierList[17 - subtractValue].curValue,
+            SnakeNotesSwitch: MenuModifiers.modifierList[17 - subtractValue].value,
 
-            DrunkNotes: MenuModifiers.modifierList[18].curValue,
-            DrunkNotesSwitch: MenuModifiers.modifierList[18].value,
+            DrunkNotes: MenuModifiers.modifierList[18 - subtractValue].curValue,
+            DrunkNotesSwitch: MenuModifiers.modifierList[18 - subtractValue].value,
 
-            AccelNotes: MenuModifiers.modifierList[19].curValue,
-            AccelNotesSwitch: MenuModifiers.modifierList[19].value,
+            AccelNotes: MenuModifiers.modifierList[19 - subtractValue].curValue,
+            AccelNotesSwitch: MenuModifiers.modifierList[19 - subtractValue].value,
 
-            Shortsighted: MenuModifiers.modifierList[20].curValue,
-            ShortsightedSwitch: MenuModifiers.modifierList[20].value,
+            Shortsighted: MenuModifiers.modifierList[20 - subtractValue].curValue,
+            ShortsightedSwitch: MenuModifiers.modifierList[20 - subtractValue].value,
 
-            Longsighted: MenuModifiers.modifierList[21].curValue,
-            LongsightedSwitch: MenuModifiers.modifierList[21].value,
+            Longsighted: MenuModifiers.modifierList[21 - subtractValue].curValue,
+            LongsightedSwitch: MenuModifiers.modifierList[21 - subtractValue].value,
 
-            FlippedNotes: MenuModifiers.modifierList[22].value,
+            FlippedNotes: MenuModifiers.modifierList[22 - subtractValue].value,
 
-            HyperNotes: MenuModifiers.modifierList[23].curValue,
-            HyperNotesSwitch: MenuModifiers.modifierList[23].value,
+            HyperNotes: MenuModifiers.modifierList[23 - subtractValue].curValue,
+            HyperNotesSwitch: MenuModifiers.modifierList[23 - subtractValue].value,
 
-            EelNotes: MenuModifiers.modifierList[24].curValue,
-            EelNotesSwitch: MenuModifiers.modifierList[24].value,
+            EelNotes: MenuModifiers.modifierList[24 - subtractValue].curValue,
+            EelNotesSwitch: MenuModifiers.modifierList[24 - subtractValue].value,
 
-            Stretch: MenuModifiers.modifierList[25].curValue,
-            StretchSwitch: MenuModifiers.modifierList[25].value,
+            Stretch: MenuModifiers.modifierList[25 - subtractValue].curValue,
+            StretchSwitch: MenuModifiers.modifierList[25 - subtractValue].value,
 
-            Widen: MenuModifiers.modifierList[26].curValue,
-            WidenSwitch: MenuModifiers.modifierList[26].value,
+            Widen: MenuModifiers.modifierList[26 - subtractValue].curValue,
+            WidenSwitch: MenuModifiers.modifierList[26 - subtractValue].value,
 
-            Jacktastic: MenuModifiers.modifierList[27].curValue,
-            JacktasticSwitch: MenuModifiers.modifierList[27].value,
+            Jacktastic: MenuModifiers.modifierList[27 - subtractValue].curValue,
+            JacktasticSwitch: MenuModifiers.modifierList[27 - subtractValue].value,
 
-            Seasick: MenuModifiers.modifierList[28].curValue,
-            SeasickSwitch: MenuModifiers.modifierList[28].value,
+            Seasick: MenuModifiers.modifierList[28 - subtractValue].curValue,
+            SeasickSwitch: MenuModifiers.modifierList[28 - subtractValue].value,
 
-            UpsideDown: MenuModifiers.modifierList[29].value,
+            UpsideDown: MenuModifiers.modifierList[29 - subtractValue].value,
 
-            Mirror: MenuModifiers.modifierList[30].value,
+            Mirror: MenuModifiers.modifierList[30 - subtractValue].value,
 
-            Camera: MenuModifiers.modifierList[31].curValue,
-            CameraSwitch: MenuModifiers.modifierList[31].value,
+            Camera: MenuModifiers.modifierList[31 - subtractValue].curValue,
+            CameraSwitch: MenuModifiers.modifierList[31 - subtractValue].value,
 
-            Earthquake: MenuModifiers.modifierList[32].curValue,
-            EarthquakeSwitch: MenuModifiers.modifierList[32].value,
+            Earthquake: MenuModifiers.modifierList[32 - subtractValue].curValue,
+            EarthquakeSwitch: MenuModifiers.modifierList[32 - subtractValue].value,
 
-            Love: MenuModifiers.modifierList[33].curValue,
-            LoveSwitch: MenuModifiers.modifierList[33].value,
+            Love: MenuModifiers.modifierList[33 - subtractValue].curValue,
+            LoveSwitch: MenuModifiers.modifierList[33 - subtractValue].value,
 
-            Fright: MenuModifiers.modifierList[34].curValue,
-            FrightSwitch: MenuModifiers.modifierList[34].value,
+            Fright: MenuModifiers.modifierList[34 - subtractValue].curValue,
+            FrightSwitch: MenuModifiers.modifierList[34 - subtractValue].value,
 
-            MustDie: MenuModifiers.modifierList[35].curValue,
-            MustDieSwitch: MenuModifiers.modifierList[35].value,
+            MustDie: MenuModifiers.modifierList[35 - subtractValue].curValue,
+            MustDieSwitch: MenuModifiers.modifierList[35 - subtractValue].value,
 
-            Freeze: MenuModifiers.modifierList[36].curValue,
-            FreezeSwitch: MenuModifiers.modifierList[36].value,
+            Freeze: MenuModifiers.modifierList[36 - subtractValue].curValue,
+            FreezeSwitch: MenuModifiers.modifierList[36 - subtractValue].value,
 
-            Paparazzi: MenuModifiers.modifierList[37].curValue,
-            PaparazziSwitch: MenuModifiers.modifierList[37].value
+            Paparazzi: MenuModifiers.modifierList[37 - subtractValue].curValue,
+            PaparazziSwitch: MenuModifiers.modifierList[37 - subtractValue].value
         };
     }
 
@@ -270,79 +281,81 @@ class ModifierVariables
         
         MenuModifiers.modifierList[11].value = _modifiers.Enigma;
 
+        #if sys
         MenuModifiers.modifierList[12].curValue = _modifiers.Vibe;
         MenuModifiers.modifierList[12].value = _modifiers.VibeSwitch;
+        #end
 
-        MenuModifiers.modifierList[13].curValue = _modifiers.Offbeat;
-        MenuModifiers.modifierList[13].value = _modifiers.OffbeatSwitch;
+        MenuModifiers.modifierList[13 - subtractValue].curValue = _modifiers.Offbeat;
+        MenuModifiers.modifierList[13 - subtractValue].value = _modifiers.OffbeatSwitch;
 
-        MenuModifiers.modifierList[14].curValue = _modifiers.HitZones;
-        MenuModifiers.modifierList[14].value = _modifiers.HitZonesSwitch;
+        MenuModifiers.modifierList[14 - subtractValue].curValue = _modifiers.HitZones;
+        MenuModifiers.modifierList[14 - subtractValue].value = _modifiers.HitZonesSwitch;
 
-        MenuModifiers.modifierList[15].curValue = _modifiers.NoteSpeed;
-        MenuModifiers.modifierList[15].value = _modifiers.NoteSpeedSwitch;
+        MenuModifiers.modifierList[15 - subtractValue].curValue = _modifiers.NoteSpeed;
+        MenuModifiers.modifierList[15 - subtractValue].value = _modifiers.NoteSpeedSwitch;
 
-        MenuModifiers.modifierList[16].value = _modifiers.InvisibleNotes;
+        MenuModifiers.modifierList[16 - subtractValue].value = _modifiers.InvisibleNotes;
 
-        MenuModifiers.modifierList[17].curValue = _modifiers.SnakeNotes;
-        MenuModifiers.modifierList[17].value = _modifiers.SnakeNotesSwitch;
+        MenuModifiers.modifierList[17 - subtractValue].curValue = _modifiers.SnakeNotes;
+        MenuModifiers.modifierList[17 - subtractValue].value = _modifiers.SnakeNotesSwitch;
 
-        MenuModifiers.modifierList[18].curValue = _modifiers.DrunkNotes;
-        MenuModifiers.modifierList[18].value = _modifiers.DrunkNotesSwitch;
+        MenuModifiers.modifierList[18 - subtractValue].curValue = _modifiers.DrunkNotes;
+        MenuModifiers.modifierList[18 - subtractValue].value = _modifiers.DrunkNotesSwitch;
 
-        MenuModifiers.modifierList[19].curValue = _modifiers.AccelNotes;
-        MenuModifiers.modifierList[19].value = _modifiers.AccelNotesSwitch;
+        MenuModifiers.modifierList[19 - subtractValue].curValue = _modifiers.AccelNotes;
+        MenuModifiers.modifierList[19 - subtractValue].value = _modifiers.AccelNotesSwitch;
 
-        MenuModifiers.modifierList[20].curValue = _modifiers.Shortsighted;
-        MenuModifiers.modifierList[20].value = _modifiers.ShortsightedSwitch;
+        MenuModifiers.modifierList[20 - subtractValue].curValue = _modifiers.Shortsighted;
+        MenuModifiers.modifierList[20 - subtractValue].value = _modifiers.ShortsightedSwitch;
 
-        MenuModifiers.modifierList[21].curValue = _modifiers.Longsighted;
-        MenuModifiers.modifierList[21].value = _modifiers.LongsightedSwitch;
+        MenuModifiers.modifierList[21 - subtractValue].curValue = _modifiers.Longsighted;
+        MenuModifiers.modifierList[21 - subtractValue].value = _modifiers.LongsightedSwitch;
 
-        MenuModifiers.modifierList[22].value = _modifiers.FlippedNotes;
+        MenuModifiers.modifierList[22 - subtractValue].value = _modifiers.FlippedNotes;
 
-        MenuModifiers.modifierList[23].curValue = _modifiers.HyperNotes;
-        MenuModifiers.modifierList[23].value = _modifiers.HyperNotesSwitch;
+        MenuModifiers.modifierList[23 - subtractValue].curValue = _modifiers.HyperNotes;
+        MenuModifiers.modifierList[23 - subtractValue].value = _modifiers.HyperNotesSwitch;
 
-        MenuModifiers.modifierList[24].curValue = _modifiers.EelNotes;
-        MenuModifiers.modifierList[24].value = _modifiers.EelNotesSwitch;
+        MenuModifiers.modifierList[24 - subtractValue].curValue = _modifiers.EelNotes;
+        MenuModifiers.modifierList[24 - subtractValue].value = _modifiers.EelNotesSwitch;
 
-        MenuModifiers.modifierList[25].curValue = _modifiers.Stretch;
-        MenuModifiers.modifierList[25].value = _modifiers.StretchSwitch;
+        MenuModifiers.modifierList[25 - subtractValue].curValue = _modifiers.Stretch;
+        MenuModifiers.modifierList[25 - subtractValue].value = _modifiers.StretchSwitch;
 
-        MenuModifiers.modifierList[26].curValue = _modifiers.Widen;
-        MenuModifiers.modifierList[26].value = _modifiers.WidenSwitch;
+        MenuModifiers.modifierList[26 - subtractValue].curValue = _modifiers.Widen;
+        MenuModifiers.modifierList[26 - subtractValue].value = _modifiers.WidenSwitch;
 
-        MenuModifiers.modifierList[27].curValue = _modifiers.Jacktastic;
-        MenuModifiers.modifierList[27].value = _modifiers.JacktasticSwitch;
+        MenuModifiers.modifierList[27 - subtractValue].curValue = _modifiers.Jacktastic;
+        MenuModifiers.modifierList[27 - subtractValue].value = _modifiers.JacktasticSwitch;
 
-        MenuModifiers.modifierList[28].curValue = _modifiers.Seasick;
-        MenuModifiers.modifierList[28].value = _modifiers.SeasickSwitch;
+        MenuModifiers.modifierList[28 - subtractValue].curValue = _modifiers.Seasick;
+        MenuModifiers.modifierList[28 - subtractValue].value = _modifiers.SeasickSwitch;
 
-        MenuModifiers.modifierList[29].value = _modifiers.UpsideDown;
+        MenuModifiers.modifierList[29 - subtractValue].value = _modifiers.UpsideDown;
 
-        MenuModifiers.modifierList[30].value = _modifiers.Mirror;
+        MenuModifiers.modifierList[30 - subtractValue].value = _modifiers.Mirror;
 
-        MenuModifiers.modifierList[31].curValue = _modifiers.Camera;
-        MenuModifiers.modifierList[31].value = _modifiers.CameraSwitch;
+        MenuModifiers.modifierList[31 - subtractValue].curValue = _modifiers.Camera;
+        MenuModifiers.modifierList[31 - subtractValue].value = _modifiers.CameraSwitch;
 
-        MenuModifiers.modifierList[32].curValue = _modifiers.Earthquake;
-        MenuModifiers.modifierList[32].value = _modifiers.EarthquakeSwitch;
+        MenuModifiers.modifierList[32 - subtractValue].curValue = _modifiers.Earthquake;
+        MenuModifiers.modifierList[32 - subtractValue].value = _modifiers.EarthquakeSwitch;
 
-        MenuModifiers.modifierList[33].curValue = _modifiers.Love;
-        MenuModifiers.modifierList[33].value = _modifiers.LoveSwitch;
+        MenuModifiers.modifierList[33 - subtractValue].curValue = _modifiers.Love;
+        MenuModifiers.modifierList[33 - subtractValue].value = _modifiers.LoveSwitch;
 
-        MenuModifiers.modifierList[34].curValue = _modifiers.Fright;
-        MenuModifiers.modifierList[34].value = _modifiers.FrightSwitch;
+        MenuModifiers.modifierList[34 - subtractValue].curValue = _modifiers.Fright;
+        MenuModifiers.modifierList[34 - subtractValue].value = _modifiers.FrightSwitch;
 
-        MenuModifiers.modifierList[35].curValue = _modifiers.MustDie;
-        MenuModifiers.modifierList[35].value = _modifiers.MustDieSwitch;
+        MenuModifiers.modifierList[35 - subtractValue].curValue = _modifiers.MustDie;
+        MenuModifiers.modifierList[35 - subtractValue].value = _modifiers.MustDieSwitch;
 
-        MenuModifiers.modifierList[36].curValue = _modifiers.Freeze;
-        MenuModifiers.modifierList[36].value = _modifiers.FreezeSwitch;
+        MenuModifiers.modifierList[36 - subtractValue].curValue = _modifiers.Freeze;
+        MenuModifiers.modifierList[36 - subtractValue].value = _modifiers.FreezeSwitch;
 
-        MenuModifiers.modifierList[37].curValue = _modifiers.Paparazzi;
-        MenuModifiers.modifierList[37].value = _modifiers.PaparazziSwitch;
+        MenuModifiers.modifierList[37 - subtractValue].curValue = _modifiers.Paparazzi;
+        MenuModifiers.modifierList[37 - subtractValue].value = _modifiers.PaparazziSwitch;
     }
 
     public static function nullify():Void
@@ -398,6 +411,10 @@ class ModifierVariables
             {name: 'Stagefright', value: false, conflicts: [1,2,3,4,5], multi: 0.05, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 30, curValue: 0, offAt: 0, addChange: 1, string: '\nLESS\nMISSES', explanation: "Intimidation makes you afraid. Set how many misses you need to have until you freeze. YOU ARE GIVEN 30 MISSES BY 1 LESS MISS. The higher, the less misses you need. Adds 0.05 to the multiplier with each amount. Can be changed numerically."},
             {name: 'Paparazzi', value: false, conflicts: [], multi: 0.004, realmulti: 0, equation: '', abs: false,  revAtLow: false, type: 'number', minValue: 0, maxValue: 100, curValue: 0, offAt: 0, addChange: 1, string: '\nCAMERAMA(E)N', explanation: "Oh how popular you are! Change how many cameramen you want on the scene taking pictures. Adds 0.004 to the score rate. Can be changed numerically."},
         ];
+
+        #if !sys
+            MenuModifiers.modifierList.remove(MenuModifiers.modifierList[12]);
+        #end
 
         updateModifiers();
     }

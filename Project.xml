@@ -48,16 +48,17 @@
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
     <define name="SYSTOOLS" if="windows" />
 
+	<!--Allows the game to be playable at all times when playing on the web. If that doesn't happen then these folders get ignored without any valid reason.-->
 	<section if="web">
-		<assets path="assets/shared"    rename="assets"    		exclude="*.ogg"/>
-		<assets path="assets/tutorial"  rename="assets"    		exclude="*.ogg"/>
-		<assets path="assets/week1"     rename="assets"    		exclude="*.ogg"/>
-		<assets path="assets/week2"     rename="assets"    		exclude="*.ogg"/>
-		<assets path="assets/week3"     rename="assets"    		exclude="*.ogg"/>
-		<assets path="assets/week4"     rename="assets"    		exclude="*.ogg"/>
-		<assets path="assets/week5"     rename="assets"    		exclude="*.ogg"/>
-		<assets path="assets/week6"     rename="assets"    		exclude="*.ogg"/>
-		<assets path="assets/songs"     rename="assets/music"   exclude="*.ogg"/>
+		<assets path="assets/shared"    rename="assets"    		exclude="*.ogg|*LOFI.mp3|*HIFI.mp3"/>
+		<assets path="assets/tutorial"  rename="assets"    		exclude="*.ogg|*LOFI.mp3|*HIFI.mp3"/>
+		<assets path="assets/week1"     rename="assets"    		exclude="*.ogg|*LOFI.mp3|*HIFI.mp3"/>
+		<assets path="assets/week2"     rename="assets"    		exclude="*.ogg|*LOFI.mp3|*HIFI.mp3"/>
+		<assets path="assets/week3"     rename="assets"    		exclude="*.ogg|*LOFI.mp3|*HIFI.mp3"/>
+		<assets path="assets/week4"     rename="assets"    		exclude="*.ogg|*LOFI.mp3|*HIFI.mp3"/>
+		<assets path="assets/week5"     rename="assets"    		exclude="*.ogg|*LOFI.mp3|*HIFI.mp3"/>
+		<assets path="assets/week6"     rename="assets"    		exclude="*.ogg|*LOFI.mp3|*HIFI.mp3"/>
+		<assets path="assets/songs"     rename="assets/music"   exclude="*.ogg|*LOFI.mp3|*HIFI.mp3"/>
 	</section>
 	
 	<section if="PRELOAD_ALL">
