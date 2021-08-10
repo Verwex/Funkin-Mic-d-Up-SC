@@ -170,8 +170,10 @@ class PauseSubState extends MusicBeatSubstate
 							PlayState.ended = false;
 							PlayState.loops = 0;
 							PlayState.speed = 0;
+							#if sys
 							var image = lime.graphics.Image.fromFile('assets/images/iconOG.png');
 							lime.app.Application.current.window.setIcon(image);
+							#end
 							switch (PlayState.gameplayArea)
 							{
 								case "Story":

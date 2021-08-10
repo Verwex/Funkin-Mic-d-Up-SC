@@ -85,7 +85,7 @@
 		<library name="week6"    preload="false" />
 	</section>
 	
-	<section if="sys">
+	<section unless="web">
 		<assets path="assets/songs"    library="songs"    exclude="*.ogg" if="web"/>
 		<assets path="assets/songs"    library="songs"    exclude="*.mp3" unless="web"/>
 		<assets path="assets/shared"   library="shared"   exclude="*.ogg" if="web"/>
