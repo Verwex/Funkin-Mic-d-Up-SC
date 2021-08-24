@@ -49,7 +49,7 @@ class Character extends FlxSprite
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
 				animation.addByPrefix('scared', 'GF FEAR', 24);
 
-				loadOffsetFile("gf");
+				loadOffsetFile();
 
 				playAnim('danceRight');
 
@@ -68,7 +68,7 @@ class Character extends FlxSprite
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
 				animation.addByPrefix('scared', 'GF FEAR', 24);
 
-				loadOffsetFile("gf-christmas");
+				loadOffsetFile();
 
 				playAnim('danceRight');
 
@@ -82,7 +82,7 @@ class Character extends FlxSprite
 					false);
 				animation.addByIndices("idleHair", "GF Dancing Beat Hair blowing CAR", [10, 11, 12, 25, 26, 27], "", 24, true);
 
-				loadOffsetFile("gf-car");
+				loadOffsetFile();
 
 				playAnim('danceRight');
 
@@ -94,7 +94,7 @@ class Character extends FlxSprite
 				animation.addByIndices('danceRight', 'GF IDLE', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				animation.addByPrefix('sad', 'GF SAD', 24, false);
 
-				loadOffsetFile("gf-pixel");
+				loadOffsetFile();
 
 				playAnim('danceRight');
 
@@ -112,7 +112,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Dad Sing Note RIGHT0', 24, false);
 				animation.addByPrefix('singDOWN', 'Dad Sing Note DOWN0', 24, false);
 
-				loadOffsetFile("dad");
+				loadOffsetFile();
 
 				playAnim('idle');
 			case 'spooky':
@@ -125,7 +125,7 @@ class Character extends FlxSprite
 				animation.addByIndices('danceLeft', 'spooky dance idle', [0, 2, 6], "", 12, false);
 				animation.addByIndices('danceRight', 'spooky dance idle', [8, 10, 12, 14], "", 12, false);
 
-				loadOffsetFile("spooky");
+				loadOffsetFile();
 
 				playAnim('danceRight');
 			case 'mom':
@@ -140,7 +140,7 @@ class Character extends FlxSprite
 				// CUZ DAVE IS DUMB!
 				animation.addByPrefix('singRIGHT', 'Mom Pose Left', 24, false);
 
-				loadOffsetFile("mom");
+				loadOffsetFile();
 
 				playAnim('idle');
 
@@ -157,7 +157,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Mom Pose Left', 24, false);
 				animation.addByIndices("idleHair", "Mom Idle", [10, 11, 12, 13], "", 24, true);
 
-				loadOffsetFile("mom-car");
+				loadOffsetFile();
 
 				playAnim('idle');
 			case 'monster':
@@ -169,7 +169,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'Monster left note', 24, false);
 				animation.addByPrefix('singRIGHT', 'Monster Right note', 24, false);
 
-				loadOffsetFile("monster");
+				loadOffsetFile();
 				playAnim('idle');
 			case 'monster-christmas':
 				tex = Paths.getSparrowAtlas('characters/monsterChristmas', 'shared');
@@ -180,7 +180,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'Monster left note', 24, false);
 				animation.addByPrefix('singRIGHT', 'Monster Right note', 24, false);
 
-				loadOffsetFile("monster-christmas");
+				loadOffsetFile();
 				playAnim('idle');
 			case 'pico':
 				tex = Paths.getSparrowAtlas('characters/Pico_FNF_assetss', 'shared');
@@ -196,7 +196,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singUPmiss', 'pico Up note miss', 24);
 				animation.addByPrefix('singDOWNmiss', 'Pico Down Note MISS', 24);
 
-				loadOffsetFile("pico");
+				loadOffsetFile();
 
 				playAnim('idle');
 
@@ -224,7 +224,7 @@ class Character extends FlxSprite
 
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
-				loadOffsetFile("bf");
+				loadOffsetFile();
 
 				playAnim('idle');
 
@@ -246,7 +246,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('hey', 'BF HEY', 24, false);
 				animation.addByPrefix('frozen', 'BF frozen', 24, false);
 
-				loadOffsetFile('bf-christmas');
+				loadOffsetFile();
 
 				playAnim('idle');
 				if (_modifiers.FrightSwitch)
@@ -274,7 +274,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('frozen', 'BF frozen', 24, false);
 				animation.addByIndices('idleHair', 'BF idle dance', [10, 11, 12, 13], "", 24, true);
 
-				loadOffsetFile('bf-car');
+				loadOffsetFile();
 
 				playAnim('idle');
 				if (_modifiers.FrightSwitch)
@@ -301,7 +301,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('frozen', 'BF FROZEN', 24, false);
 				animation.addByPrefix('scared', 'BF SHAKING', 24);
 
-				loadOffsetFile('bf-pixel');
+				loadOffsetFile();
 
 				if (PlayState.curStage.startsWith('school'))
 					setGraphicSize(Std.int(width * 6));
@@ -333,7 +333,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('deathConfirm', "RETRY CONFIRM", 24, false);
 				animation.play('firstDeath');
 
-				loadOffsetFile('bf-pixel-dead');
+				loadOffsetFile();
 				playAnim('firstDeath');
 				// pixel bullshit
 				setGraphicSize(Std.int(width * 6));
@@ -349,7 +349,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'SENPAI RIGHT NOTE', 24, false);
 				animation.addByPrefix('singDOWN', 'SENPAI DOWN NOTE', 24, false);
 
-				loadOffsetFile('senpai');
+				loadOffsetFile();
 
 				playAnim('idle');
 
@@ -365,7 +365,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Angry Senpai RIGHT NOTE', 24, false);
 				animation.addByPrefix('singDOWN', 'Angry Senpai DOWN NOTE', 24, false);
 
-				loadOffsetFile('senpai-angry');
+				loadOffsetFile();
 				playAnim('idle');
 
 				setGraphicSize(Std.int(width * 6));
@@ -381,7 +381,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', "left_", 24, false);
 				animation.addByPrefix('singDOWN', "spirit down_", 24, false);
 
-				loadOffsetFile('spirit');
+				loadOffsetFile();
 
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
@@ -404,7 +404,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT-alt', 'Parent Left Note Mom', 24, false);
 				animation.addByPrefix('singRIGHT-alt', 'Parent Right Note Mom', 24, false);
 
-				loadOffsetFile('parents-christmas');
+				loadOffsetFile();
 
 				playAnim('idle');
 		}
@@ -523,9 +523,9 @@ class Character extends FlxSprite
 		}
 	}
 
-	public function loadOffsetFile(character:String = 'bf')
+	public function loadOffsetFile()
 	{
-		var offsets = Paths.offsets(character + "Offsets", "shared");
+		var offsets = Paths.offsets(curCharacter + "Offsets", "shared");
 		for (i in 0...offsets.length)
 		{
 			var parsedOffset = offsets[i];
